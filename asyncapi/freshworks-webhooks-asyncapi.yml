@@ -1,0 +1,447 @@
+asyncapi: 2.6.0
+info:
+  title: Freshworks Webhook Events
+  description: >-
+    Freshworks products support webhook callbacks that notify external
+    applications when specific events occur within the helpdesk, service
+    desk, CRM, and messaging platforms. Webhooks are configured through
+    automation rules and workflow automators, triggering HTTP POST requests
+    to registered callback URLs when events such as ticket creation,
+    conversation updates, and status changes occur. Rate limits of 1000
+    webhook requests per hour apply across all Freshworks products.
+  version: '1.0'
+  contact:
+    name: Freshworks Support
+    url: https://support.freshworks.com/
+  license:
+    name: Proprietary
+servers:
+  freshdeskWebhook:
+    url: '{callbackUrl}'
+    protocol: https
+    description: >-
+      Freshdesk sends webhook POST requests to the callback URL configured
+      in automation rules. The URL is set by the customer.
+    variables:
+      callbackUrl:
+        description: The customer-configured webhook callback URL.
+  freshserviceWebhook:
+    url: '{callbackUrl}'
+    protocol: https
+    description: >-
+      Freshservice sends webhook POST requests to the callback URL
+      configured in the Workflow Automator.
+    variables:
+      callbackUrl:
+        description: The customer-configured webhook callback URL.
+  freshchatWebhook:
+    url: '{callbackUrl}'
+    protocol: https
+    description: >-
+      Freshchat sends webhook POST requests to the registered callback
+      URL when messaging events occur.
+    variables:
+      callbackUrl:
+        description: The customer-configured webhook callback URL.
+channels:
+  /freshdesk/ticket-created:
+    description: >-
+      Triggered when a new ticket is created in Freshdesk. Configured
+      through ticket creation automation rules.
+    publish:
+      operationId: onFreshdeskTicketCreated
+      summary: Freshdesk ticket created event
+      message:
+        $ref: '#/components/messages/FreshdeskTicketEvent'
+  /freshdesk/ticket-updated:
+    description: >-
+      Triggered when an existing ticket is updated in Freshdesk. This
+      includes status changes, assignment changes, priority updates,
+      and custom field modifications.
+    publish:
+      operationId: onFreshdeskTicketUpdated
+      summary: Freshdesk ticket updated event
+      message:
+        $ref: '#/components/messages/FreshdeskTicketEvent'
+  /freshservice/ticket-created:
+    description: >-
+      Triggered when a new ticket is created in Freshservice. Configured
+      through the Workflow Automator.
+    publish:
+      operationId: onFreshserviceTicketCreated
+      summary: Freshservice ticket created event
+      message:
+        $ref: '#/components/messages/FreshserviceTicketEvent'
+  /freshservice/ticket-updated:
+    description: >-
+      Triggered when an existing ticket is updated in Freshservice,
+      including status changes, assignment updates, and field modifications.
+    publish:
+      operationId: onFreshserviceTicketUpdated
+      summary: Freshservice ticket updated event
+      message:
+        $ref: '#/components/messages/FreshserviceTicketEvent'
+  /freshchat/message-create:
+    description: >-
+      Triggered when a new message is sent in a Freshchat conversation,
+      whether by a user, agent, or bot.
+    publish:
+      operationId: onFreshchatMessageCreate
+      summary: Freshchat message created event
+      message:
+        $ref: '#/components/messages/FreshchatMessageEvent'
+  /freshchat/conversation-assignment:
+    description: >-
+      Triggered when a conversation is assigned or reassigned to an
+      agent or group in Freshchat.
+    publish:
+      operationId: onFreshchatConversationAssignment
+      summary: Freshchat conversation assignment event
+      message:
+        $ref: '#/components/messages/FreshchatConversationEvent'
+  /freshchat/conversation-resolution:
+    description: >-
+      Triggered when a conversation is resolved in Freshchat.
+    publish:
+      operationId: onFreshchatConversationResolution
+      summary: Freshchat conversation resolution event
+      message:
+        $ref: '#/components/messages/FreshchatConversationEvent'
+  /freshchat/conversation-reopen:
+    description: >-
+      Triggered when a previously resolved conversation is reopened
+      in Freshchat.
+    publish:
+      operationId: onFreshchatConversationReopen
+      summary: Freshchat conversation reopen event
+      message:
+        $ref: '#/components/messages/FreshchatConversationEvent'
+components:
+  messages:
+    FreshdeskTicketEvent:
+      name: FreshdeskTicketEvent
+      title: Freshdesk Ticket Webhook Event
+      summary: >-
+        Payload sent by Freshdesk when a ticket event occurs via
+        automation rule webhooks.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/FreshdeskTicketPayload'
+    FreshserviceTicketEvent:
+      name: FreshserviceTicketEvent
+      title: Freshservice Ticket Webhook Event
+      summary: >-
+        Payload sent by Freshservice when a ticket event occurs via
+        the Workflow Automator.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/FreshserviceTicketPayload'
+    FreshchatMessageEvent:
+      name: FreshchatMessageEvent
+      title: Freshchat Message Webhook Event
+      summary: >-
+        Payload sent by Freshchat when a new message is created in a
+        conversation.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/FreshchatMessagePayload'
+    FreshchatConversationEvent:
+      name: FreshchatConversationEvent
+      title: Freshchat Conversation Webhook Event
+      summary: >-
+        Payload sent by Freshchat when a conversation lifecycle event
+        occurs such as assignment, resolution, or reopening.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/FreshchatConversationPayload'
+  schemas:
+    FreshdeskTicketPayload:
+      type: object
+      description: >-
+        Webhook payload for Freshdesk ticket events. The exact fields
+        included depend on the automation rule configuration.
+      properties:
+        freshdesk_webhook:
+          type: object
+          description: Wrapper object for the webhook data.
+          properties:
+            ticket_id:
+              type: integer
+              description: ID of the ticket.
+            ticket_subject:
+              type: string
+              description: Subject of the ticket.
+            ticket_description:
+              type: string
+              description: Description text of the ticket.
+            ticket_status:
+              type: string
+              description: Status name of the ticket.
+            ticket_priority:
+              type: string
+              description: Priority name of the ticket.
+            ticket_source:
+              type: string
+              description: Source channel of the ticket.
+            ticket_type:
+              type: string
+              description: Type of the ticket.
+            ticket_requester_name:
+              type: string
+              description: Name of the requester.
+            ticket_requester_email:
+              type: string
+              format: email
+              description: Email of the requester.
+            ticket_agent_name:
+              type: string
+              description: Name of the assigned agent.
+            ticket_agent_email:
+              type: string
+              format: email
+              description: Email of the assigned agent.
+            ticket_group_name:
+              type: string
+              description: Name of the assigned group.
+            ticket_company_name:
+              type: string
+              description: Name of the associated company.
+            ticket_product_name:
+              type: string
+              description: Name of the associated product.
+            ticket_tags:
+              type: string
+              description: Comma-separated list of ticket tags.
+            ticket_due_by_time:
+              type: string
+              format: date-time
+              description: Due by timestamp.
+            ticket_created_at:
+              type: string
+              format: date-time
+              description: Ticket creation timestamp.
+            ticket_updated_at:
+              type: string
+              format: date-time
+              description: Last update timestamp.
+            ticket_url:
+              type: string
+              format: uri
+              description: URL to view the ticket in Freshdesk.
+    FreshserviceTicketPayload:
+      type: object
+      description: >-
+        Webhook payload for Freshservice ticket events. Fields are
+        determined by the Workflow Automator configuration.
+      properties:
+        freshservice_webhook:
+          type: object
+          description: Wrapper object for the webhook data.
+          properties:
+            ticket_id:
+              type: integer
+              description: ID of the ticket.
+            ticket_subject:
+              type: string
+              description: Subject of the ticket.
+            ticket_description:
+              type: string
+              description: Description of the ticket.
+            ticket_status:
+              type: string
+              description: Status name.
+            ticket_priority:
+              type: string
+              description: Priority name.
+            ticket_type:
+              type: string
+              description: Ticket type (Incident, Service Request).
+            ticket_source:
+              type: string
+              description: Source channel.
+            ticket_requester_name:
+              type: string
+              description: Name of the requester.
+            ticket_requester_email:
+              type: string
+              format: email
+              description: Email of the requester.
+            ticket_agent_name:
+              type: string
+              description: Name of the assigned agent.
+            ticket_group_name:
+              type: string
+              description: Name of the assigned group.
+            ticket_department_name:
+              type: string
+              description: Name of the department.
+            ticket_category:
+              type: string
+              description: Category of the ticket.
+            ticket_sub_category:
+              type: string
+              description: Sub-category.
+            ticket_due_by_time:
+              type: string
+              format: date-time
+              description: Due by timestamp.
+            ticket_created_at:
+              type: string
+              format: date-time
+              description: Ticket creation timestamp.
+            ticket_updated_at:
+              type: string
+              format: date-time
+              description: Last update timestamp.
+            ticket_url:
+              type: string
+              format: uri
+              description: URL to view the ticket in Freshservice.
+    FreshchatMessagePayload:
+      type: object
+      description: >-
+        Webhook payload for Freshchat message creation events.
+      properties:
+        actor:
+          type: object
+          description: The actor who triggered the event.
+          properties:
+            actor_type:
+              type: string
+              description: Type of actor (user, agent, system).
+              enum:
+                - user
+                - agent
+                - system
+            actor_id:
+              type: string
+              description: ID of the actor.
+        action:
+          type: string
+          description: The action that triggered the event.
+          const: message_create
+        action_time:
+          type: string
+          format: date-time
+          description: Timestamp when the action occurred.
+        data:
+          type: object
+          description: Event data containing the message details.
+          properties:
+            message:
+              type: object
+              description: The message that was created.
+              properties:
+                message_id:
+                  type: string
+                  description: ID of the message.
+                conversation_id:
+                  type: string
+                  description: ID of the conversation.
+                message_type:
+                  type: string
+                  description: Type of message (normal, private).
+                  enum:
+                    - normal
+                    - private
+                message_parts:
+                  type: array
+                  description: Parts composing the message.
+                  items:
+                    type: object
+                    properties:
+                      text:
+                        type: object
+                        properties:
+                          content:
+                            type: string
+                            description: Text content.
+                app_id:
+                  type: string
+                  description: ID of the application.
+                channel_id:
+                  type: string
+                  description: ID of the channel.
+                created_time:
+                  type: string
+                  format: date-time
+                  description: Message creation timestamp.
+    FreshchatConversationPayload:
+      type: object
+      description: >-
+        Webhook payload for Freshchat conversation lifecycle events
+        including assignment, resolution, and reopening.
+      properties:
+        actor:
+          type: object
+          description: The actor who triggered the event.
+          properties:
+            actor_type:
+              type: string
+              description: Type of actor (user, agent, system).
+              enum:
+                - user
+                - agent
+                - system
+            actor_id:
+              type: string
+              description: ID of the actor.
+        action:
+          type: string
+          description: The action that triggered the event.
+          enum:
+            - conversation_assignment
+            - conversation_resolution
+            - conversation_reopen
+        action_time:
+          type: string
+          format: date-time
+          description: Timestamp when the action occurred.
+        data:
+          type: object
+          description: Event data containing conversation details.
+          properties:
+            conversation:
+              type: object
+              description: The conversation involved in the event.
+              properties:
+                conversation_id:
+                  type: string
+                  description: ID of the conversation.
+                app_id:
+                  type: string
+                  description: ID of the application.
+                channel_id:
+                  type: string
+                  description: ID of the channel.
+                status:
+                  type: string
+                  description: Current status of the conversation.
+                  enum:
+                    - new
+                    - assigned
+                    - resolved
+                    - reopened
+                assigned_agent_id:
+                  type: string
+                  description: ID of the assigned agent.
+                assigned_group_id:
+                  type: string
+                  description: ID of the assigned group.
+            assignment:
+              type: object
+              description: >-
+                Assignment details (present only for assignment events).
+              properties:
+                from_agent_id:
+                  type: string
+                  description: Previous agent ID.
+                to_agent_id:
+                  type: string
+                  description: New agent ID.
+                from_group_id:
+                  type: string
+                  description: Previous group ID.
+                to_group_id:
+                  type: string
+                  description: New group ID.

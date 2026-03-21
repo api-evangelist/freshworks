@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://freshworks.com/schemas/freshworks/contact.json",
+  "title": "Freshworks Contact",
+  "description": "A contact record representing a customer, requester, or lead across Freshworks products including Freshdesk, Freshsales, and Freshchat. Contacts are the primary person entities in the Freshworks ecosystem.",
+  "type": "object",
+  "required": ["id"],
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique identifier of the contact."
+    },
+    "first_name": {
+      "type": "string",
+      "description": "First name of the contact.",
+      "maxLength": 255
+    },
+    "last_name": {
+      "type": "string",
+      "description": "Last name of the contact.",
+      "maxLength": 255
+    },
+    "name": {
+      "type": "string",
+      "description": "Full display name of the contact.",
+      "maxLength": 255
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Primary email address of the contact."
+    },
+    "phone": {
+      "type": "string",
+      "description": "Primary phone number.",
+      "pattern": "^[+]?[0-9\\s\\-().]+$"
+    },
+    "mobile": {
+      "type": "string",
+      "description": "Mobile phone number.",
+      "pattern": "^[+]?[0-9\\s\\-().]+$"
+    },
+    "address": {
+      "type": "string",
+      "description": "Mailing or street address."
+    },
+    "city": {
+      "type": "string",
+      "description": "City of residence."
+    },
+    "state": {
+      "type": "string",
+      "description": "State or province."
+    },
+    "country": {
+      "type": "string",
+      "description": "Country of residence."
+    },
+    "zipcode": {
+      "type": "string",
+      "description": "ZIP or postal code."
+    },
+    "job_title": {
+      "type": "string",
+      "description": "Job title or position."
+    },
+    "department": {
+      "type": "string",
+      "description": "Department within the company."
+    },
+    "company_id": {
+      "type": "integer",
+      "description": "ID of the associated company or account."
+    },
+    "company_name": {
+      "type": "string",
+      "description": "Name of the associated company."
+    },
+    "language": {
+      "type": "string",
+      "description": "Preferred language (ISO 639-1 code).",
+      "pattern": "^[a-z]{2}(-[A-Z]{2})?$"
+    },
+    "time_zone": {
+      "type": "string",
+      "description": "Time zone identifier (IANA format)."
+    },
+    "tags": {
+      "type": "array",
+      "description": "Tags applied to the contact for segmentation.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "active": {
+      "type": "boolean",
+      "description": "Whether the contact is active in the system."
+    },
+    "lead_score": {
+      "type": "integer",
+      "description": "Lead score assigned to the contact (Freshsales).",
+      "minimum": 0
+    },
+    "owner_id": {
+      "type": "integer",
+      "description": "ID of the sales agent who owns this contact (Freshsales)."
+    },
+    "custom_fields": {
+      "type": "object",
+      "description": "Custom field key-value pairs specific to the account configuration.",
+      "additionalProperties": true
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the contact was created."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the contact was last updated."
+    }
+  }
+}

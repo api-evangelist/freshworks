@@ -1,0 +1,148 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://freshworks.com/schemas/freshworks/ticket.json",
+  "title": "Freshworks Ticket",
+  "description": "A support or service desk ticket common across Freshdesk and Freshservice products. Tickets represent customer or employee requests for assistance, incidents, or service requests.",
+  "type": "object",
+  "required": ["id", "subject", "status", "priority"],
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique identifier of the ticket."
+    },
+    "subject": {
+      "type": "string",
+      "description": "Subject line summarizing the ticket request.",
+      "minLength": 1,
+      "maxLength": 255
+    },
+    "description": {
+      "type": "string",
+      "description": "HTML-formatted description of the ticket with full details of the request."
+    },
+    "description_text": {
+      "type": "string",
+      "description": "Plain text version of the ticket description."
+    },
+    "status": {
+      "type": "integer",
+      "description": "Numeric status code. 2=Open, 3=Pending, 4=Resolved, 5=Closed.",
+      "enum": [2, 3, 4, 5]
+    },
+    "priority": {
+      "type": "integer",
+      "description": "Numeric priority level. 1=Low, 2=Medium, 3=High, 4=Urgent.",
+      "enum": [1, 2, 3, 4]
+    },
+    "type": {
+      "type": "string",
+      "description": "Category type of the ticket (e.g., Question, Incident, Problem, Feature Request, Service Request)."
+    },
+    "source": {
+      "type": "integer",
+      "description": "Source channel through which the ticket was created. 1=Email, 2=Portal, 3=Phone, 7=Chat, 9=Feedback Widget, 10=Outbound Email."
+    },
+    "requester_id": {
+      "type": "integer",
+      "description": "ID of the requester (contact or employee) who raised the ticket."
+    },
+    "requester_email": {
+      "type": "string",
+      "format": "email",
+      "description": "Email address of the requester."
+    },
+    "responder_id": {
+      "type": "integer",
+      "description": "ID of the agent assigned to handle the ticket."
+    },
+    "group_id": {
+      "type": "integer",
+      "description": "ID of the agent group to which the ticket is assigned."
+    },
+    "company_id": {
+      "type": "integer",
+      "description": "ID of the associated company (Freshdesk) or department (Freshservice)."
+    },
+    "product_id": {
+      "type": "integer",
+      "description": "ID of the product or service associated with the ticket."
+    },
+    "tags": {
+      "type": "array",
+      "description": "Labels or tags applied to the ticket for categorization.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "due_by": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp by which the ticket should be resolved."
+    },
+    "fr_due_by": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp by which the first response to the ticket is due."
+    },
+    "is_escalated": {
+      "type": "boolean",
+      "description": "Indicates whether the ticket has been escalated due to SLA breach."
+    },
+    "custom_fields": {
+      "type": "object",
+      "description": "Key-value pairs containing custom field data specific to the helpdesk configuration.",
+      "additionalProperties": true
+    },
+    "attachments": {
+      "type": "array",
+      "description": "File attachments associated with the ticket.",
+      "items": {
+        "$ref": "#/$defs/Attachment"
+      }
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the ticket was created."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the ticket was last updated."
+    }
+  },
+  "$defs": {
+    "Attachment": {
+      "type": "object",
+      "description": "A file attachment on a ticket.",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Unique ID of the attachment."
+        },
+        "name": {
+          "type": "string",
+          "description": "File name of the attachment."
+        },
+        "content_type": {
+          "type": "string",
+          "description": "MIME type of the attachment."
+        },
+        "size": {
+          "type": "integer",
+          "description": "File size in bytes."
+        },
+        "attachment_url": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL to download the attachment."
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the attachment was uploaded."
+        }
+      }
+    }
+  }
+}

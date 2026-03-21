@@ -1,0 +1,924 @@
+openapi: 3.1.0
+info:
+  title: Freshworks Freshchat API
+  description: >-
+    The Freshchat API provides programmatic access to the Freshchat messaging
+    platform for managing customer conversations and engagement. It supports
+    operations for conversations, messages, agents, channels, and users. The
+    API enables developers to automate customer communication workflows,
+    integrate Freshchat with external systems, and build custom messaging
+    solutions on top of the Freshchat platform. Authentication is handled via
+    API tokens obtained from the Freshchat admin panel.
+  version: '2.0'
+  contact:
+    name: Freshworks Support
+    url: https://support.freshchat.com/
+  termsOfService: https://www.freshworks.com/terms/
+externalDocs:
+  description: Freshchat API Documentation
+  url: https://developers.freshchat.com/api/
+servers:
+  - url: https://{domain}.freshchat.com/v2
+    description: Freshchat Production Server (Standalone)
+    variables:
+      domain:
+        default: yourdomain
+        description: Your Freshchat account name
+  - url: https://{domain}.myfreshworks.com/v2
+    description: Freshchat Production Server (Freshsales Suite)
+    variables:
+      domain:
+        default: yourdomain
+        description: Your Freshworks bundle alias
+tags:
+  - name: Conversations
+    description: >-
+      Manage customer conversations and their lifecycle.
+  - name: Messages
+    description: >-
+      Send and retrieve messages within conversations.
+  - name: Agents
+    description: >-
+      Manage chat agents and their availability.
+  - name: Users
+    description: >-
+      Manage end-user profiles for chat interactions.
+  - name: Channels
+    description: >-
+      Manage messaging channels and their configurations.
+  - name: Groups
+    description: >-
+      Manage agent groups for conversation routing.
+security:
+  - bearerAuth: []
+paths:
+  /conversations:
+    get:
+      operationId: listConversations
+      summary: List all conversations
+      description: >-
+        Retrieves a paginated list of all conversations. The response
+        does not include messages or user details by default.
+      tags:
+        - Conversations
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/ItemsPerPageParam'
+        - name: status
+          in: query
+          description: >-
+            Filter conversations by status (new, assigned, resolved, reopened).
+          schema:
+            type: string
+        - name: assigned_agent_id
+          in: query
+          description: Filter by assigned agent ID.
+          schema:
+            type: string
+        - name: assigned_group_id
+          in: query
+          description: Filter by assigned group ID.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  conversations:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Conversation'
+                  links:
+                    $ref: '#/components/schemas/PaginationLinks'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createConversation
+      summary: Create a conversation
+      description: >-
+        Creates a new conversation with an initial message. Requires a
+        user ID or user details and the message content.
+      tags:
+        - Conversations
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConversationCreate'
+      responses:
+        '200':
+          description: Conversation created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  conversation_id:
+                    type: string
+                    description: ID of the created conversation.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /conversations/{conversation_id}:
+    get:
+      operationId: getConversation
+      summary: View a conversation
+      description: >-
+        Retrieves the details of a specific conversation by its ID.
+        Messages and user attributes are not included by default.
+      tags:
+        - Conversations
+      parameters:
+        - $ref: '#/components/parameters/ConversationIdParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conversation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateConversation
+      summary: Update a conversation
+      description: >-
+        Updates the properties of an existing conversation such as
+        status and assignment.
+      tags:
+        - Conversations
+      parameters:
+        - $ref: '#/components/parameters/ConversationIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConversationUpdate'
+      responses:
+        '200':
+          description: Conversation updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conversation'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /conversations/{conversation_id}/messages:
+    get:
+      operationId: listConversationMessages
+      summary: List messages in a conversation
+      description: >-
+        Retrieves all messages within a specific conversation, ordered
+        by creation time.
+      tags:
+        - Messages
+      parameters:
+        - $ref: '#/components/parameters/ConversationIdParam'
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/ItemsPerPageParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  messages:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Message'
+                  links:
+                    $ref: '#/components/schemas/PaginationLinks'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    post:
+      operationId: sendMessage
+      summary: Send a message in a conversation
+      description: >-
+        Sends a new message in an existing conversation. The message
+        can be sent on behalf of an agent or the system.
+      tags:
+        - Messages
+      parameters:
+        - $ref: '#/components/parameters/ConversationIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessageCreate'
+      responses:
+        '200':
+          description: Message sent successfully
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /agents:
+    get:
+      operationId: listAgents
+      summary: List all agents
+      description: >-
+        Retrieves a list of all agents configured for the Freshchat
+        account, including their availability status.
+      tags:
+        - Agents
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/ItemsPerPageParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  agents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Agent'
+                  links:
+                    $ref: '#/components/schemas/PaginationLinks'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /agents/{agent_id}:
+    get:
+      operationId: getAgent
+      summary: View an agent
+      description: >-
+        Retrieves the metadata and availability status of a specific agent.
+      tags:
+        - Agents
+      parameters:
+        - $ref: '#/components/parameters/AgentIdParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Agent'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /users:
+    get:
+      operationId: listUsers
+      summary: List all users
+      description: >-
+        Retrieves a paginated list of all end-users registered in the
+        Freshchat system.
+      tags:
+        - Users
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/ItemsPerPageParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  users:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+                  links:
+                    $ref: '#/components/schemas/PaginationLinks'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createUser
+      summary: Create a user
+      description: >-
+        Creates a new end-user in the Freshchat system.
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+      responses:
+        '200':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /users/{user_id}:
+    get:
+      operationId: getUser
+      summary: View a user
+      description: >-
+        Retrieves the profile and properties of a specific user.
+      tags:
+        - Users
+      parameters:
+        - $ref: '#/components/parameters/UserIdParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateUser
+      summary: Update a user
+      description: >-
+        Updates the profile properties of an existing user.
+      tags:
+        - Users
+      parameters:
+        - $ref: '#/components/parameters/UserIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+      responses:
+        '200':
+          description: User updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /channels:
+    get:
+      operationId: listChannels
+      summary: List all channels
+      description: >-
+        Retrieves a list of all messaging channels configured in the
+        Freshchat account.
+      tags:
+        - Channels
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  channels:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Channel'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /channels/{channel_id}:
+    get:
+      operationId: getChannel
+      summary: View a channel
+      description: >-
+        Retrieves the details of a specific messaging channel.
+      tags:
+        - Channels
+      parameters:
+        - name: channel_id
+          in: path
+          required: true
+          description: The ID of the channel.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Channel'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /groups:
+    get:
+      operationId: listGroups
+      summary: List all groups
+      description: >-
+        Retrieves a list of all agent groups configured for conversation
+        routing.
+      tags:
+        - Groups
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  groups:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Group'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /groups/{group_id}:
+    get:
+      operationId: getGroup
+      summary: View a group
+      description: >-
+        Retrieves the details of a specific agent group.
+      tags:
+        - Groups
+      parameters:
+        - name: group_id
+          in: path
+          required: true
+          description: The ID of the group.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: >-
+        Bearer token authentication. Obtain the API token from the
+        Freshchat admin settings panel.
+  parameters:
+    PageParam:
+      name: page
+      in: query
+      description: Page number for pagination.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    ItemsPerPageParam:
+      name: items_per_page
+      in: query
+      description: Number of items per page.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 50
+        default: 20
+    ConversationIdParam:
+      name: conversation_id
+      in: path
+      required: true
+      description: The ID of the conversation.
+      schema:
+        type: string
+    AgentIdParam:
+      name: agent_id
+      in: path
+      required: true
+      description: The ID of the agent.
+      schema:
+        type: string
+    UserIdParam:
+      name: user_id
+      in: path
+      required: true
+      description: The ID of the user.
+      schema:
+        type: string
+  responses:
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Conversation:
+      type: object
+      properties:
+        conversation_id:
+          type: string
+          description: Unique ID of the conversation.
+        app_id:
+          type: string
+          description: ID of the Freshchat application.
+        channel_id:
+          type: string
+          description: ID of the channel.
+        status:
+          type: string
+          description: >-
+            Status of the conversation (new, assigned, resolved, reopened).
+          enum:
+            - new
+            - assigned
+            - resolved
+            - reopened
+        assigned_agent_id:
+          type: string
+          description: ID of the assigned agent.
+        assigned_group_id:
+          type: string
+          description: ID of the assigned group.
+        users:
+          type: array
+          description: Users involved in the conversation.
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: User ID.
+        created_time:
+          type: string
+          format: date-time
+          description: Timestamp when the conversation was created.
+    ConversationCreate:
+      type: object
+      required:
+        - app_id
+        - channel_id
+        - messages
+      properties:
+        app_id:
+          type: string
+          description: ID of the Freshchat application.
+        channel_id:
+          type: string
+          description: ID of the channel.
+        users:
+          type: array
+          description: Users to involve in the conversation.
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: User ID.
+        messages:
+          type: array
+          description: Initial messages for the conversation.
+          items:
+            $ref: '#/components/schemas/MessageCreate'
+    ConversationUpdate:
+      type: object
+      properties:
+        status:
+          type: string
+          description: New status for the conversation.
+          enum:
+            - new
+            - assigned
+            - resolved
+            - reopened
+        assigned_agent_id:
+          type: string
+          description: ID of the agent to assign.
+        assigned_group_id:
+          type: string
+          description: ID of the group to assign.
+    Message:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique ID of the message.
+        message_type:
+          type: string
+          description: >-
+            Type of message (normal, private, system).
+          enum:
+            - normal
+            - private
+            - system
+        actor_type:
+          type: string
+          description: >-
+            Type of actor who sent the message (user, agent, system).
+          enum:
+            - user
+            - agent
+            - system
+        actor_id:
+          type: string
+          description: ID of the actor.
+        message_parts:
+          type: array
+          description: Parts that compose the message content.
+          items:
+            type: object
+            properties:
+              text:
+                type: object
+                properties:
+                  content:
+                    type: string
+                    description: Text content of the message part.
+              image:
+                type: object
+                properties:
+                  url:
+                    type: string
+                    format: uri
+                    description: URL of the image.
+        reply_parts:
+          type: array
+          description: >-
+            Response enablers for agent or bot messages allowing quick replies.
+          items:
+            type: object
+        created_time:
+          type: string
+          format: date-time
+          description: Timestamp when the message was created.
+    MessageCreate:
+      type: object
+      required:
+        - message_parts
+        - actor_type
+        - actor_id
+      properties:
+        message_type:
+          type: string
+          description: Type of message.
+          enum:
+            - normal
+            - private
+          default: normal
+        actor_type:
+          type: string
+          description: Type of actor sending the message.
+          enum:
+            - user
+            - agent
+        actor_id:
+          type: string
+          description: ID of the actor sending the message.
+        message_parts:
+          type: array
+          description: Parts composing the message content.
+          items:
+            type: object
+            properties:
+              text:
+                type: object
+                properties:
+                  content:
+                    type: string
+                    description: Text content.
+    Agent:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique ID of the agent.
+        email:
+          type: string
+          format: email
+          description: Email address.
+        first_name:
+          type: string
+          description: First name.
+        last_name:
+          type: string
+          description: Last name.
+        avatar:
+          type: object
+          description: Avatar image details.
+          properties:
+            url:
+              type: string
+              format: uri
+              description: URL of the avatar image.
+        biography:
+          type: string
+          description: Agent biography.
+        is_deactivated:
+          type: boolean
+          description: Whether the agent is deactivated.
+        groups:
+          type: array
+          description: Groups the agent belongs to.
+          items:
+            type: string
+        availability:
+          type: string
+          description: Current availability status.
+          enum:
+            - online
+            - offline
+        created_time:
+          type: string
+          format: date-time
+          description: Timestamp when the agent was created.
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique ID of the user.
+        email:
+          type: string
+          format: email
+          description: Email address.
+        first_name:
+          type: string
+          description: First name.
+        last_name:
+          type: string
+          description: Last name.
+        phone:
+          type: string
+          description: Phone number.
+        avatar:
+          type: object
+          description: Avatar image details.
+          properties:
+            url:
+              type: string
+              format: uri
+              description: URL of the avatar image.
+        properties:
+          type: array
+          description: Custom user properties.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Property name.
+              value:
+                type: string
+                description: Property value.
+        created_time:
+          type: string
+          format: date-time
+          description: Timestamp when the user was created.
+    UserCreate:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: Email address.
+        first_name:
+          type: string
+          description: First name.
+        last_name:
+          type: string
+          description: Last name.
+        phone:
+          type: string
+          description: Phone number.
+        properties:
+          type: array
+          description: Custom user properties.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Property name.
+              value:
+                type: string
+                description: Property value.
+    Channel:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique ID of the channel.
+        name:
+          type: string
+          description: Name of the channel.
+        icon:
+          type: object
+          description: Channel icon details.
+          properties:
+            url:
+              type: string
+              format: uri
+              description: URL of the icon image.
+        enabled:
+          type: boolean
+          description: Whether the channel is enabled.
+        public:
+          type: boolean
+          description: Whether the channel is public.
+        welcome_message:
+          type: object
+          description: Welcome message configuration.
+          properties:
+            message_parts:
+              type: array
+              items:
+                type: object
+                properties:
+                  text:
+                    type: object
+                    properties:
+                      content:
+                        type: string
+                        description: Welcome message text.
+        updated_time:
+          type: string
+          format: date-time
+          description: Timestamp when the channel was last updated.
+    Group:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique ID of the group.
+        name:
+          type: string
+          description: Name of the group.
+        description:
+          type: string
+          description: Description of the group.
+        routing_type:
+          type: string
+          description: Conversation routing type for the group.
+        agents:
+          type: array
+          description: IDs of agents in the group.
+          items:
+            type: string
+        created_time:
+          type: string
+          format: date-time
+          description: Timestamp when the group was created.
+    PaginationLinks:
+      type: object
+      properties:
+        next_page:
+          type: string
+          format: uri
+          description: URL for the next page of results.
+        prev_page:
+          type: string
+          format: uri
+          description: URL for the previous page of results.
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Human-readable error message.

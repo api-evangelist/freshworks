@@ -1,0 +1,1012 @@
+openapi: 3.1.0
+info:
+  title: Freshworks Freshteam API
+  description: >-
+    The Freshteam API provides programmatic access to HR and recruiting
+    functionality within the Freshteam platform. It supports operations for
+    managing employees, job postings, candidates, branches, departments, and
+    other HR resources. The API uses OAuth 2.0 authentication and enables
+    developers to automate HR workflows, integrate employee data with other
+    business systems, and build custom applications on top of Freshteam's
+    applicant tracking and HR management capabilities.
+  version: '1.0'
+  contact:
+    name: Freshworks Support
+    url: https://support.freshteam.com/
+  termsOfService: https://www.freshworks.com/terms/
+externalDocs:
+  description: Freshteam API Documentation
+  url: https://developers.freshteam.com/api/
+servers:
+  - url: https://{domain}.freshteam.com/api
+    description: Freshteam Production Server
+    variables:
+      domain:
+        default: yourdomain
+        description: Your Freshteam subdomain
+tags:
+  - name: Employees
+    description: >-
+      Manage employee records including personal information, job details,
+      and employment history.
+  - name: Job Postings
+    description: >-
+      Manage job postings and their associated applicant fields.
+  - name: Applicants
+    description: >-
+      Manage job applicants and their application details.
+  - name: Branches
+    description: >-
+      Manage organizational branch or office locations.
+  - name: Departments
+    description: >-
+      Manage organizational departments.
+  - name: Sub-Departments
+    description: >-
+      Manage sub-departments within departments.
+  - name: Levels
+    description: >-
+      Manage employee levels and designations.
+  - name: Time Off
+    description: >-
+      Manage time-off types and employee leave requests.
+  - name: Roles
+    description: >-
+      Manage user roles and permissions.
+security:
+  - bearerAuth: []
+paths:
+  /employees:
+    get:
+      operationId: listEmployees
+      summary: List all employees
+      description: >-
+        Retrieves a paginated list of all employees in the Freshteam
+        system. Supports filtering by status and sort options.
+      tags:
+        - Employees
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - name: sort
+          in: query
+          description: Field to sort by.
+          schema:
+            type: string
+        - name: sort_type
+          in: query
+          description: Sort direction (asc or desc).
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        - name: status
+          in: query
+          description: >-
+            Filter by employment status.
+          schema:
+            type: string
+            enum:
+              - active
+              - inactive
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Employee'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /employees/{employee_id}:
+    get:
+      operationId: getEmployee
+      summary: View an employee
+      description: >-
+        Retrieves the full details of a specific employee by their ID.
+      tags:
+        - Employees
+      parameters:
+        - $ref: '#/components/parameters/EmployeeIdParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateEmployee
+      summary: Update an employee
+      description: >-
+        Updates the properties of an existing employee record.
+      tags:
+        - Employees
+      parameters:
+        - $ref: '#/components/parameters/EmployeeIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmployeeUpdate'
+      responses:
+        '200':
+          description: Employee updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /employee_fields:
+    get:
+      operationId: listEmployeeFields
+      summary: List all employee fields
+      description: >-
+        Retrieves the list of all employee form fields, including
+        custom fields and their configurations.
+      tags:
+        - Employees
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Field'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /job_postings:
+    get:
+      operationId: listJobPostings
+      summary: List all job postings
+      description: >-
+        Retrieves a list of all job postings in the Freshteam system.
+      tags:
+        - Job Postings
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - name: status
+          in: query
+          description: >-
+            Filter by posting status (draft, published, on_hold, closed).
+          schema:
+            type: string
+            enum:
+              - draft
+              - published
+              - on_hold
+              - closed
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/JobPosting'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /job_postings/{job_posting_id}:
+    get:
+      operationId: getJobPosting
+      summary: View a job posting
+      description: >-
+        Retrieves the details of a specific job posting by its ID.
+      tags:
+        - Job Postings
+      parameters:
+        - $ref: '#/components/parameters/JobPostingIdParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobPosting'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /job_postings/{job_posting_id}/applicant_fields:
+    get:
+      operationId: listApplicantFields
+      summary: List applicant fields for a job posting
+      description: >-
+        Retrieves the list of applicant form fields for a specific job
+        posting, including required and custom fields.
+      tags:
+        - Job Postings
+      parameters:
+        - $ref: '#/components/parameters/JobPostingIdParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Field'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /job_postings/{job_posting_id}/applicants:
+    get:
+      operationId: listApplicants
+      summary: List applicants for a job posting
+      description: >-
+        Retrieves a paginated list of all applicants for a specific
+        job posting.
+      tags:
+        - Applicants
+      parameters:
+        - $ref: '#/components/parameters/JobPostingIdParam'
+        - $ref: '#/components/parameters/PageParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Applicant'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    post:
+      operationId: createApplicant
+      summary: Create an applicant for a job posting
+      description: >-
+        Creates a new applicant for a specific job posting. This is
+        used to programmatically submit job applications.
+      tags:
+        - Applicants
+      parameters:
+        - $ref: '#/components/parameters/JobPostingIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApplicantCreate'
+      responses:
+        '201':
+          description: Applicant created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Applicant'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /branches:
+    get:
+      operationId: listBranches
+      summary: List all branches
+      description: >-
+        Retrieves a list of all organizational branches or office locations.
+      tags:
+        - Branches
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Branch'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /departments:
+    get:
+      operationId: listDepartments
+      summary: List all departments
+      description: >-
+        Retrieves a list of all organizational departments.
+      tags:
+        - Departments
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Department'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /sub_departments:
+    get:
+      operationId: listSubDepartments
+      summary: List all sub-departments
+      description: >-
+        Retrieves a list of all sub-departments within the organization.
+      tags:
+        - Sub-Departments
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SubDepartment'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /levels:
+    get:
+      operationId: listLevels
+      summary: List all levels
+      description: >-
+        Retrieves a list of all employee levels and designations.
+      tags:
+        - Levels
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Level'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /time_off_types:
+    get:
+      operationId: listTimeOffTypes
+      summary: List all time-off types
+      description: >-
+        Retrieves a list of all time-off types configured in Freshteam
+        such as vacation, sick leave, and personal days.
+      tags:
+        - Time Off
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TimeOffType'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /time_offs:
+    get:
+      operationId: listTimeOffRequests
+      summary: List all time-off requests
+      description: >-
+        Retrieves a paginated list of all employee time-off requests.
+      tags:
+        - Time Off
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - name: user_id
+          in: query
+          description: Filter by employee user ID.
+          schema:
+            type: integer
+        - name: status
+          in: query
+          description: Filter by request status.
+          schema:
+            type: string
+            enum:
+              - pending
+              - approved
+              - declined
+              - cancelled
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TimeOffRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createTimeOffRequest
+      summary: Create a time-off request
+      description: >-
+        Creates a new time-off request for an employee.
+      tags:
+        - Time Off
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TimeOffRequestCreate'
+      responses:
+        '201':
+          description: Time-off request created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeOffRequest'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /roles:
+    get:
+      operationId: listRoles
+      summary: List all roles
+      description: >-
+        Retrieves a list of all user roles and their permissions.
+      tags:
+        - Roles
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Role'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: >-
+        OAuth 2.0 Bearer token. Obtain access tokens via the Freshteam
+        OAuth authorization flow.
+  parameters:
+    PageParam:
+      name: page
+      in: query
+      description: Page number for pagination.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    EmployeeIdParam:
+      name: employee_id
+      in: path
+      required: true
+      description: The ID of the employee.
+      schema:
+        type: integer
+    JobPostingIdParam:
+      name: job_posting_id
+      in: path
+      required: true
+      description: The ID of the job posting.
+      schema:
+        type: integer
+  responses:
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Employee:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the employee.
+        first_name:
+          type: string
+          description: First name.
+        last_name:
+          type: string
+          description: Last name.
+        official_email:
+          type: string
+          format: email
+          description: Official work email address.
+        personal_email:
+          type: string
+          format: email
+          description: Personal email address.
+        employee_id:
+          type: string
+          description: Employee ID number.
+        status:
+          type: string
+          description: Employment status (active, inactive).
+        designation:
+          type: string
+          description: Job designation or title.
+        phone_number:
+          type: string
+          description: Phone number.
+        date_of_birth:
+          type: string
+          format: date
+          description: Date of birth.
+        joining_date:
+          type: string
+          format: date
+          description: Date of joining the organization.
+        branch_id:
+          type: integer
+          description: ID of the branch.
+        department_id:
+          type: integer
+          description: ID of the department.
+        sub_department_id:
+          type: integer
+          description: ID of the sub-department.
+        reporting_to_id:
+          type: integer
+          description: ID of the reporting manager.
+        level_id:
+          type: integer
+          description: ID of the employee level.
+        role_id:
+          type: integer
+          description: ID of the assigned role.
+        gender:
+          type: string
+          description: Gender.
+        address:
+          type: object
+          description: Address information.
+          properties:
+            street:
+              type: string
+              description: Street address.
+            city:
+              type: string
+              description: City.
+            state:
+              type: string
+              description: State or province.
+            country:
+              type: string
+              description: Country.
+            zip_code:
+              type: string
+              description: ZIP or postal code.
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: Custom field values.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when last updated.
+    EmployeeUpdate:
+      type: object
+      properties:
+        first_name:
+          type: string
+          description: First name.
+        last_name:
+          type: string
+          description: Last name.
+        official_email:
+          type: string
+          format: email
+          description: Official work email.
+        designation:
+          type: string
+          description: Job designation.
+        phone_number:
+          type: string
+          description: Phone number.
+        branch_id:
+          type: integer
+          description: Branch ID.
+        department_id:
+          type: integer
+          description: Department ID.
+        sub_department_id:
+          type: integer
+          description: Sub-department ID.
+        reporting_to_id:
+          type: integer
+          description: Reporting manager ID.
+        level_id:
+          type: integer
+          description: Level ID.
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: Custom field values.
+    JobPosting:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the job posting.
+        title:
+          type: string
+          description: Title of the job posting.
+        description:
+          type: string
+          description: Full job description.
+        status:
+          type: string
+          description: Status of the posting.
+          enum:
+            - draft
+            - published
+            - on_hold
+            - closed
+        branch_id:
+          type: integer
+          description: ID of the branch.
+        department_id:
+          type: integer
+          description: ID of the department.
+        type:
+          type: string
+          description: Employment type (full_time, part_time, contract).
+        experience:
+          type: string
+          description: Required experience level.
+        remote:
+          type: boolean
+          description: Whether the position is remote.
+        salary:
+          type: object
+          description: Salary range information.
+          properties:
+            min:
+              type: number
+              description: Minimum salary.
+            max:
+              type: number
+              description: Maximum salary.
+            currency:
+              type: string
+              description: Currency code.
+        closing_date:
+          type: string
+          format: date
+          description: Closing date for applications.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when last updated.
+    Applicant:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the applicant.
+        first_name:
+          type: string
+          description: First name.
+        last_name:
+          type: string
+          description: Last name.
+        email:
+          type: string
+          format: email
+          description: Email address.
+        phone_number:
+          type: string
+          description: Phone number.
+        job_posting_id:
+          type: integer
+          description: ID of the associated job posting.
+        status:
+          type: string
+          description: Application status.
+        source:
+          type: string
+          description: Application source.
+        resume_url:
+          type: string
+          format: uri
+          description: URL to the applicant resume.
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: Custom field values.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the application was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when last updated.
+    ApplicantCreate:
+      type: object
+      required:
+        - first_name
+        - last_name
+        - email
+      properties:
+        first_name:
+          type: string
+          description: First name.
+        last_name:
+          type: string
+          description: Last name.
+        email:
+          type: string
+          format: email
+          description: Email address.
+        phone_number:
+          type: string
+          description: Phone number.
+        source:
+          type: string
+          description: Application source.
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: Custom field values.
+    Branch:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the branch.
+        name:
+          type: string
+          description: Name of the branch.
+        city:
+          type: string
+          description: City.
+        state:
+          type: string
+          description: State or province.
+        country:
+          type: string
+          description: Country.
+        zip:
+          type: string
+          description: ZIP or postal code.
+        time_zone:
+          type: string
+          description: Time zone.
+        currency:
+          type: string
+          description: Local currency code.
+        main_office:
+          type: boolean
+          description: Whether this is the main office.
+        date_format:
+          type: string
+          description: Date format used at this branch.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when last updated.
+    Department:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the department.
+        name:
+          type: string
+          description: Name of the department.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when last updated.
+    SubDepartment:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the sub-department.
+        name:
+          type: string
+          description: Name of the sub-department.
+        department_id:
+          type: integer
+          description: ID of the parent department.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when last updated.
+    Level:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the level.
+        name:
+          type: string
+          description: Name of the level.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when last updated.
+    TimeOffType:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the time-off type.
+        name:
+          type: string
+          description: Name of the time-off type (e.g., Vacation, Sick Leave).
+        description:
+          type: string
+          description: Description.
+        is_paid:
+          type: boolean
+          description: Whether the time-off type is paid leave.
+    TimeOffRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the time-off request.
+        user_id:
+          type: integer
+          description: ID of the employee.
+        leave_type_id:
+          type: integer
+          description: ID of the time-off type.
+        start_date:
+          type: string
+          format: date
+          description: Start date of the leave.
+        end_date:
+          type: string
+          format: date
+          description: End date of the leave.
+        status:
+          type: string
+          description: Status of the request.
+          enum:
+            - pending
+            - approved
+            - declined
+            - cancelled
+        comments:
+          type: string
+          description: Comments from the requester.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when last updated.
+    TimeOffRequestCreate:
+      type: object
+      required:
+        - leave_type_id
+        - start_date
+        - end_date
+      properties:
+        leave_type_id:
+          type: integer
+          description: ID of the time-off type.
+        start_date:
+          type: string
+          format: date
+          description: Start date.
+        end_date:
+          type: string
+          format: date
+          description: End date.
+        comments:
+          type: string
+          description: Comments or reason for the request.
+        notify:
+          type: array
+          items:
+            type: integer
+          description: User IDs to notify about the request.
+    Role:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the role.
+        name:
+          type: string
+          description: Name of the role.
+        description:
+          type: string
+          description: Description.
+        default:
+          type: boolean
+          description: Whether this is a default system role.
+    Field:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the field.
+        name:
+          type: string
+          description: Internal name of the field.
+        label:
+          type: string
+          description: Display label.
+        field_type:
+          type: string
+          description: Type of field (text, dropdown, checkbox, etc).
+        required:
+          type: boolean
+          description: Whether the field is required.
+        position:
+          type: integer
+          description: Display position order.
+        choices:
+          type: array
+          description: Available choices for dropdown fields.
+          items:
+            type: string
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Human-readable error message.

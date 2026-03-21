@@ -1,0 +1,278 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "freshworks": "https://freshworks.com/schemas/",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+
+    "Ticket": {
+      "@id": "freshworks:Ticket",
+      "@context": {
+        "subject": "schema:name",
+        "description": "schema:description",
+        "status": "freshworks:ticketStatus",
+        "priority": "freshworks:ticketPriority",
+        "type": "freshworks:ticketType",
+        "source": "freshworks:ticketSource",
+        "requester": {
+          "@id": "freshworks:requester",
+          "@type": "@id"
+        },
+        "responder": {
+          "@id": "freshworks:responder",
+          "@type": "@id"
+        },
+        "group": {
+          "@id": "freshworks:assignedGroup",
+          "@type": "@id"
+        },
+        "tags": "schema:keywords",
+        "dueBy": {
+          "@id": "freshworks:dueBy",
+          "@type": "xsd:dateTime"
+        },
+        "createdAt": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        },
+        "updatedAt": {
+          "@id": "dcterms:modified",
+          "@type": "xsd:dateTime"
+        }
+      }
+    },
+
+    "Contact": {
+      "@id": "freshworks:Contact",
+      "@context": {
+        "name": "schema:name",
+        "firstName": "schema:givenName",
+        "lastName": "schema:familyName",
+        "email": "schema:email",
+        "phone": "schema:telephone",
+        "mobile": "freshworks:mobilePhone",
+        "address": "schema:address",
+        "jobTitle": "schema:jobTitle",
+        "company": {
+          "@id": "schema:worksFor",
+          "@type": "@id"
+        },
+        "language": "schema:knowsLanguage",
+        "timeZone": "freshworks:timeZone",
+        "tags": "schema:keywords",
+        "createdAt": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        },
+        "updatedAt": {
+          "@id": "dcterms:modified",
+          "@type": "xsd:dateTime"
+        }
+      }
+    },
+
+    "Company": {
+      "@id": "freshworks:Company",
+      "@context": {
+        "name": "schema:name",
+        "description": "schema:description",
+        "industry": "schema:industry",
+        "website": {
+          "@id": "schema:url",
+          "@type": "@id"
+        },
+        "phone": "schema:telephone",
+        "address": "schema:address",
+        "numberOfEmployees": "schema:numberOfEmployees",
+        "annualRevenue": "freshworks:annualRevenue",
+        "createdAt": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        },
+        "updatedAt": {
+          "@id": "dcterms:modified",
+          "@type": "xsd:dateTime"
+        }
+      }
+    },
+
+    "Agent": {
+      "@id": "freshworks:Agent",
+      "@context": {
+        "name": "schema:name",
+        "email": "schema:email",
+        "phone": "schema:telephone",
+        "jobTitle": "schema:jobTitle",
+        "available": "freshworks:isAvailable",
+        "groups": {
+          "@id": "schema:memberOf",
+          "@container": "@set"
+        },
+        "roles": {
+          "@id": "schema:hasOccupation",
+          "@container": "@set"
+        },
+        "createdAt": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        },
+        "updatedAt": {
+          "@id": "dcterms:modified",
+          "@type": "xsd:dateTime"
+        }
+      }
+    },
+
+    "Conversation": {
+      "@id": "freshworks:Conversation",
+      "@context": {
+        "status": "freshworks:conversationStatus",
+        "assignedAgent": {
+          "@id": "freshworks:assignedAgent",
+          "@type": "@id"
+        },
+        "assignedGroup": {
+          "@id": "freshworks:assignedGroup",
+          "@type": "@id"
+        },
+        "channel": {
+          "@id": "freshworks:channel",
+          "@type": "@id"
+        },
+        "createdAt": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        }
+      }
+    },
+
+    "Deal": {
+      "@id": "freshworks:Deal",
+      "@context": {
+        "name": "schema:name",
+        "amount": "schema:price",
+        "currency": "schema:priceCurrency",
+        "stage": "freshworks:dealStage",
+        "probability": "freshworks:probability",
+        "expectedClose": {
+          "@id": "freshworks:expectedCloseDate",
+          "@type": "xsd:date"
+        },
+        "account": {
+          "@id": "freshworks:salesAccount",
+          "@type": "@id"
+        },
+        "owner": {
+          "@id": "freshworks:owner",
+          "@type": "@id"
+        },
+        "createdAt": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        },
+        "updatedAt": {
+          "@id": "dcterms:modified",
+          "@type": "xsd:dateTime"
+        }
+      }
+    },
+
+    "Employee": {
+      "@id": "freshworks:Employee",
+      "@context": {
+        "firstName": "schema:givenName",
+        "lastName": "schema:familyName",
+        "email": "schema:email",
+        "phone": "schema:telephone",
+        "designation": "schema:jobTitle",
+        "department": {
+          "@id": "schema:department",
+          "@type": "@id"
+        },
+        "branch": {
+          "@id": "freshworks:branch",
+          "@type": "@id"
+        },
+        "reportsTo": {
+          "@id": "freshworks:reportsTo",
+          "@type": "@id"
+        },
+        "joiningDate": {
+          "@id": "freshworks:joiningDate",
+          "@type": "xsd:date"
+        },
+        "dateOfBirth": {
+          "@id": "schema:birthDate",
+          "@type": "xsd:date"
+        },
+        "createdAt": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        },
+        "updatedAt": {
+          "@id": "dcterms:modified",
+          "@type": "xsd:dateTime"
+        }
+      }
+    },
+
+    "Asset": {
+      "@id": "freshworks:Asset",
+      "@context": {
+        "name": "schema:name",
+        "description": "schema:description",
+        "assetTag": "freshworks:assetTag",
+        "assetType": {
+          "@id": "freshworks:assetType",
+          "@type": "@id"
+        },
+        "user": {
+          "@id": "freshworks:assignedUser",
+          "@type": "@id"
+        },
+        "location": {
+          "@id": "schema:location",
+          "@type": "@id"
+        },
+        "department": {
+          "@id": "schema:department",
+          "@type": "@id"
+        },
+        "createdAt": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        },
+        "updatedAt": {
+          "@id": "dcterms:modified",
+          "@type": "xsd:dateTime"
+        }
+      }
+    },
+
+    "Call": {
+      "@id": "freshworks:Call",
+      "@context": {
+        "direction": "freshworks:callDirection",
+        "status": "freshworks:callStatus",
+        "callerNumber": "schema:telephone",
+        "duration": {
+          "@id": "schema:duration",
+          "@type": "xsd:integer"
+        },
+        "recording": {
+          "@id": "freshworks:recordingUrl",
+          "@type": "@id"
+        },
+        "agent": {
+          "@id": "freshworks:agent",
+          "@type": "@id"
+        },
+        "createdAt": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        }
+      }
+    }
+  }
+}
