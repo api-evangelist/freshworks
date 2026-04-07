@@ -25,46 +25,46 @@ servers:
         default: yourdomain
         description: Your Freshservice subdomain
 tags:
+  - name: Agents
+    description: >-
+      Manage service desk agents and their configurations.
+  - name: Assets
+    description: >-
+      Manage IT assets including hardware, software, and configurations.
+  - name: Changes
+    description: >-
+      Manage change requests for controlled modifications to IT infrastructure.
+  - name: Conversations
+    description: >-
+      Manage ticket conversations including replies and notes.
+  - name: Departments
+    description: >-
+      Manage organizational department records.
+  - name: Locations
+    description: >-
+      Manage office and facility locations.
+  - name: Problems
+    description: >-
+      Manage problem records for root cause analysis of recurring incidents.
+  - name: Products
+    description: >-
+      Manage product records tracked in the service desk.
+  - name: Releases
+    description: >-
+      Manage release records for deploying changes to production.
+  - name: Requesters
+    description: >-
+      Manage requesters who submit tickets to the service desk.
+  - name: Service Catalog
+    description: >-
+      Manage service catalog items available for request.
   - name: Tickets
     description: >-
       Manage IT service desk tickets including incidents, service requests,
       and their lifecycle.
-  - name: Conversations
-    description: >-
-      Manage ticket conversations including replies and notes.
-  - name: Problems
-    description: >-
-      Manage problem records for root cause analysis of recurring incidents.
-  - name: Changes
-    description: >-
-      Manage change requests for controlled modifications to IT infrastructure.
-  - name: Releases
-    description: >-
-      Manage release records for deploying changes to production.
-  - name: Assets
-    description: >-
-      Manage IT assets including hardware, software, and configurations.
-  - name: Requesters
-    description: >-
-      Manage requesters who submit tickets to the service desk.
-  - name: Agents
-    description: >-
-      Manage service desk agents and their configurations.
   - name: Vendors
     description: >-
       Manage vendor records for IT procurement and contracts.
-  - name: Products
-    description: >-
-      Manage product records tracked in the service desk.
-  - name: Locations
-    description: >-
-      Manage office and facility locations.
-  - name: Departments
-    description: >-
-      Manage organizational department records.
-  - name: Service Catalog
-    description: >-
-      Manage service catalog items available for request.
 security:
   - basicAuth: []
 paths:

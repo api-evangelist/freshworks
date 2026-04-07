@@ -25,13 +25,6 @@ servers:
         default: yourdomain
         description: Your Freshteam subdomain
 tags:
-  - name: Employees
-    description: >-
-      Manage employee records including personal information, job details,
-      and employment history.
-  - name: Job Postings
-    description: >-
-      Manage job postings and their associated applicant fields.
   - name: Applicants
     description: >-
       Manage job applicants and their application details.
@@ -41,18 +34,25 @@ tags:
   - name: Departments
     description: >-
       Manage organizational departments.
-  - name: Sub-Departments
+  - name: Employees
     description: >-
-      Manage sub-departments within departments.
+      Manage employee records including personal information, job details,
+      and employment history.
+  - name: Job Postings
+    description: >-
+      Manage job postings and their associated applicant fields.
   - name: Levels
     description: >-
       Manage employee levels and designations.
-  - name: Time Off
-    description: >-
-      Manage time-off types and employee leave requests.
   - name: Roles
     description: >-
       Manage user roles and permissions.
+  - name: Sub-Departments
+    description: >-
+      Manage sub-departments within departments.
+  - name: Time Off
+    description: >-
+      Manage time-off types and employee leave requests.
 security:
   - bearerAuth: []
 paths:

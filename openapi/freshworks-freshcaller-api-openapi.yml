@@ -25,20 +25,20 @@ servers:
         default: yourdomain
         description: Your Freshcaller subdomain
 tags:
+  - name: Call Metrics
+    description: >-
+      Access call center metrics and analytics data.
   - name: Calls
     description: >-
       Access call records, call details, and call metrics from the
       Freshcaller system.
+  - name: Teams
+    description: >-
+      Manage agent teams for call routing and organization.
   - name: Users
     description: >-
       Manage agent users in the Freshcaller system including creation,
       updates, and status management.
-  - name: Teams
-    description: >-
-      Manage agent teams for call routing and organization.
-  - name: Call Metrics
-    description: >-
-      Access call center metrics and analytics data.
 security:
   - apiKeyAuth: []
 paths:

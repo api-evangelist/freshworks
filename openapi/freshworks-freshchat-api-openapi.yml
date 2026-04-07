@@ -31,24 +31,24 @@ servers:
         default: yourdomain
         description: Your Freshworks bundle alias
 tags:
-  - name: Conversations
-    description: >-
-      Manage customer conversations and their lifecycle.
-  - name: Messages
-    description: >-
-      Send and retrieve messages within conversations.
   - name: Agents
     description: >-
       Manage chat agents and their availability.
-  - name: Users
-    description: >-
-      Manage end-user profiles for chat interactions.
   - name: Channels
     description: >-
       Manage messaging channels and their configurations.
+  - name: Conversations
+    description: >-
+      Manage customer conversations and their lifecycle.
   - name: Groups
     description: >-
       Manage agent groups for conversation routing.
+  - name: Messages
+    description: >-
+      Send and retrieve messages within conversations.
+  - name: Users
+    description: >-
+      Manage end-user profiles for chat interactions.
 security:
   - bearerAuth: []
 paths:

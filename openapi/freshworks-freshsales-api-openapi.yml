@@ -25,30 +25,30 @@ servers:
         default: yourdomain
         description: Your Freshworks bundle alias
 tags:
-  - name: Contacts
-    description: >-
-      Manage customer contacts and their associated information in the CRM.
   - name: Accounts
     description: >-
       Manage company accounts with which you have business relationships.
+  - name: Appointments
+    description: >-
+      Manage scheduled appointments and meetings.
+  - name: Contacts
+    description: >-
+      Manage customer contacts and their associated information in the CRM.
   - name: Deals
     description: >-
       Manage sales deals and their pipeline progression.
   - name: Leads
     description: >-
       Manage sales leads before they are converted to contacts or accounts.
-  - name: Tasks
-    description: >-
-      Manage tasks associated with sales activities.
-  - name: Appointments
-    description: >-
-      Manage scheduled appointments and meetings.
   - name: Notes
     description: >-
       Manage notes attached to CRM records.
   - name: Sales Activities
     description: >-
       Track and manage sales activity records.
+  - name: Tasks
+    description: >-
+      Manage tasks associated with sales activities.
 security:
   - apiKeyAuth: []
 paths:

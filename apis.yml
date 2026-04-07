@@ -1,18 +1,16 @@
 aid: freshworks
-url: 
-  https://raw.githubusercontent.com/api-evangelist/freshworks/refs/heads/main/apis.yml
+url: https://raw.githubusercontent.com/api-evangelist/freshworks/refs/heads/main/apis.yml
 modified: '2026-03-20'
 apis:
   - aid: freshworks:freshdesk-api
     name: Freshworks Freshdesk API
     tags:
+      - Agents
+      - Contacts
       - Customer Support
       - Helpdesk
       - Ticketing
-      - Contacts
-      - Agents
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://domain.freshdesk.com/api/v2
     humanURL: https://developers.freshdesk.com/api/
     properties:
@@ -30,13 +28,12 @@ apis:
   - aid: freshworks:freshservice-api
     name: Freshworks Freshservice API
     tags:
+      - Asset Management
       - IT Service Management
       - ITSM
-      - Ticketing
-      - Asset Management
       - Service Desk
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+      - Ticketing
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://domain.freshservice.com/api/v2
     humanURL: https://api.freshservice.com/
     properties:
@@ -55,13 +52,12 @@ apis:
   - aid: freshworks:freshsales-api
     name: Freshworks Freshsales API
     tags:
-      - CRM
-      - Sales
       - Contacts
+      - CRM
       - Deals
       - Leads
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+      - Sales
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://domain.myfreshworks.com/crm/sales/api
     humanURL: https://developers.freshworks.com/crm/api/
     properties:
@@ -80,13 +76,12 @@ apis:
   - aid: freshworks:freshchat-api
     name: Freshworks Freshchat API
     tags:
-      - Messaging
       - Chat
-      - Customer Engagement
       - Conversations
+      - Customer Engagement
       - Live Chat
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+      - Messaging
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.freshchat.com/v2
     humanURL: https://developers.freshchat.com/api/
     properties:
@@ -105,13 +100,12 @@ apis:
   - aid: freshworks:freshcaller-api
     name: Freshworks Freshcaller API
     tags:
-      - Phone
       - Call Center
-      - Voice
-      - Telephony
       - Contact Center
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+      - Phone
+      - Telephony
+      - Voice
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://domain.freshcaller.com/api/v1
     humanURL: https://developers.freshcaller.com/api/
     properties:
@@ -130,13 +124,12 @@ apis:
   - aid: freshworks:freshteam-api
     name: Freshworks Freshteam API
     tags:
-      - Human Resources
-      - HR
-      - Recruiting
-      - Employees
       - Applicant Tracking
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+      - Employees
+      - HR
+      - Human Resources
+      - Recruiting
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://domain.freshteam.com/api
     humanURL: https://developers.freshworks.com/api-sdk/freshteam/
     properties:
@@ -151,13 +144,12 @@ apis:
   - aid: freshworks:freshmarketer-api
     name: Freshworks Freshmarketer API
     tags:
+      - Analytics
+      - Campaigns
+      - Email Marketing
       - Marketing
       - Marketing Automation
-      - Email Marketing
-      - Campaigns
-      - Analytics
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.example.com
     humanURL: https://developer.freshmarketer.com/
     properties:
@@ -174,13 +166,12 @@ apis:
   - aid: freshworks:freshworks-app-sdk
     name: Freshworks App SDK
     tags:
-      - SDK
       - App Development
       - Extensions
-      - Platform
       - Integrations
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+      - Platform
+      - SDK
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.example.com
     humanURL: https://developers.freshworks.com/docs/
     properties:

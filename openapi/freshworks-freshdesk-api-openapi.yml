@@ -24,44 +24,44 @@ servers:
         default: yourdomain
         description: Your Freshdesk subdomain
 tags:
-  - name: Tickets
+  - name: Agents
     description: >-
-      Manage helpdesk tickets including creation, updates, assignment,
-      and resolution workflows.
-  - name: Conversations
+      Manage helpdesk agents and their properties.
+  - name: Business Hours
     description: >-
-      Manage ticket conversations including replies, notes, and forwards.
+      Manage business hours configurations.
+  - name: Companies
+    description: >-
+      Manage company records associated with contacts.
   - name: Contacts
     description: >-
       Manage customer contacts including creation, updates, merging,
       and deactivation.
-  - name: Companies
+  - name: Conversations
     description: >-
-      Manage company records associated with contacts.
-  - name: Agents
-    description: >-
-      Manage helpdesk agents and their properties.
-  - name: Groups
-    description: >-
-      Manage agent groups for ticket assignment and routing.
-  - name: Roles
-    description: >-
-      Manage agent roles and permissions.
-  - name: Products
-    description: >-
-      Manage products associated with the helpdesk.
+      Manage ticket conversations including replies, notes, and forwards.
   - name: Email Configs
     description: >-
       Manage email configuration settings for the helpdesk.
+  - name: Groups
+    description: >-
+      Manage agent groups for ticket assignment and routing.
+  - name: Products
+    description: >-
+      Manage products associated with the helpdesk.
+  - name: Roles
+    description: >-
+      Manage agent roles and permissions.
   - name: SLA Policies
     description: >-
       Manage SLA policies for ticket response and resolution targets.
-  - name: Business Hours
-    description: >-
-      Manage business hours configurations.
   - name: Surveys
     description: >-
       Manage customer satisfaction surveys.
+  - name: Tickets
+    description: >-
+      Manage helpdesk tickets including creation, updates, assignment,
+      and resolution workflows.
   - name: Time Entries
     description: >-
       Track time spent on tickets.
