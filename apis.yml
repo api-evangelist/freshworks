@@ -1,5 +1,6 @@
 aid: freshworks
-url: https://raw.githubusercontent.com/api-evangelist/freshworks/refs/heads/main/apis.yml
+url: 
+  https://raw.githubusercontent.com/api-evangelist/freshworks/refs/heads/main/apis.yml
 modified: '2026-03-20'
 apis:
   - aid: freshworks:freshdesk-api
@@ -10,7 +11,8 @@ apis:
       - Ticketing
       - Contacts
       - Agents
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: 
+      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://domain.freshdesk.com/api/v2
     humanURL: https://developers.freshdesk.com/api/
     properties:
@@ -33,7 +35,8 @@ apis:
       - Ticketing
       - Asset Management
       - Service Desk
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: 
+      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://domain.freshservice.com/api/v2
     humanURL: https://api.freshservice.com/
     properties:
@@ -57,7 +60,8 @@ apis:
       - Contacts
       - Deals
       - Leads
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: 
+      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://domain.myfreshworks.com/crm/sales/api
     humanURL: https://developers.freshworks.com/crm/api/
     properties:
@@ -81,7 +85,8 @@ apis:
       - Customer Engagement
       - Conversations
       - Live Chat
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: 
+      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.freshchat.com/v2
     humanURL: https://developers.freshchat.com/api/
     properties:
@@ -105,7 +110,8 @@ apis:
       - Voice
       - Telephony
       - Contact Center
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: 
+      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://domain.freshcaller.com/api/v1
     humanURL: https://developers.freshcaller.com/api/
     properties:
@@ -129,7 +135,8 @@ apis:
       - Recruiting
       - Employees
       - Applicant Tracking
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: 
+      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://domain.freshteam.com/api
     humanURL: https://developers.freshworks.com/api-sdk/freshteam/
     properties:
@@ -138,13 +145,9 @@ apis:
       - url: openapi/freshworks-freshteam-api-openapi.yml
         type: OpenAPI
     description: >-
-      The Freshteam API provides programmatic access to HR and recruiting
-      functionality within the Freshteam platform. It supports operations for
-      managing employees, job postings, candidates, branches, departments, and
-      other HR resources. The API is accessible through the Freshworks API SDK
-      for Node.js and enables developers to automate HR workflows, integrate
-      employee data with other business systems, and build custom applications
-      on top of Freshteam's applicant tracking and HR management capabilities.
+      The Freshteam API provides programmatic access to HR and recruiting functionality
+      within the Freshteam platform. It supports operations for managing employees,
+      job postings, candidates, branches, departments, and other HR resources.
   - aid: freshworks:freshmarketer-api
     name: Freshworks Freshmarketer API
     tags:
@@ -153,7 +156,8 @@ apis:
       - Email Marketing
       - Campaigns
       - Analytics
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: 
+      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.example.com
     humanURL: https://developer.freshmarketer.com/
     properties:
@@ -175,20 +179,18 @@ apis:
       - Extensions
       - Platform
       - Integrations
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: 
+      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.example.com
     humanURL: https://developers.freshworks.com/docs/
     properties:
       - url: https://developers.freshworks.com/docs/
         type: Documentation
     description: >-
-      The Freshworks App SDK enables developers to build custom applications
-      and extensions that run within the Freshworks product ecosystem. It
-      provides tools for creating apps for Freshdesk, Freshservice, Freshsales,
-      and other Freshworks products using a unified development framework. The
-      SDK supports OAuth authentication, serverless app hosting, and access to
-      product-specific events and data interfaces, allowing developers to extend
-      Freshworks functionality and publish apps to the Freshworks Marketplace.
+      The Freshworks App SDK enables developers to build custom applications and extensions
+      that run within the Freshworks product ecosystem. It provides tools for creating
+      apps for Freshdesk, Freshservice, Freshsales, and other Freshworks products
+      using a unified development framework.
 common:
   - type: AsyncAPI
     url: asyncapi/freshworks-webhooks-asyncapi.yml
@@ -198,3 +200,7 @@ common:
     url: json-schema/freshworks-contact-schema.json
   - type: JSON-LD
     url: json-ld/freshworks-context.jsonld
+description: >-
+  Freshworks is a software company that develops cloud-based business software including
+  customer support, IT service management, sales force automation, marketing automation,
+  and HR applications.
