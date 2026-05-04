@@ -1,0 +1,83 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Freshworks
+providerId: freshworks
+created: '2026-05-04'
+modified: '2026-05-04'
+reconciled: true
+tags:
+  - CRM
+  - Customer Support
+  - ITSM
+description: Freshdesk per-agent pricing (representative; CRM, IT, etc. have parallel tiers).
+sources:
+  - https://www.freshworks.com/freshdesk/pricing/
+plans:
+  - id: freshdesk-growth
+    name: Freshdesk Growth
+    type: paid
+    description: $19/agent/month.
+    entries:
+      - label: Per agent
+        name: seat
+        type: subscription
+        metric: user
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '19.00'
+        userMultiplied: true
+    elements:
+      - name: Ticketing + customer portal
+      - name: Reports
+      - name: Shared inbox
+      - name: Threads and tasks
+      - name: Multilingual help desk
+      - name: 5,000 collaborators included
+  - id: freshdesk-pro
+    name: Freshdesk Pro
+    type: paid
+    description: $55/agent/month.
+    entries:
+      - label: Per agent
+        name: seat
+        type: subscription
+        metric: user
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '55.00'
+        userMultiplied: true
+    elements:
+      - name: Custom support portals
+      - name: Custom objects
+      - name: Advanced ticketing
+      - name: Custom reporting
+      - name: Routing mechanisms
+      - name: Freddy AI Agent (500 sessions)
+      - name: Freddy AI Copilot
+      - name: Freddy AI Insights
+  - id: freshdesk-enterprise
+    name: Freshdesk Enterprise
+    type: enterprise
+    description: $89/agent/month.
+    entries:
+      - label: Per agent
+        name: seat
+        type: subscription
+        metric: user
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '89.00'
+        userMultiplied: true
+    elements:
+      - name: Audit logs
+      - name: Approval workflows
+      - name: Skills-based assignments
+      - name: Additional security
+      - name: Freddy AI Agent (500 sessions)

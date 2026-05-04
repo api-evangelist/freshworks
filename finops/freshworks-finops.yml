@@ -1,0 +1,58 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Freshworks
+providerId: freshworks
+created: '2026-05-04'
+modified: '2026-05-04'
+reconciled: true
+tags:
+  - FinOps
+  - FOCUS
+  - Customer Support / CRM
+description: FOCUS-aligned FinOps for Freshworks.
+sources:
+  - https://www.freshworks.com/freshdesk/pricing/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Freshworks
+serviceCategory: Customer Support / CRM
+billingModel:
+  pricingCategory: Per-Agent Subscription
+  billingFrequency: Monthly
+  billingCurrency: USD
+focusColumns:
+  ServiceName: Freshworks
+  ServiceCategory: Customer Support / CRM
+  ProviderName: Freshworks
+  PublisherName: Freshworks
+  BillingCurrency: USD
+meters:
+  - name: agent_seats
+    unit: seat-month
+    aggregation: max
+    dimensions:
+      - product
+      - tier
+  - name: freddy_ai_sessions
+    unit: session
+    aggregation: sum
+  - name: tickets_created
+    unit: ticket
+    aggregation: sum
+  - name: collaborators
+    unit: collaborator-month
+    aggregation: max
+principles:
+  - name: Visibility
+    description: Track Freshworks consumption monthly.
+  - name: Allocation
+    description: Tag usage to teams/cost centers.
+  - name: Optimization
+    description: Right-size; reclaim unused entitlements.
+  - name: Accountability
+    description: Set spend alerts; quarterly review.
