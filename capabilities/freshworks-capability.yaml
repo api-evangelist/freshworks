@@ -1,0 +1,477 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Freshworks Freshcaller API
+  description: The Freshcaller API provides access to cloud-based phone system functionality for contact center operations.
+    It allows developers to export call data, call recordings, user information, and agent team details stored in the Freshcaller
+    system. The API supports integration of voice and telephony workflows into broader business applications, enabling organizations
+    to automate call center reporting, synchronize agent data, and build custom dashboards around their phone operations.
+  tags:
+  - Freshworks
+  - API
+  created: '2026-05-06'
+  modified: '2026-05-06'
+capability:
+  consumes:
+  - type: http
+    namespace: freshworks
+    baseUri: https://yourdomain.freshcaller.com/api/v1
+    description: Freshworks Freshcaller API HTTP API.
+    authentication:
+      type: apikey
+      in: header
+      name: X-Api-Auth
+      value: '{{FRESHWORKS_TOKEN}}'
+    resources:
+    - name: calls
+      path: /calls
+      operations:
+      - name: listcalls
+        method: GET
+        description: List all calls
+        inputParameters:
+        - name: by_time[from]
+          in: query
+          type: string
+          description: Filter calls from this timestamp (ISO 8601).
+        - name: by_time[to]
+          in: query
+          type: string
+          description: Filter calls up to this timestamp (ISO 8601).
+        - name: has_ancestry
+          in: query
+          type: boolean
+          description: Filter calls that have parent-child relationships.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: calls-call-id
+      path: /calls/{call_id}
+      operations:
+      - name: getcall
+        method: GET
+        description: View a call
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: calls-call-id-recording
+      path: /calls/{call_id}/recording
+      operations:
+      - name: getcallrecording
+        method: GET
+        description: Get call recording
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: users
+      path: /users
+      operations:
+      - name: listusers
+        method: GET
+        description: List all users
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createuser
+        method: POST
+        description: Create a user
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: users-user-id
+      path: /users/{user_id}
+      operations:
+      - name: getuser
+        method: GET
+        description: View a user
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updateuser
+        method: PUT
+        description: Update a user
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: user-statuses
+      path: /user_statuses
+      operations:
+      - name: listuserstatuses
+        method: GET
+        description: List all user statuses
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: teams
+      path: /teams
+      operations:
+      - name: listteams
+        method: GET
+        description: List all teams
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createteam
+        method: POST
+        description: Create a team
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: teams-team-id
+      path: /teams/{team_id}
+      operations:
+      - name: getteam
+        method: GET
+        description: View a team
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updateteam
+        method: PUT
+        description: Update a team
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: call-metrics
+      path: /call_metrics
+      operations:
+      - name: listcallmetrics
+        method: GET
+        description: List call metrics
+        inputParameters:
+        - name: by_time[from]
+          in: query
+          type: string
+          description: Start of the time range (ISO 8601).
+        - name: by_time[to]
+          in: query
+          type: string
+          description: End of the time range (ISO 8601).
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    port: 8080
+    namespace: freshworks-rest
+    description: REST adapter for Freshworks Freshcaller API.
+    resources:
+    - path: /calls
+      name: listcalls
+      operations:
+      - method: GET
+        name: listcalls
+        description: List all calls
+        call: freshworks.listcalls
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /calls/{call_id}
+      name: getcall
+      operations:
+      - method: GET
+        name: getcall
+        description: View a call
+        call: freshworks.getcall
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /calls/{call_id}/recording
+      name: getcallrecording
+      operations:
+      - method: GET
+        name: getcallrecording
+        description: Get call recording
+        call: freshworks.getcallrecording
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /users
+      name: listusers
+      operations:
+      - method: GET
+        name: listusers
+        description: List all users
+        call: freshworks.listusers
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /users
+      name: createuser
+      operations:
+      - method: POST
+        name: createuser
+        description: Create a user
+        call: freshworks.createuser
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /users/{user_id}
+      name: getuser
+      operations:
+      - method: GET
+        name: getuser
+        description: View a user
+        call: freshworks.getuser
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /users/{user_id}
+      name: updateuser
+      operations:
+      - method: PUT
+        name: updateuser
+        description: Update a user
+        call: freshworks.updateuser
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /user_statuses
+      name: listuserstatuses
+      operations:
+      - method: GET
+        name: listuserstatuses
+        description: List all user statuses
+        call: freshworks.listuserstatuses
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /teams
+      name: listteams
+      operations:
+      - method: GET
+        name: listteams
+        description: List all teams
+        call: freshworks.listteams
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /teams
+      name: createteam
+      operations:
+      - method: POST
+        name: createteam
+        description: Create a team
+        call: freshworks.createteam
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /teams/{team_id}
+      name: getteam
+      operations:
+      - method: GET
+        name: getteam
+        description: View a team
+        call: freshworks.getteam
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /teams/{team_id}
+      name: updateteam
+      operations:
+      - method: PUT
+        name: updateteam
+        description: Update a team
+        call: freshworks.updateteam
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /call_metrics
+      name: listcallmetrics
+      operations:
+      - method: GET
+        name: listcallmetrics
+        description: List call metrics
+        call: freshworks.listcallmetrics
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    port: 9090
+    namespace: freshworks-mcp
+    transport: http
+    description: MCP adapter for Freshworks Freshcaller API for AI agent use.
+    tools:
+    - name: listcalls
+      description: List all calls
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshworks.listcalls
+      with:
+        by_time[from]: tools.by_time[from]
+        by_time[to]: tools.by_time[to]
+        has_ancestry: tools.has_ancestry
+      inputParameters:
+      - name: by_time[from]
+        type: string
+        description: Filter calls from this timestamp (ISO 8601).
+      - name: by_time[to]
+        type: string
+        description: Filter calls up to this timestamp (ISO 8601).
+      - name: has_ancestry
+        type: boolean
+        description: Filter calls that have parent-child relationships.
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getcall
+      description: View a call
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshworks.getcall
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getcallrecording
+      description: Get call recording
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshworks.getcallrecording
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listusers
+      description: List all users
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshworks.listusers
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createuser
+      description: Create a user
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: freshworks.createuser
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getuser
+      description: View a user
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshworks.getuser
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: updateuser
+      description: Update a user
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: freshworks.updateuser
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listuserstatuses
+      description: List all user statuses
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshworks.listuserstatuses
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listteams
+      description: List all teams
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshworks.listteams
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createteam
+      description: Create a team
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: freshworks.createteam
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getteam
+      description: View a team
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshworks.getteam
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: updateteam
+      description: Update a team
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: freshworks.updateteam
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listcallmetrics
+      description: List call metrics
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshworks.listcallmetrics
+      with:
+        by_time[from]: tools.by_time[from]
+        by_time[to]: tools.by_time[to]
+      inputParameters:
+      - name: by_time[from]
+        type: string
+        description: Start of the time range (ISO 8601).
+      - name: by_time[to]
+        type: string
+        description: End of the time range (ISO 8601).
+      outputParameters:
+      - type: object
+        mapping: $.
+binds:
+- namespace: env
+  keys:
+    FRESHWORKS_TOKEN: FRESHWORKS_TOKEN
