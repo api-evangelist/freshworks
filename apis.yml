@@ -169,7 +169,7 @@ common:
     url: json-schema/freshworks-ticket-schema.json
   - type: JSONSchema
     url: json-schema/freshworks-contact-schema.json
-  - type: JSON-LD
+  - type: JSONLD
     url: json-ld/freshworks-context.jsonld
   - type: Features
     data:
