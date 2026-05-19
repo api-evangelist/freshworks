@@ -1,0 +1,112 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Freshworks Freshchat API — Groups
+  description: 'Freshworks Freshchat API — Groups. 2 operations. Lead operation: List all groups. Self-contained Naftiko capability
+    covering one Freshworks business surface.'
+  tags:
+  - Freshworks
+  - Groups
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FRESHWORKS_API_KEY: FRESHWORKS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: freshchat-groups
+    baseUri: https://{domain}.freshchat.com/v2
+    description: Freshworks Freshchat API — Groups business capability. Self-contained, no shared references.
+    resources:
+    - name: groups
+      path: /groups
+      operations:
+      - name: listgroups
+        method: GET
+        description: List all groups
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: groups-group_id
+      path: /groups/{group_id}
+      operations:
+      - name: getgroup
+        method: GET
+        description: View a group
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: group_id
+          in: path
+          type: string
+          description: The ID of the group.
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.FRESHWORKS_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: freshchat-groups-rest
+    port: 8080
+    description: REST adapter for Freshworks Freshchat API — Groups. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/groups
+      name: groups
+      description: REST surface for groups.
+      operations:
+      - method: GET
+        name: listgroups
+        description: List all groups
+        call: freshchat-groups.listgroups
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/groups/{group-id}
+      name: groups-group-id
+      description: REST surface for groups-group_id.
+      operations:
+      - method: GET
+        name: getgroup
+        description: View a group
+        call: freshchat-groups.getgroup
+        with:
+          group_id: rest.group_id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: freshchat-groups-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Freshworks Freshchat API — Groups. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-all-groups
+      description: List all groups
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshchat-groups.listgroups
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: view-group
+      description: View a group
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshchat-groups.getgroup
+      with:
+        group_id: tools.group_id
+      outputParameters:
+      - type: object
+        mapping: $.

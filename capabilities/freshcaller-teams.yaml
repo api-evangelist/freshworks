@@ -1,0 +1,174 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Freshworks Freshcaller API — Teams
+  description: 'Freshworks Freshcaller API — Teams. 4 operations. Lead operation: List all teams. Self-contained Naftiko capability
+    covering one Freshworks business surface.'
+  tags:
+  - Freshworks
+  - Teams
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FRESHWORKS_API_KEY: FRESHWORKS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: freshcaller-teams
+    baseUri: https://{domain}.freshcaller.com/api/v1
+    description: Freshworks Freshcaller API — Teams business capability. Self-contained, no shared references.
+    resources:
+    - name: teams
+      path: /teams
+      operations:
+      - name: listteams
+        method: GET
+        description: List all teams
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createteam
+        method: POST
+        description: Create a team
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: teams-team_id
+      path: /teams/{team_id}
+      operations:
+      - name: getteam
+        method: GET
+        description: View a team
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updateteam
+        method: PUT
+        description: Update a team
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: apikey
+      key: X-Api-Auth
+      value: '{{env.FRESHWORKS_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: freshcaller-teams-rest
+    port: 8080
+    description: REST adapter for Freshworks Freshcaller API — Teams. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/teams
+      name: teams
+      description: REST surface for teams.
+      operations:
+      - method: GET
+        name: listteams
+        description: List all teams
+        call: freshcaller-teams.listteams
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createteam
+        description: Create a team
+        call: freshcaller-teams.createteam
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/teams/{team-id}
+      name: teams-team-id
+      description: REST surface for teams-team_id.
+      operations:
+      - method: GET
+        name: getteam
+        description: View a team
+        call: freshcaller-teams.getteam
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updateteam
+        description: Update a team
+        call: freshcaller-teams.updateteam
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: freshcaller-teams-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Freshworks Freshcaller API — Teams. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-all-teams
+      description: List all teams
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshcaller-teams.listteams
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-team
+      description: Create a team
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: freshcaller-teams.createteam
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: view-team
+      description: View a team
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshcaller-teams.getteam
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-team
+      description: Update a team
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: freshcaller-teams.updateteam
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

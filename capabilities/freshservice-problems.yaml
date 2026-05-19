@@ -1,0 +1,198 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Freshworks Freshservice API — Problems
+  description: 'Freshworks Freshservice API — Problems. 5 operations. Lead operation: List all problems. Self-contained Naftiko
+    capability covering one Freshworks business surface.'
+  tags:
+  - Freshworks
+  - Problems
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FRESHWORKS_API_KEY: FRESHWORKS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: freshservice-problems
+    baseUri: https://{domain}.freshservice.com/api/v2
+    description: Freshworks Freshservice API — Problems business capability. Self-contained, no shared references.
+    resources:
+    - name: problems
+      path: /problems
+      operations:
+      - name: listproblems
+        method: GET
+        description: List all problems
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createproblem
+        method: POST
+        description: Create a problem
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: problems-problem_id
+      path: /problems/{problem_id}
+      operations:
+      - name: getproblem
+        method: GET
+        description: View a problem
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updateproblem
+        method: PUT
+        description: Update a problem
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteproblem
+        method: DELETE
+        description: Delete a problem
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: basic
+      username: '{{env.FRESHWORKS_USER}}'
+      password: '{{env.FRESHWORKS_PASS}}'
+  exposes:
+  - type: rest
+    namespace: freshservice-problems-rest
+    port: 8080
+    description: REST adapter for Freshworks Freshservice API — Problems. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/problems
+      name: problems
+      description: REST surface for problems.
+      operations:
+      - method: GET
+        name: listproblems
+        description: List all problems
+        call: freshservice-problems.listproblems
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createproblem
+        description: Create a problem
+        call: freshservice-problems.createproblem
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/problems/{problem-id}
+      name: problems-problem-id
+      description: REST surface for problems-problem_id.
+      operations:
+      - method: GET
+        name: getproblem
+        description: View a problem
+        call: freshservice-problems.getproblem
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updateproblem
+        description: Update a problem
+        call: freshservice-problems.updateproblem
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteproblem
+        description: Delete a problem
+        call: freshservice-problems.deleteproblem
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: freshservice-problems-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Freshworks Freshservice API — Problems. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-all-problems
+      description: List all problems
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshservice-problems.listproblems
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-problem
+      description: Create a problem
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: freshservice-problems.createproblem
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: view-problem
+      description: View a problem
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshservice-problems.getproblem
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-problem
+      description: Update a problem
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: freshservice-problems.updateproblem
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-problem
+      description: Delete a problem
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: freshservice-problems.deleteproblem
+      outputParameters:
+      - type: object
+        mapping: $.

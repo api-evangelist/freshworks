@@ -1,0 +1,143 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Freshworks Freshteam API — Job Postings
+  description: 'Freshworks Freshteam API — Job Postings. 3 operations. Lead operation: List all job postings. Self-contained
+    Naftiko capability covering one Freshworks business surface.'
+  tags:
+  - Freshworks
+  - Job Postings
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FRESHWORKS_API_KEY: FRESHWORKS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: freshteam-job-postings
+    baseUri: https://{domain}.freshteam.com/api
+    description: Freshworks Freshteam API — Job Postings business capability. Self-contained, no shared references.
+    resources:
+    - name: job_postings
+      path: /job_postings
+      operations:
+      - name: listjobpostings
+        method: GET
+        description: List all job postings
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: status
+          in: query
+          type: string
+          description: Filter by posting status (draft, published, on_hold, closed).
+    - name: job_postings-job_posting_id
+      path: /job_postings/{job_posting_id}
+      operations:
+      - name: getjobposting
+        method: GET
+        description: View a job posting
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: job_postings-job_posting_id-applicant_fields
+      path: /job_postings/{job_posting_id}/applicant_fields
+      operations:
+      - name: listapplicantfields
+        method: GET
+        description: List applicant fields for a job posting
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.FRESHWORKS_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: freshteam-job-postings-rest
+    port: 8080
+    description: REST adapter for Freshworks Freshteam API — Job Postings. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/job-postings
+      name: job-postings
+      description: REST surface for job_postings.
+      operations:
+      - method: GET
+        name: listjobpostings
+        description: List all job postings
+        call: freshteam-job-postings.listjobpostings
+        with:
+          status: rest.status
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/job-postings/{job-posting-id}
+      name: job-postings-job-posting-id
+      description: REST surface for job_postings-job_posting_id.
+      operations:
+      - method: GET
+        name: getjobposting
+        description: View a job posting
+        call: freshteam-job-postings.getjobposting
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/job-postings/{job-posting-id}/applicant-fields
+      name: job-postings-job-posting-id-applicant-fields
+      description: REST surface for job_postings-job_posting_id-applicant_fields.
+      operations:
+      - method: GET
+        name: listapplicantfields
+        description: List applicant fields for a job posting
+        call: freshteam-job-postings.listapplicantfields
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: freshteam-job-postings-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Freshworks Freshteam API — Job Postings. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-all-job-postings
+      description: List all job postings
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshteam-job-postings.listjobpostings
+      with:
+        status: tools.status
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: view-job-posting
+      description: View a job posting
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshteam-job-postings.getjobposting
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-applicant-fields-job-posting
+      description: List applicant fields for a job posting
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshteam-job-postings.listapplicantfields
+      outputParameters:
+      - type: object
+        mapping: $.

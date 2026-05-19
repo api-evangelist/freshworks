@@ -1,0 +1,213 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Freshworks Freshservice API — Requesters
+  description: 'Freshworks Freshservice API — Requesters. 5 operations. Lead operation: List all requesters. Self-contained
+    Naftiko capability covering one Freshworks business surface.'
+  tags:
+  - Freshworks
+  - Requesters
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FRESHWORKS_API_KEY: FRESHWORKS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: freshservice-requesters
+    baseUri: https://{domain}.freshservice.com/api/v2
+    description: Freshworks Freshservice API — Requesters business capability. Self-contained, no shared references.
+    resources:
+    - name: requesters
+      path: /requesters
+      operations:
+      - name: listrequesters
+        method: GET
+        description: List all requesters
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: email
+          in: query
+          type: string
+          description: Filter requesters by email address.
+        - name: query
+          in: query
+          type: string
+          description: Search query to filter requesters by name or email.
+      - name: createrequester
+        method: POST
+        description: Create a requester
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: requesters-requester_id
+      path: /requesters/{requester_id}
+      operations:
+      - name: getrequester
+        method: GET
+        description: View a requester
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updaterequester
+        method: PUT
+        description: Update a requester
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleterequester
+        method: DELETE
+        description: Delete a requester
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: basic
+      username: '{{env.FRESHWORKS_USER}}'
+      password: '{{env.FRESHWORKS_PASS}}'
+  exposes:
+  - type: rest
+    namespace: freshservice-requesters-rest
+    port: 8080
+    description: REST adapter for Freshworks Freshservice API — Requesters. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/requesters
+      name: requesters
+      description: REST surface for requesters.
+      operations:
+      - method: GET
+        name: listrequesters
+        description: List all requesters
+        call: freshservice-requesters.listrequesters
+        with:
+          email: rest.email
+          query: rest.query
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createrequester
+        description: Create a requester
+        call: freshservice-requesters.createrequester
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/requesters/{requester-id}
+      name: requesters-requester-id
+      description: REST surface for requesters-requester_id.
+      operations:
+      - method: GET
+        name: getrequester
+        description: View a requester
+        call: freshservice-requesters.getrequester
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updaterequester
+        description: Update a requester
+        call: freshservice-requesters.updaterequester
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleterequester
+        description: Delete a requester
+        call: freshservice-requesters.deleterequester
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: freshservice-requesters-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Freshworks Freshservice API — Requesters. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: list-all-requesters
+      description: List all requesters
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshservice-requesters.listrequesters
+      with:
+        email: tools.email
+        query: tools.query
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-requester
+      description: Create a requester
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: freshservice-requesters.createrequester
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: view-requester
+      description: View a requester
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshservice-requesters.getrequester
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-requester
+      description: Update a requester
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: freshservice-requesters.updaterequester
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-requester
+      description: Delete a requester
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: freshservice-requesters.deleterequester
+      outputParameters:
+      - type: object
+        mapping: $.

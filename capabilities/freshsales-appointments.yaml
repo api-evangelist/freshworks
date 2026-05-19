@@ -1,0 +1,193 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Freshworks Freshsales API — Appointments
+  description: 'Freshworks Freshsales API — Appointments. 4 operations. Lead operation: List all appointments. Self-contained
+    Naftiko capability covering one Freshworks business surface.'
+  tags:
+  - Freshworks
+  - Appointments
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FRESHWORKS_API_KEY: FRESHWORKS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: freshsales-appointments
+    baseUri: https://{domain}.myfreshworks.com/crm/sales/api
+    description: Freshworks Freshsales API — Appointments business capability. Self-contained, no shared references.
+    resources:
+    - name: appointments
+      path: /appointments
+      operations:
+      - name: listappointments
+        method: GET
+        description: List all appointments
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: filter
+          in: query
+          type: string
+          description: Filter appointments by time range.
+      - name: createappointment
+        method: POST
+        description: Create an appointment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: appointments-appointment_id
+      path: /appointments/{appointment_id}
+      operations:
+      - name: getappointment
+        method: GET
+        description: View an appointment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: appointment_id
+          in: path
+          type: integer
+          description: The ID of the appointment.
+          required: true
+      - name: deleteappointment
+        method: DELETE
+        description: Delete an appointment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: appointment_id
+          in: path
+          type: integer
+          description: The ID of the appointment.
+          required: true
+    authentication:
+      type: apikey
+      key: Authorization
+      value: '{{env.FRESHWORKS_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: freshsales-appointments-rest
+    port: 8080
+    description: REST adapter for Freshworks Freshsales API — Appointments. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/appointments
+      name: appointments
+      description: REST surface for appointments.
+      operations:
+      - method: GET
+        name: listappointments
+        description: List all appointments
+        call: freshsales-appointments.listappointments
+        with:
+          filter: rest.filter
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createappointment
+        description: Create an appointment
+        call: freshsales-appointments.createappointment
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/appointments/{appointment-id}
+      name: appointments-appointment-id
+      description: REST surface for appointments-appointment_id.
+      operations:
+      - method: GET
+        name: getappointment
+        description: View an appointment
+        call: freshsales-appointments.getappointment
+        with:
+          appointment_id: rest.appointment_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteappointment
+        description: Delete an appointment
+        call: freshsales-appointments.deleteappointment
+        with:
+          appointment_id: rest.appointment_id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: freshsales-appointments-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Freshworks Freshsales API — Appointments. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: list-all-appointments
+      description: List all appointments
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshsales-appointments.listappointments
+      with:
+        filter: tools.filter
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-appointment
+      description: Create an appointment
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: freshsales-appointments.createappointment
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: view-appointment
+      description: View an appointment
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshsales-appointments.getappointment
+      with:
+        appointment_id: tools.appointment_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-appointment
+      description: Delete an appointment
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: freshsales-appointments.deleteappointment
+      with:
+        appointment_id: tools.appointment_id
+      outputParameters:
+      - type: object
+        mapping: $.

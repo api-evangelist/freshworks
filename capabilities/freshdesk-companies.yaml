@@ -1,0 +1,198 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Freshworks Freshdesk API — Companies
+  description: 'Freshworks Freshdesk API — Companies. 5 operations. Lead operation: List all companies. Self-contained Naftiko
+    capability covering one Freshworks business surface.'
+  tags:
+  - Freshworks
+  - Companies
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FRESHWORKS_API_KEY: FRESHWORKS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: freshdesk-companies
+    baseUri: https://{domain}.freshdesk.com/api/v2
+    description: Freshworks Freshdesk API — Companies business capability. Self-contained, no shared references.
+    resources:
+    - name: companies
+      path: /companies
+      operations:
+      - name: listcompanies
+        method: GET
+        description: List all companies
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createcompany
+        method: POST
+        description: Create a company
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: companies-company_id
+      path: /companies/{company_id}
+      operations:
+      - name: getcompany
+        method: GET
+        description: View a company
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updatecompany
+        method: PUT
+        description: Update a company
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletecompany
+        method: DELETE
+        description: Delete a company
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: basic
+      username: '{{env.FRESHWORKS_USER}}'
+      password: '{{env.FRESHWORKS_PASS}}'
+  exposes:
+  - type: rest
+    namespace: freshdesk-companies-rest
+    port: 8080
+    description: REST adapter for Freshworks Freshdesk API — Companies. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/companies
+      name: companies
+      description: REST surface for companies.
+      operations:
+      - method: GET
+        name: listcompanies
+        description: List all companies
+        call: freshdesk-companies.listcompanies
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createcompany
+        description: Create a company
+        call: freshdesk-companies.createcompany
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/companies/{company-id}
+      name: companies-company-id
+      description: REST surface for companies-company_id.
+      operations:
+      - method: GET
+        name: getcompany
+        description: View a company
+        call: freshdesk-companies.getcompany
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatecompany
+        description: Update a company
+        call: freshdesk-companies.updatecompany
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletecompany
+        description: Delete a company
+        call: freshdesk-companies.deletecompany
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: freshdesk-companies-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Freshworks Freshdesk API — Companies. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-all-companies
+      description: List all companies
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshdesk-companies.listcompanies
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-company
+      description: Create a company
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: freshdesk-companies.createcompany
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: view-company
+      description: View a company
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshdesk-companies.getcompany
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-company
+      description: Update a company
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: freshdesk-companies.updatecompany
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-company
+      description: Delete a company
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: freshdesk-companies.deletecompany
+      outputParameters:
+      - type: object
+        mapping: $.

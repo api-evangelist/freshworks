@@ -1,0 +1,279 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Freshworks Freshdesk API — Tickets
+  description: 'Freshworks Freshdesk API — Tickets. 6 operations. Lead operation: List all tickets. Self-contained Naftiko
+    capability covering one Freshworks business surface.'
+  tags:
+  - Freshworks
+  - Tickets
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FRESHWORKS_API_KEY: FRESHWORKS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: freshdesk-tickets
+    baseUri: https://{domain}.freshdesk.com/api/v2
+    description: Freshworks Freshdesk API — Tickets business capability. Self-contained, no shared references.
+    resources:
+    - name: tickets
+      path: /tickets
+      operations:
+      - name: listtickets
+        method: GET
+        description: List all tickets
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: filter
+          in: query
+          type: string
+          description: Pre-defined filter to apply. Options include new_and_my_open, watching, spam, deleted.
+        - name: requester_id
+          in: query
+          type: integer
+          description: Filter tickets by requester ID.
+        - name: email
+          in: query
+          type: string
+          description: Filter tickets by requester email.
+        - name: updated_since
+          in: query
+          type: string
+          description: Return tickets updated after this timestamp in UTC format.
+        - name: order_by
+          in: query
+          type: string
+          description: Field to sort by.
+        - name: order_type
+          in: query
+          type: string
+          description: Sort order direction.
+      - name: createticket
+        method: POST
+        description: Create a ticket
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: tickets-ticket_id
+      path: /tickets/{ticket_id}
+      operations:
+      - name: getticket
+        method: GET
+        description: View a ticket
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: include
+          in: query
+          type: string
+          description: Include additional information in the response. Comma-separated values from conversations, requester,
+            company, stats.
+      - name: updateticket
+        method: PUT
+        description: Update a ticket
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteticket
+        method: DELETE
+        description: Delete a ticket
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: tickets-ticket_id-restore
+      path: /tickets/{ticket_id}/restore
+      operations:
+      - name: restoreticket
+        method: PUT
+        description: Restore a deleted ticket
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: basic
+      username: '{{env.FRESHWORKS_USER}}'
+      password: '{{env.FRESHWORKS_PASS}}'
+  exposes:
+  - type: rest
+    namespace: freshdesk-tickets-rest
+    port: 8080
+    description: REST adapter for Freshworks Freshdesk API — Tickets. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/tickets
+      name: tickets
+      description: REST surface for tickets.
+      operations:
+      - method: GET
+        name: listtickets
+        description: List all tickets
+        call: freshdesk-tickets.listtickets
+        with:
+          filter: rest.filter
+          requester_id: rest.requester_id
+          email: rest.email
+          updated_since: rest.updated_since
+          order_by: rest.order_by
+          order_type: rest.order_type
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createticket
+        description: Create a ticket
+        call: freshdesk-tickets.createticket
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/tickets/{ticket-id}
+      name: tickets-ticket-id
+      description: REST surface for tickets-ticket_id.
+      operations:
+      - method: GET
+        name: getticket
+        description: View a ticket
+        call: freshdesk-tickets.getticket
+        with:
+          include: rest.include
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updateticket
+        description: Update a ticket
+        call: freshdesk-tickets.updateticket
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteticket
+        description: Delete a ticket
+        call: freshdesk-tickets.deleteticket
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/tickets/{ticket-id}/restore
+      name: tickets-ticket-id-restore
+      description: REST surface for tickets-ticket_id-restore.
+      operations:
+      - method: PUT
+        name: restoreticket
+        description: Restore a deleted ticket
+        call: freshdesk-tickets.restoreticket
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: freshdesk-tickets-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Freshworks Freshdesk API — Tickets. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-all-tickets
+      description: List all tickets
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshdesk-tickets.listtickets
+      with:
+        filter: tools.filter
+        requester_id: tools.requester_id
+        email: tools.email
+        updated_since: tools.updated_since
+        order_by: tools.order_by
+        order_type: tools.order_type
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-ticket
+      description: Create a ticket
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: freshdesk-tickets.createticket
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: view-ticket
+      description: View a ticket
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshdesk-tickets.getticket
+      with:
+        include: tools.include
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-ticket
+      description: Update a ticket
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: freshdesk-tickets.updateticket
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-ticket
+      description: Delete a ticket
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: freshdesk-tickets.deleteticket
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: restore-deleted-ticket
+      description: Restore a deleted ticket
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: freshdesk-tickets.restoreticket
+      outputParameters:
+      - type: object
+        mapping: $.

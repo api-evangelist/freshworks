@@ -1,0 +1,70 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Freshworks Freshteam API — Branches
+  description: 'Freshworks Freshteam API — Branches. 1 operations. Lead operation: List all branches. Self-contained Naftiko
+    capability covering one Freshworks business surface.'
+  tags:
+  - Freshworks
+  - Branches
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FRESHWORKS_API_KEY: FRESHWORKS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: freshteam-branches
+    baseUri: https://{domain}.freshteam.com/api
+    description: Freshworks Freshteam API — Branches business capability. Self-contained, no shared references.
+    resources:
+    - name: branches
+      path: /branches
+      operations:
+      - name: listbranches
+        method: GET
+        description: List all branches
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.FRESHWORKS_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: freshteam-branches-rest
+    port: 8080
+    description: REST adapter for Freshworks Freshteam API — Branches. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/branches
+      name: branches
+      description: REST surface for branches.
+      operations:
+      - method: GET
+        name: listbranches
+        description: List all branches
+        call: freshteam-branches.listbranches
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: freshteam-branches-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Freshworks Freshteam API — Branches. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-all-branches
+      description: List all branches
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshteam-branches.listbranches
+      outputParameters:
+      - type: object
+        mapping: $.

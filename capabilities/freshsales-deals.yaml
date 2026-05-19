@@ -1,0 +1,199 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Freshworks Freshsales API — Deals
+  description: 'Freshworks Freshsales API — Deals. 5 operations. Lead operation: List all deals. Self-contained Naftiko capability
+    covering one Freshworks business surface.'
+  tags:
+  - Freshworks
+  - Deals
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FRESHWORKS_API_KEY: FRESHWORKS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: freshsales-deals
+    baseUri: https://{domain}.myfreshworks.com/crm/sales/api
+    description: Freshworks Freshsales API — Deals business capability. Self-contained, no shared references.
+    resources:
+    - name: deals
+      path: /deals
+      operations:
+      - name: listdeals
+        method: GET
+        description: List all deals
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createdeal
+        method: POST
+        description: Create a deal
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: deals-deal_id
+      path: /deals/{deal_id}
+      operations:
+      - name: getdeal
+        method: GET
+        description: View a deal
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updatedeal
+        method: PUT
+        description: Update a deal
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletedeal
+        method: DELETE
+        description: Delete a deal
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: apikey
+      key: Authorization
+      value: '{{env.FRESHWORKS_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: freshsales-deals-rest
+    port: 8080
+    description: REST adapter for Freshworks Freshsales API — Deals. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/deals
+      name: deals
+      description: REST surface for deals.
+      operations:
+      - method: GET
+        name: listdeals
+        description: List all deals
+        call: freshsales-deals.listdeals
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createdeal
+        description: Create a deal
+        call: freshsales-deals.createdeal
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/deals/{deal-id}
+      name: deals-deal-id
+      description: REST surface for deals-deal_id.
+      operations:
+      - method: GET
+        name: getdeal
+        description: View a deal
+        call: freshsales-deals.getdeal
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatedeal
+        description: Update a deal
+        call: freshsales-deals.updatedeal
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletedeal
+        description: Delete a deal
+        call: freshsales-deals.deletedeal
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: freshsales-deals-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Freshworks Freshsales API — Deals. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-all-deals
+      description: List all deals
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshsales-deals.listdeals
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-deal
+      description: Create a deal
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: freshsales-deals.createdeal
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: view-deal
+      description: View a deal
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshsales-deals.getdeal
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-deal
+      description: Update a deal
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: freshsales-deals.updatedeal
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-deal
+      description: Delete a deal
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: freshsales-deals.deletedeal
+      outputParameters:
+      - type: object
+        mapping: $.

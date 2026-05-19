@@ -1,0 +1,107 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Freshworks Freshsales API — Sales Activities
+  description: 'Freshworks Freshsales API — Sales Activities. 2 operations. Lead operation: List all sales activities. Self-contained
+    Naftiko capability covering one Freshworks business surface.'
+  tags:
+  - Freshworks
+  - Sales Activities
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FRESHWORKS_API_KEY: FRESHWORKS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: freshsales-sales-activities
+    baseUri: https://{domain}.myfreshworks.com/crm/sales/api
+    description: Freshworks Freshsales API — Sales Activities business capability. Self-contained, no shared references.
+    resources:
+    - name: sales_activities
+      path: /sales_activities
+      operations:
+      - name: listsalesactivities
+        method: GET
+        description: List all sales activities
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createsalesactivity
+        method: POST
+        description: Create a sales activity
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: apikey
+      key: Authorization
+      value: '{{env.FRESHWORKS_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: freshsales-sales-activities-rest
+    port: 8080
+    description: REST adapter for Freshworks Freshsales API — Sales Activities. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/sales-activities
+      name: sales-activities
+      description: REST surface for sales_activities.
+      operations:
+      - method: GET
+        name: listsalesactivities
+        description: List all sales activities
+        call: freshsales-sales-activities.listsalesactivities
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createsalesactivity
+        description: Create a sales activity
+        call: freshsales-sales-activities.createsalesactivity
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: freshsales-sales-activities-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Freshworks Freshsales API — Sales Activities. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: list-all-sales-activities
+      description: List all sales activities
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshsales-sales-activities.listsalesactivities
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-sales-activity
+      description: Create a sales activity
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: freshsales-sales-activities.createsalesactivity
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

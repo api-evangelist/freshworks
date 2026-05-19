@@ -1,0 +1,71 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Freshworks Freshdesk API — Business Hours
+  description: 'Freshworks Freshdesk API — Business Hours. 1 operations. Lead operation: List all business hours. Self-contained
+    Naftiko capability covering one Freshworks business surface.'
+  tags:
+  - Freshworks
+  - Business Hours
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FRESHWORKS_API_KEY: FRESHWORKS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: freshdesk-business-hours
+    baseUri: https://{domain}.freshdesk.com/api/v2
+    description: Freshworks Freshdesk API — Business Hours business capability. Self-contained, no shared references.
+    resources:
+    - name: business_hours
+      path: /business_hours
+      operations:
+      - name: listbusinesshours
+        method: GET
+        description: List all business hours
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: basic
+      username: '{{env.FRESHWORKS_USER}}'
+      password: '{{env.FRESHWORKS_PASS}}'
+  exposes:
+  - type: rest
+    namespace: freshdesk-business-hours-rest
+    port: 8080
+    description: REST adapter for Freshworks Freshdesk API — Business Hours. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/business-hours
+      name: business-hours
+      description: REST surface for business_hours.
+      operations:
+      - method: GET
+        name: listbusinesshours
+        description: List all business hours
+        call: freshdesk-business-hours.listbusinesshours
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: freshdesk-business-hours-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Freshworks Freshdesk API — Business Hours. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: list-all-business-hours
+      description: List all business hours
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: freshdesk-business-hours.listbusinesshours
+      outputParameters:
+      - type: object
+        mapping: $.
