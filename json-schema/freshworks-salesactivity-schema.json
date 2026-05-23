@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/SalesActivity",
+  "title": "SalesActivity",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique ID of the sales activity."
+    },
+    "title": {
+      "type": "string",
+      "description": "Title of the activity."
+    },
+    "notes": {
+      "type": "string",
+      "description": "Notes about the activity."
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Start date and time."
+    },
+    "end_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "End date and time."
+    },
+    "sales_activity_type_id": {
+      "type": "integer",
+      "description": "ID of the activity type."
+    },
+    "sales_activity_outcome_id": {
+      "type": "integer",
+      "description": "ID of the activity outcome."
+    },
+    "owner_id": {
+      "type": "integer",
+      "description": "ID of the activity owner."
+    },
+    "targetable_type": {
+      "type": "string",
+      "description": "Type of associated record."
+    },
+    "targetable_id": {
+      "type": "integer",
+      "description": "ID of associated record."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when created."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when last updated."
+    }
+  }
+}

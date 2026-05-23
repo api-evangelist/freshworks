@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/TicketUpdate",
+  "title": "TicketUpdate",
+  "type": "object",
+  "properties": {
+    "subject": {
+      "type": "string",
+      "description": "Subject of the ticket."
+    },
+    "description": {
+      "type": "string",
+      "description": "HTML content of the ticket description."
+    },
+    "status": {
+      "type": "integer",
+      "description": "Status of the ticket.",
+      "enum": [
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "priority": {
+      "type": "integer",
+      "description": "Priority of the ticket.",
+      "enum": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "responder_id": {
+      "type": "integer",
+      "description": "ID of the agent to assign."
+    },
+    "group_id": {
+      "type": "integer",
+      "description": "ID of the group to assign."
+    },
+    "type": {
+      "type": "string",
+      "description": "Type of the ticket."
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Tags to associate with the ticket."
+    },
+    "custom_fields": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Key-value pairs for custom fields."
+    }
+  }
+}

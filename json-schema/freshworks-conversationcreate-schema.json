@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ConversationCreate",
+  "title": "ConversationCreate",
+  "type": "object",
+  "required": [
+    "app_id",
+    "channel_id",
+    "messages"
+  ],
+  "properties": {
+    "app_id": {
+      "type": "string",
+      "description": "ID of the Freshchat application."
+    },
+    "channel_id": {
+      "type": "string",
+      "description": "ID of the channel."
+    },
+    "users": {
+      "type": "array",
+      "description": "Users to involve in the conversation.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "User ID."
+          }
+        }
+      }
+    },
+    "messages": {
+      "type": "array",
+      "description": "Initial messages for the conversation.",
+      "items": {
+        "$ref": "#/components/schemas/MessageCreate"
+      }
+    }
+  }
+}

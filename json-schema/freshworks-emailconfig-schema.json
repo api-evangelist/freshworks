@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/EmailConfig",
+  "title": "EmailConfig",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique ID of the email configuration."
+    },
+    "name": {
+      "type": "string",
+      "description": "Friendly name of the email configuration."
+    },
+    "reply_email": {
+      "type": "string",
+      "format": "email",
+      "description": "Reply-to email address."
+    },
+    "support_email": {
+      "type": "string",
+      "format": "email",
+      "description": "Support email address for receiving tickets."
+    },
+    "active": {
+      "type": "boolean",
+      "description": "Whether the email configuration is active."
+    },
+    "product_id": {
+      "type": "integer",
+      "description": "ID of the associated product."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the configuration was created."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the configuration was last updated."
+    }
+  }
+}

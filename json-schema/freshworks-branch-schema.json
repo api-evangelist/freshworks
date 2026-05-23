@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Branch",
+  "title": "Branch",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique ID of the branch."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the branch."
+    },
+    "city": {
+      "type": "string",
+      "description": "City."
+    },
+    "state": {
+      "type": "string",
+      "description": "State or province."
+    },
+    "country": {
+      "type": "string",
+      "description": "Country."
+    },
+    "zip": {
+      "type": "string",
+      "description": "ZIP or postal code."
+    },
+    "time_zone": {
+      "type": "string",
+      "description": "Time zone."
+    },
+    "currency": {
+      "type": "string",
+      "description": "Local currency code."
+    },
+    "main_office": {
+      "type": "boolean",
+      "description": "Whether this is the main office."
+    },
+    "date_format": {
+      "type": "string",
+      "description": "Date format used at this branch."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when created."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when last updated."
+    }
+  }
+}

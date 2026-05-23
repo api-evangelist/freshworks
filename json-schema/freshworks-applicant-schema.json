@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Applicant",
+  "title": "Applicant",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique ID of the applicant."
+    },
+    "first_name": {
+      "type": "string",
+      "description": "First name."
+    },
+    "last_name": {
+      "type": "string",
+      "description": "Last name."
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Email address."
+    },
+    "phone_number": {
+      "type": "string",
+      "description": "Phone number."
+    },
+    "job_posting_id": {
+      "type": "integer",
+      "description": "ID of the associated job posting."
+    },
+    "status": {
+      "type": "string",
+      "description": "Application status."
+    },
+    "source": {
+      "type": "string",
+      "description": "Application source."
+    },
+    "resume_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL to the applicant resume."
+    },
+    "custom_fields": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Custom field values."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the application was created."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when last updated."
+    }
+  }
+}

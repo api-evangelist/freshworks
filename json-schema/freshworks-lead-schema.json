@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Lead",
+  "title": "Lead",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique ID of the lead."
+    },
+    "first_name": {
+      "type": "string",
+      "description": "First name."
+    },
+    "last_name": {
+      "type": "string",
+      "description": "Last name."
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Email address."
+    },
+    "work_number": {
+      "type": "string",
+      "description": "Work phone number."
+    },
+    "mobile_number": {
+      "type": "string",
+      "description": "Mobile phone number."
+    },
+    "company": {
+      "type": "object",
+      "description": "Company information.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Company name."
+        }
+      }
+    },
+    "job_title": {
+      "type": "string",
+      "description": "Job title."
+    },
+    "lead_source_id": {
+      "type": "integer",
+      "description": "ID of the lead source."
+    },
+    "lead_stage_id": {
+      "type": "integer",
+      "description": "ID of the lead stage."
+    },
+    "owner_id": {
+      "type": "integer",
+      "description": "ID of the owning sales agent."
+    },
+    "lead_score": {
+      "type": "integer",
+      "description": "Lead score."
+    },
+    "custom_field": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Custom field values."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when created."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when last updated."
+    }
+  }
+}

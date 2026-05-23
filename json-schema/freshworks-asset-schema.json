@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Asset",
+  "title": "Asset",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique ID of the asset."
+    },
+    "display_id": {
+      "type": "integer",
+      "description": "Display ID of the asset."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the asset."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the asset."
+    },
+    "asset_type_id": {
+      "type": "integer",
+      "description": "ID of the asset type."
+    },
+    "asset_tag": {
+      "type": "string",
+      "description": "Asset tag identifier."
+    },
+    "impact": {
+      "type": "string",
+      "description": "Impact level of the asset."
+    },
+    "usage_type": {
+      "type": "string",
+      "description": "Usage type (permanent, loaner)."
+    },
+    "user_id": {
+      "type": "integer",
+      "description": "ID of the user assigned to the asset."
+    },
+    "department_id": {
+      "type": "integer",
+      "description": "ID of the department."
+    },
+    "location_id": {
+      "type": "integer",
+      "description": "ID of the location."
+    },
+    "agent_id": {
+      "type": "integer",
+      "description": "ID of the managing agent."
+    },
+    "assigned_on": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date when the asset was assigned."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when created."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when last updated."
+    }
+  }
+}

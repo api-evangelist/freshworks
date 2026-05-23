@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/AppointmentCreate",
+  "title": "AppointmentCreate",
+  "type": "object",
+  "required": [
+    "title",
+    "from_date",
+    "end_date"
+  ],
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Title of the appointment."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description."
+    },
+    "from_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Start date and time."
+    },
+    "end_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "End date and time."
+    },
+    "location": {
+      "type": "string",
+      "description": "Location."
+    },
+    "targetable_type": {
+      "type": "string",
+      "description": "Type of associated record."
+    },
+    "targetable_id": {
+      "type": "integer",
+      "description": "ID of associated record."
+    }
+  }
+}

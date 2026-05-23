@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ReleaseCreate",
+  "title": "ReleaseCreate",
+  "type": "object",
+  "required": [
+    "subject",
+    "description",
+    "status",
+    "priority",
+    "release_type",
+    "planned_start_date",
+    "planned_end_date"
+  ],
+  "properties": {
+    "subject": {
+      "type": "string",
+      "description": "Subject of the release."
+    },
+    "description": {
+      "type": "string",
+      "description": "HTML description."
+    },
+    "status": {
+      "type": "integer",
+      "description": "Status."
+    },
+    "priority": {
+      "type": "integer",
+      "description": "Priority."
+    },
+    "release_type": {
+      "type": "integer",
+      "description": "Type of release."
+    },
+    "planned_start_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Planned start date."
+    },
+    "planned_end_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Planned end date."
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/TimeOffRequest",
+  "title": "TimeOffRequest",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique ID of the time-off request."
+    },
+    "user_id": {
+      "type": "integer",
+      "description": "ID of the employee."
+    },
+    "leave_type_id": {
+      "type": "integer",
+      "description": "ID of the time-off type."
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Start date of the leave."
+    },
+    "end_date": {
+      "type": "string",
+      "format": "date",
+      "description": "End date of the leave."
+    },
+    "status": {
+      "type": "string",
+      "description": "Status of the request.",
+      "enum": [
+        "pending",
+        "approved",
+        "declined",
+        "cancelled"
+      ]
+    },
+    "comments": {
+      "type": "string",
+      "description": "Comments from the requester."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when created."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when last updated."
+    }
+  }
+}

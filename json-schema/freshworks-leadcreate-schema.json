@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/LeadCreate",
+  "title": "LeadCreate",
+  "type": "object",
+  "properties": {
+    "first_name": {
+      "type": "string",
+      "description": "First name."
+    },
+    "last_name": {
+      "type": "string",
+      "description": "Last name."
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Email address."
+    },
+    "work_number": {
+      "type": "string",
+      "description": "Work phone number."
+    },
+    "mobile_number": {
+      "type": "string",
+      "description": "Mobile phone number."
+    },
+    "job_title": {
+      "type": "string",
+      "description": "Job title."
+    },
+    "lead_source_id": {
+      "type": "integer",
+      "description": "ID of the lead source."
+    },
+    "owner_id": {
+      "type": "integer",
+      "description": "ID of the owning agent."
+    },
+    "custom_field": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Custom field values."
+    }
+  }
+}

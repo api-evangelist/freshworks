@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Release",
+  "title": "Release",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique ID of the release."
+    },
+    "subject": {
+      "type": "string",
+      "description": "Subject of the release."
+    },
+    "description": {
+      "type": "string",
+      "description": "HTML description."
+    },
+    "status": {
+      "type": "integer",
+      "description": "Status. 1=Open, 2=On Hold, 3=In Progress, 4=Incomplete, 5=Completed."
+    },
+    "priority": {
+      "type": "integer",
+      "description": "Priority. 1=Low, 2=Medium, 3=High, 4=Urgent."
+    },
+    "release_type": {
+      "type": "integer",
+      "description": "Type. 1=Minor, 2=Standard, 3=Major, 4=Emergency."
+    },
+    "planned_start_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Planned start date."
+    },
+    "planned_end_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Planned end date."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when created."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when last updated."
+    }
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Account",
+  "title": "Account",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique ID of the account."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the company."
+    },
+    "address": {
+      "type": "string",
+      "description": "Address."
+    },
+    "city": {
+      "type": "string",
+      "description": "City."
+    },
+    "state": {
+      "type": "string",
+      "description": "State or province."
+    },
+    "zipcode": {
+      "type": "string",
+      "description": "ZIP or postal code."
+    },
+    "country": {
+      "type": "string",
+      "description": "Country."
+    },
+    "phone": {
+      "type": "string",
+      "description": "Phone number."
+    },
+    "website": {
+      "type": "string",
+      "format": "uri",
+      "description": "Website URL."
+    },
+    "number_of_employees": {
+      "type": "integer",
+      "description": "Number of employees."
+    },
+    "annual_revenue": {
+      "type": "number",
+      "description": "Annual revenue amount."
+    },
+    "industry_type_id": {
+      "type": "integer",
+      "description": "ID of the industry type."
+    },
+    "business_type_id": {
+      "type": "integer",
+      "description": "ID of the business type."
+    },
+    "owner_id": {
+      "type": "integer",
+      "description": "ID of the owning sales agent."
+    },
+    "custom_field": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Custom field values."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when created."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when last updated."
+    }
+  }
+}

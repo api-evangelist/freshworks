@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Employee",
+  "title": "Employee",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique ID of the employee."
+    },
+    "first_name": {
+      "type": "string",
+      "description": "First name."
+    },
+    "last_name": {
+      "type": "string",
+      "description": "Last name."
+    },
+    "official_email": {
+      "type": "string",
+      "format": "email",
+      "description": "Official work email address."
+    },
+    "personal_email": {
+      "type": "string",
+      "format": "email",
+      "description": "Personal email address."
+    },
+    "employee_id": {
+      "type": "string",
+      "description": "Employee ID number."
+    },
+    "status": {
+      "type": "string",
+      "description": "Employment status (active, inactive)."
+    },
+    "designation": {
+      "type": "string",
+      "description": "Job designation or title."
+    },
+    "phone_number": {
+      "type": "string",
+      "description": "Phone number."
+    },
+    "date_of_birth": {
+      "type": "string",
+      "format": "date",
+      "description": "Date of birth."
+    },
+    "joining_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date of joining the organization."
+    },
+    "branch_id": {
+      "type": "integer",
+      "description": "ID of the branch."
+    },
+    "department_id": {
+      "type": "integer",
+      "description": "ID of the department."
+    },
+    "sub_department_id": {
+      "type": "integer",
+      "description": "ID of the sub-department."
+    },
+    "reporting_to_id": {
+      "type": "integer",
+      "description": "ID of the reporting manager."
+    },
+    "level_id": {
+      "type": "integer",
+      "description": "ID of the employee level."
+    },
+    "role_id": {
+      "type": "integer",
+      "description": "ID of the assigned role."
+    },
+    "gender": {
+      "type": "string",
+      "description": "Gender."
+    },
+    "address": {
+      "type": "object",
+      "description": "Address information.",
+      "properties": {
+        "street": {
+          "type": "string",
+          "description": "Street address."
+        },
+        "city": {
+          "type": "string",
+          "description": "City."
+        },
+        "state": {
+          "type": "string",
+          "description": "State or province."
+        },
+        "country": {
+          "type": "string",
+          "description": "Country."
+        },
+        "zip_code": {
+          "type": "string",
+          "description": "ZIP or postal code."
+        }
+      }
+    },
+    "custom_fields": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Custom field values."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when created."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when last updated."
+    }
+  }
+}

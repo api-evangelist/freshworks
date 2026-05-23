@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Meta",
+  "title": "Meta",
+  "type": "object",
+  "properties": {
+    "total_pages": {
+      "type": "integer",
+      "description": "Total number of pages."
+    },
+    "total": {
+      "type": "integer",
+      "description": "Total number of records."
+    },
+    "current_page": {
+      "type": "integer",
+      "description": "Current page number."
+    }
+  }
+}

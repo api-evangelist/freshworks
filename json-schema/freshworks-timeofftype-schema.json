@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/TimeOffType",
+  "title": "TimeOffType",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique ID of the time-off type."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the time-off type (e.g., Vacation, Sick Leave)."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description."
+    },
+    "is_paid": {
+      "type": "boolean",
+      "description": "Whether the time-off type is paid leave."
+    }
+  }
+}

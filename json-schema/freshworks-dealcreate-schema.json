@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/DealCreate",
+  "title": "DealCreate",
+  "type": "object",
+  "required": [
+    "name",
+    "amount"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the deal."
+    },
+    "amount": {
+      "type": "number",
+      "description": "Deal value amount."
+    },
+    "expected_close": {
+      "type": "string",
+      "format": "date",
+      "description": "Expected close date."
+    },
+    "deal_stage_id": {
+      "type": "integer",
+      "description": "ID of the deal stage."
+    },
+    "deal_pipeline_id": {
+      "type": "integer",
+      "description": "ID of the pipeline."
+    },
+    "probability": {
+      "type": "integer",
+      "description": "Probability of closing."
+    },
+    "sales_account_id": {
+      "type": "integer",
+      "description": "ID of the associated account."
+    },
+    "owner_id": {
+      "type": "integer",
+      "description": "ID of the owning agent."
+    },
+    "custom_field": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Custom field values."
+    }
+  }
+}

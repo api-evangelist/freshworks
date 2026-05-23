@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Agent",
+  "title": "Agent",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique ID of the agent."
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Email address."
+    },
+    "first_name": {
+      "type": "string",
+      "description": "First name."
+    },
+    "last_name": {
+      "type": "string",
+      "description": "Last name."
+    },
+    "avatar": {
+      "type": "object",
+      "description": "Avatar image details.",
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL of the avatar image."
+        }
+      }
+    },
+    "biography": {
+      "type": "string",
+      "description": "Agent biography."
+    },
+    "is_deactivated": {
+      "type": "boolean",
+      "description": "Whether the agent is deactivated."
+    },
+    "groups": {
+      "type": "array",
+      "description": "Groups the agent belongs to.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "availability": {
+      "type": "string",
+      "description": "Current availability status.",
+      "enum": [
+        "online",
+        "offline"
+      ]
+    },
+    "created_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the agent was created."
+    }
+  }
+}

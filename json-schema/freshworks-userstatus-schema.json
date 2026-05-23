@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/UserStatus",
+  "title": "UserStatus",
+  "type": "object",
+  "properties": {
+    "user_id": {
+      "type": "integer",
+      "description": "ID of the user."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the user."
+    },
+    "available": {
+      "type": "boolean",
+      "description": "Whether the user is available."
+    },
+    "on_call": {
+      "type": "boolean",
+      "description": "Whether the user is currently on a call."
+    },
+    "status": {
+      "type": "string",
+      "description": "Current status label."
+    }
+  }
+}

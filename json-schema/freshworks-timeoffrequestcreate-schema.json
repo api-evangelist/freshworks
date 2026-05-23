@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/TimeOffRequestCreate",
+  "title": "TimeOffRequestCreate",
+  "type": "object",
+  "required": [
+    "leave_type_id",
+    "start_date",
+    "end_date"
+  ],
+  "properties": {
+    "leave_type_id": {
+      "type": "integer",
+      "description": "ID of the time-off type."
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Start date."
+    },
+    "end_date": {
+      "type": "string",
+      "format": "date",
+      "description": "End date."
+    },
+    "comments": {
+      "type": "string",
+      "description": "Comments or reason for the request."
+    },
+    "notify": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "description": "User IDs to notify about the request."
+    }
+  }
+}

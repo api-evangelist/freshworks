@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/AssetCreate",
+  "title": "AssetCreate",
+  "type": "object",
+  "required": [
+    "name",
+    "asset_type_id"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the asset."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description."
+    },
+    "asset_type_id": {
+      "type": "integer",
+      "description": "ID of the asset type."
+    },
+    "asset_tag": {
+      "type": "string",
+      "description": "Asset tag identifier."
+    },
+    "impact": {
+      "type": "string",
+      "description": "Impact level."
+    },
+    "usage_type": {
+      "type": "string",
+      "description": "Usage type."
+    },
+    "user_id": {
+      "type": "integer",
+      "description": "ID of the user to assign."
+    },
+    "department_id": {
+      "type": "integer",
+      "description": "ID of the department."
+    },
+    "location_id": {
+      "type": "integer",
+      "description": "ID of the location."
+    },
+    "agent_id": {
+      "type": "integer",
+      "description": "ID of the managing agent."
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ConversationUpdate",
+  "title": "ConversationUpdate",
+  "type": "object",
+  "properties": {
+    "status": {
+      "type": "string",
+      "description": "New status for the conversation.",
+      "enum": [
+        "new",
+        "assigned",
+        "resolved",
+        "reopened"
+      ]
+    },
+    "assigned_agent_id": {
+      "type": "string",
+      "description": "ID of the agent to assign."
+    },
+    "assigned_group_id": {
+      "type": "string",
+      "description": "ID of the group to assign."
+    }
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ContactCreate",
+  "title": "ContactCreate",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Full name of the contact."
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Primary email address."
+    },
+    "phone": {
+      "type": "string",
+      "description": "Phone number."
+    },
+    "mobile": {
+      "type": "string",
+      "description": "Mobile number."
+    },
+    "address": {
+      "type": "string",
+      "description": "Address of the contact."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description or notes about the contact."
+    },
+    "job_title": {
+      "type": "string",
+      "description": "Job title of the contact."
+    },
+    "company_id": {
+      "type": "integer",
+      "description": "ID of the associated company."
+    },
+    "language": {
+      "type": "string",
+      "description": "Language preference."
+    },
+    "time_zone": {
+      "type": "string",
+      "description": "Time zone."
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Tags to associate."
+    },
+    "custom_fields": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Key-value pairs for custom fields."
+    }
+  }
+}

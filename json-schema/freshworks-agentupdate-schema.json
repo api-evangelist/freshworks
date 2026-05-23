@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/AgentUpdate",
+  "title": "AgentUpdate",
+  "type": "object",
+  "properties": {
+    "occasional": {
+      "type": "boolean",
+      "description": "Whether the agent is occasional."
+    },
+    "group_ids": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "description": "IDs of groups to assign."
+    },
+    "role_ids": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "description": "IDs of roles to assign."
+    },
+    "ticket_scope": {
+      "type": "integer",
+      "description": "Scope of tickets the agent can access."
+    }
+  }
+}

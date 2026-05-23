@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/GroupCreate",
+  "title": "GroupCreate",
+  "type": "object",
+  "required": [
+    "name"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the group."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the group."
+    },
+    "agent_ids": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "description": "IDs of agents to include."
+    },
+    "auto_ticket_assign": {
+      "type": "boolean",
+      "description": "Whether to enable auto ticket assignment."
+    },
+    "escalate_to": {
+      "type": "integer",
+      "description": "Agent ID to escalate unassigned tickets to."
+    },
+    "unassigned_for": {
+      "type": "string",
+      "description": "Time duration after which tickets are escalated."
+    }
+  }
+}

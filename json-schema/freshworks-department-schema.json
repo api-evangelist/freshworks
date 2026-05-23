@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Department",
+  "title": "Department",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique ID of the department."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the department."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description."
+    },
+    "head_user_id": {
+      "type": "integer",
+      "description": "ID of the department head."
+    },
+    "prime_user_id": {
+      "type": "integer",
+      "description": "ID of the primary user."
+    },
+    "domains": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Email domains associated with the department."
+    },
+    "custom_fields": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Custom field values."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when created."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when last updated."
+    }
+  }
+}

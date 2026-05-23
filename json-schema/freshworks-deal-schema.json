@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Deal",
+  "title": "Deal",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique ID of the deal."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the deal."
+    },
+    "amount": {
+      "type": "number",
+      "description": "Deal value amount."
+    },
+    "expected_close": {
+      "type": "string",
+      "format": "date",
+      "description": "Expected close date."
+    },
+    "deal_stage_id": {
+      "type": "integer",
+      "description": "ID of the current deal stage."
+    },
+    "deal_pipeline_id": {
+      "type": "integer",
+      "description": "ID of the deal pipeline."
+    },
+    "probability": {
+      "type": "integer",
+      "description": "Probability of closing (0-100).",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "sales_account_id": {
+      "type": "integer",
+      "description": "ID of the associated account."
+    },
+    "owner_id": {
+      "type": "integer",
+      "description": "ID of the owning sales agent."
+    },
+    "currency_id": {
+      "type": "integer",
+      "description": "ID of the currency."
+    },
+    "custom_field": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Custom field values."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when created."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when last updated."
+    }
+  }
+}

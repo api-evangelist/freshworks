@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Requester",
+  "title": "Requester",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique ID of the requester."
+    },
+    "first_name": {
+      "type": "string",
+      "description": "First name."
+    },
+    "last_name": {
+      "type": "string",
+      "description": "Last name."
+    },
+    "primary_email": {
+      "type": "string",
+      "format": "email",
+      "description": "Primary email address."
+    },
+    "work_phone_number": {
+      "type": "string",
+      "description": "Work phone number."
+    },
+    "mobile_phone_number": {
+      "type": "string",
+      "description": "Mobile phone number."
+    },
+    "job_title": {
+      "type": "string",
+      "description": "Job title."
+    },
+    "department_id": {
+      "type": "integer",
+      "description": "ID of the department."
+    },
+    "location_id": {
+      "type": "integer",
+      "description": "ID of the location."
+    },
+    "is_agent": {
+      "type": "boolean",
+      "description": "Whether the requester is also an agent."
+    },
+    "active": {
+      "type": "boolean",
+      "description": "Whether the requester is active."
+    },
+    "custom_fields": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Custom field values."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when created."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when last updated."
+    }
+  }
+}

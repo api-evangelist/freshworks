@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Call",
+  "title": "Call",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique ID of the call."
+    },
+    "direction": {
+      "type": "string",
+      "description": "Direction of the call.",
+      "enum": [
+        "incoming",
+        "outgoing"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "description": "Status of the call (completed, missed, voicemail, abandoned)."
+    },
+    "phone_number": {
+      "type": "string",
+      "description": "Phone number involved in the call."
+    },
+    "caller_number": {
+      "type": "string",
+      "description": "Phone number of the caller."
+    },
+    "agent_id": {
+      "type": "integer",
+      "description": "ID of the agent who handled the call."
+    },
+    "queue_id": {
+      "type": "integer",
+      "description": "ID of the call queue."
+    },
+    "team_id": {
+      "type": "integer",
+      "description": "ID of the team."
+    },
+    "duration": {
+      "type": "integer",
+      "description": "Total duration of the call in seconds."
+    },
+    "bill_duration": {
+      "type": "integer",
+      "description": "Billable duration in seconds."
+    },
+    "talk_duration": {
+      "type": "integer",
+      "description": "Talk time duration in seconds."
+    },
+    "hold_duration": {
+      "type": "integer",
+      "description": "Hold time duration in seconds."
+    },
+    "wait_duration": {
+      "type": "integer",
+      "description": "Wait time duration in seconds."
+    },
+    "has_recording": {
+      "type": "boolean",
+      "description": "Whether the call has a recording."
+    },
+    "recording_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL to the call recording."
+    },
+    "notes": {
+      "type": "string",
+      "description": "Notes about the call."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the call started."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the record was last updated."
+    }
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/TicketCreate",
+  "title": "TicketCreate",
+  "type": "object",
+  "required": [
+    "subject",
+    "description"
+  ],
+  "properties": {
+    "subject": {
+      "type": "string",
+      "description": "Subject of the ticket."
+    },
+    "description": {
+      "type": "string",
+      "description": "HTML content of the ticket description."
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Email of the requester."
+    },
+    "phone": {
+      "type": "string",
+      "description": "Phone number of the requester."
+    },
+    "requester_id": {
+      "type": "integer",
+      "description": "ID of the requester."
+    },
+    "status": {
+      "type": "integer",
+      "description": "Status of the ticket.",
+      "enum": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "default": 2
+    },
+    "priority": {
+      "type": "integer",
+      "description": "Priority of the ticket.",
+      "enum": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "default": 1
+    },
+    "source": {
+      "type": "integer",
+      "description": "Channel through which the ticket was created."
+    },
+    "type": {
+      "type": "string",
+      "description": "Type of the ticket."
+    },
+    "responder_id": {
+      "type": "integer",
+      "description": "ID of the agent to assign."
+    },
+    "group_id": {
+      "type": "integer",
+      "description": "ID of the group to assign."
+    },
+    "product_id": {
+      "type": "integer",
+      "description": "ID of the associated product."
+    },
+    "company_id": {
+      "type": "integer",
+      "description": "ID of the associated company."
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Tags to associate with the ticket."
+    },
+    "cc_emails": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "email"
+      },
+      "description": "Email addresses to CC on the ticket."
+    },
+    "custom_fields": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Key-value pairs for custom fields."
+    },
+    "parent_id": {
+      "type": "integer",
+      "description": "ID of the parent ticket to create a child ticket."
+    }
+  }
+}

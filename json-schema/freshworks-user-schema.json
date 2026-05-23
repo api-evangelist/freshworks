@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/User",
+  "title": "User",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique ID of the user."
+    },
+    "name": {
+      "type": "string",
+      "description": "Full name of the user."
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Email address."
+    },
+    "phone": {
+      "type": "string",
+      "description": "Phone number."
+    },
+    "role": {
+      "type": "string",
+      "description": "Role of the user (admin, supervisor, agent)."
+    },
+    "available": {
+      "type": "boolean",
+      "description": "Whether the user is currently available."
+    },
+    "team_ids": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "description": "IDs of teams the user belongs to."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when created."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when last updated."
+    }
+  }
+}

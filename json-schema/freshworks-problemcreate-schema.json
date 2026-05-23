@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ProblemCreate",
+  "title": "ProblemCreate",
+  "type": "object",
+  "required": [
+    "subject",
+    "description",
+    "status",
+    "priority",
+    "impact"
+  ],
+  "properties": {
+    "subject": {
+      "type": "string",
+      "description": "Subject of the problem."
+    },
+    "description": {
+      "type": "string",
+      "description": "HTML description."
+    },
+    "status": {
+      "type": "integer",
+      "description": "Status of the problem."
+    },
+    "priority": {
+      "type": "integer",
+      "description": "Priority."
+    },
+    "impact": {
+      "type": "integer",
+      "description": "Impact level."
+    },
+    "agent_id": {
+      "type": "integer",
+      "description": "ID of the agent to assign."
+    },
+    "group_id": {
+      "type": "integer",
+      "description": "ID of the group to assign."
+    },
+    "department_id": {
+      "type": "integer",
+      "description": "ID of the department."
+    },
+    "known_error": {
+      "type": "boolean",
+      "description": "Whether this is a known error."
+    },
+    "due_by": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Due date."
+    }
+  }
+}

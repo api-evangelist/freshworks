@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ChangeCreate",
+  "title": "ChangeCreate",
+  "type": "object",
+  "required": [
+    "subject",
+    "description",
+    "status",
+    "priority",
+    "impact",
+    "risk",
+    "change_type"
+  ],
+  "properties": {
+    "subject": {
+      "type": "string",
+      "description": "Subject of the change request."
+    },
+    "description": {
+      "type": "string",
+      "description": "HTML description."
+    },
+    "status": {
+      "type": "integer",
+      "description": "Status."
+    },
+    "priority": {
+      "type": "integer",
+      "description": "Priority."
+    },
+    "impact": {
+      "type": "integer",
+      "description": "Impact level."
+    },
+    "risk": {
+      "type": "integer",
+      "description": "Risk level."
+    },
+    "change_type": {
+      "type": "string",
+      "description": "Type of change."
+    },
+    "agent_id": {
+      "type": "integer",
+      "description": "ID of the agent to assign."
+    },
+    "group_id": {
+      "type": "integer",
+      "description": "ID of the group to assign."
+    },
+    "department_id": {
+      "type": "integer",
+      "description": "ID of the department."
+    },
+    "planned_start_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Planned start date."
+    },
+    "planned_end_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Planned end date."
+    }
+  }
+}

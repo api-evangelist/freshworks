@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/NoteCreate",
+  "title": "NoteCreate",
+  "type": "object",
+  "required": [
+    "body"
+  ],
+  "properties": {
+    "body": {
+      "type": "string",
+      "description": "HTML content of the note."
+    },
+    "private": {
+      "type": "boolean",
+      "description": "Whether the note is private (internal only).",
+      "default": true
+    },
+    "incoming": {
+      "type": "boolean",
+      "description": "Whether the note is incoming.",
+      "default": false
+    }
+  }
+}

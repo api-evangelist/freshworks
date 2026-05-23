@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/MessageCreate",
+  "title": "MessageCreate",
+  "type": "object",
+  "required": [
+    "message_parts",
+    "actor_type",
+    "actor_id"
+  ],
+  "properties": {
+    "message_type": {
+      "type": "string",
+      "description": "Type of message.",
+      "enum": [
+        "normal",
+        "private"
+      ],
+      "default": "normal"
+    },
+    "actor_type": {
+      "type": "string",
+      "description": "Type of actor sending the message.",
+      "enum": [
+        "user",
+        "agent"
+      ]
+    },
+    "actor_id": {
+      "type": "string",
+      "description": "ID of the actor sending the message."
+    },
+    "message_parts": {
+      "type": "array",
+      "description": "Parts composing the message content.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "object",
+            "properties": {
+              "content": {
+                "type": "string",
+                "description": "Text content."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

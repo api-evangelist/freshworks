@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Change",
+  "title": "Change",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique ID of the change."
+    },
+    "subject": {
+      "type": "string",
+      "description": "Subject of the change request."
+    },
+    "description": {
+      "type": "string",
+      "description": "HTML description."
+    },
+    "status": {
+      "type": "integer",
+      "description": "Status. 1=Open, 2=Planning, 3=Awaiting Approval, 4=Pending Release, 5=Pending Review, 6=Closed."
+    },
+    "priority": {
+      "type": "integer",
+      "description": "Priority. 1=Low, 2=Medium, 3=High, 4=Urgent."
+    },
+    "impact": {
+      "type": "integer",
+      "description": "Impact. 1=Low, 2=Medium, 3=High."
+    },
+    "risk": {
+      "type": "integer",
+      "description": "Risk. 1=Low, 2=Medium, 3=High, 4=Very High."
+    },
+    "change_type": {
+      "type": "string",
+      "description": "Type of change (Standard, Normal, Emergency, Minor)."
+    },
+    "agent_id": {
+      "type": "integer",
+      "description": "ID of the assigned agent."
+    },
+    "group_id": {
+      "type": "integer",
+      "description": "ID of the assigned group."
+    },
+    "department_id": {
+      "type": "integer",
+      "description": "ID of the department."
+    },
+    "planned_start_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Planned start date."
+    },
+    "planned_end_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Planned end date."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when created."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when last updated."
+    }
+  }
+}

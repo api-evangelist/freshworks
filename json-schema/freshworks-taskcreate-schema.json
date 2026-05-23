@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/TaskCreate",
+  "title": "TaskCreate",
+  "type": "object",
+  "required": [
+    "title",
+    "due_date",
+    "owner_id"
+  ],
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Title of the task."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description."
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Due date and time."
+    },
+    "owner_id": {
+      "type": "integer",
+      "description": "ID of the task owner."
+    },
+    "task_type_id": {
+      "type": "integer",
+      "description": "ID of the task type."
+    },
+    "targetable_type": {
+      "type": "string",
+      "description": "Type of associated record."
+    },
+    "targetable_id": {
+      "type": "integer",
+      "description": "ID of associated record."
+    }
+  }
+}

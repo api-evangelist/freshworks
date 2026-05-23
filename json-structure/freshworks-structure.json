@@ -1,0 +1,549 @@
+{
+  "provider": "Freshworks",
+  "providerId": "freshworks",
+  "kind": "json-structure",
+  "description": "Structural overview of the Freshworks API surface; extracted from openapi/.",
+  "schemaCount": 22,
+  "operationCount": 41,
+  "schemas": [
+    {
+      "name": "Ticket",
+      "type": "object",
+      "propertyCount": 23,
+      "required": []
+    },
+    {
+      "name": "TicketCreate",
+      "type": "object",
+      "propertyCount": 17,
+      "required": [
+        "subject",
+        "description",
+        "email",
+        "status",
+        "priority"
+      ]
+    },
+    {
+      "name": "TicketUpdate",
+      "type": "object",
+      "propertyCount": 11,
+      "required": []
+    },
+    {
+      "name": "Conversation",
+      "type": "object",
+      "propertyCount": 9,
+      "required": []
+    },
+    {
+      "name": "Problem",
+      "type": "object",
+      "propertyCount": 13,
+      "required": []
+    },
+    {
+      "name": "ProblemCreate",
+      "type": "object",
+      "propertyCount": 10,
+      "required": [
+        "subject",
+        "description",
+        "status",
+        "priority",
+        "impact"
+      ]
+    },
+    {
+      "name": "Change",
+      "type": "object",
+      "propertyCount": 15,
+      "required": []
+    },
+    {
+      "name": "ChangeCreate",
+      "type": "object",
+      "propertyCount": 12,
+      "required": [
+        "subject",
+        "description",
+        "status",
+        "priority",
+        "impact",
+        "risk",
+        "change_type"
+      ]
+    },
+    {
+      "name": "Release",
+      "type": "object",
+      "propertyCount": 10,
+      "required": []
+    },
+    {
+      "name": "ReleaseCreate",
+      "type": "object",
+      "propertyCount": 7,
+      "required": [
+        "subject",
+        "description",
+        "status",
+        "priority",
+        "release_type",
+        "planned_start_date",
+        "planned_end_date"
+      ]
+    },
+    {
+      "name": "Asset",
+      "type": "object",
+      "propertyCount": 15,
+      "required": []
+    },
+    {
+      "name": "AssetCreate",
+      "type": "object",
+      "propertyCount": 10,
+      "required": [
+        "name",
+        "asset_type_id"
+      ]
+    },
+    {
+      "name": "Requester",
+      "type": "object",
+      "propertyCount": 14,
+      "required": []
+    },
+    {
+      "name": "RequesterCreate",
+      "type": "object",
+      "propertyCount": 9,
+      "required": [
+        "first_name",
+        "primary_email"
+      ]
+    },
+    {
+      "name": "Agent",
+      "type": "object",
+      "propertyCount": 11,
+      "required": []
+    },
+    {
+      "name": "Vendor",
+      "type": "object",
+      "propertyCount": 9,
+      "required": []
+    },
+    {
+      "name": "VendorCreate",
+      "type": "object",
+      "propertyCount": 6,
+      "required": [
+        "name"
+      ]
+    },
+    {
+      "name": "Product",
+      "type": "object",
+      "propertyCount": 9,
+      "required": []
+    },
+    {
+      "name": "Location",
+      "type": "object",
+      "propertyCount": 6,
+      "required": []
+    },
+    {
+      "name": "Department",
+      "type": "object",
+      "propertyCount": 9,
+      "required": []
+    },
+    {
+      "name": "ServiceItem",
+      "type": "object",
+      "propertyCount": 10,
+      "required": []
+    },
+    {
+      "name": "Error",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    }
+  ],
+  "operations": [
+    {
+      "method": "GET",
+      "path": "/tickets",
+      "operationId": "listTickets",
+      "summary": "List all tickets",
+      "tags": [
+        "Tickets"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/tickets",
+      "operationId": "createTicket",
+      "summary": "Create a ticket",
+      "tags": [
+        "Tickets"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/tickets/{ticket_id}",
+      "operationId": "getTicket",
+      "summary": "View a ticket",
+      "tags": [
+        "Tickets"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/tickets/{ticket_id}",
+      "operationId": "updateTicket",
+      "summary": "Update a ticket",
+      "tags": [
+        "Tickets"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/tickets/{ticket_id}",
+      "operationId": "deleteTicket",
+      "summary": "Delete a ticket",
+      "tags": [
+        "Tickets"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/tickets/{ticket_id}/restore",
+      "operationId": "restoreTicket",
+      "summary": "Restore a deleted ticket",
+      "tags": [
+        "Tickets"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/tickets/{ticket_id}/conversations",
+      "operationId": "listTicketConversations",
+      "summary": "List all conversations of a ticket",
+      "tags": [
+        "Conversations"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/tickets/{ticket_id}/reply",
+      "operationId": "replyToTicket",
+      "summary": "Reply to a ticket",
+      "tags": [
+        "Conversations"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/tickets/{ticket_id}/notes",
+      "operationId": "createNote",
+      "summary": "Create a note on a ticket",
+      "tags": [
+        "Conversations"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/problems",
+      "operationId": "listProblems",
+      "summary": "List all problems",
+      "tags": [
+        "Problems"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/problems",
+      "operationId": "createProblem",
+      "summary": "Create a problem",
+      "tags": [
+        "Problems"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/problems/{problem_id}",
+      "operationId": "getProblem",
+      "summary": "View a problem",
+      "tags": [
+        "Problems"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/problems/{problem_id}",
+      "operationId": "updateProblem",
+      "summary": "Update a problem",
+      "tags": [
+        "Problems"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/problems/{problem_id}",
+      "operationId": "deleteProblem",
+      "summary": "Delete a problem",
+      "tags": [
+        "Problems"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/changes",
+      "operationId": "listChanges",
+      "summary": "List all changes",
+      "tags": [
+        "Changes"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/changes",
+      "operationId": "createChange",
+      "summary": "Create a change request",
+      "tags": [
+        "Changes"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/changes/{change_id}",
+      "operationId": "getChange",
+      "summary": "View a change request",
+      "tags": [
+        "Changes"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/changes/{change_id}",
+      "operationId": "updateChange",
+      "summary": "Update a change request",
+      "tags": [
+        "Changes"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/changes/{change_id}",
+      "operationId": "deleteChange",
+      "summary": "Delete a change request",
+      "tags": [
+        "Changes"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/releases",
+      "operationId": "listReleases",
+      "summary": "List all releases",
+      "tags": [
+        "Releases"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/releases",
+      "operationId": "createRelease",
+      "summary": "Create a release",
+      "tags": [
+        "Releases"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/releases/{release_id}",
+      "operationId": "getRelease",
+      "summary": "View a release",
+      "tags": [
+        "Releases"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/assets",
+      "operationId": "listAssets",
+      "summary": "List all assets",
+      "tags": [
+        "Assets"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/assets",
+      "operationId": "createAsset",
+      "summary": "Create an asset",
+      "tags": [
+        "Assets"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/assets/{asset_id}",
+      "operationId": "getAsset",
+      "summary": "View an asset",
+      "tags": [
+        "Assets"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/assets/{asset_id}",
+      "operationId": "updateAsset",
+      "summary": "Update an asset",
+      "tags": [
+        "Assets"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/assets/{asset_id}",
+      "operationId": "deleteAsset",
+      "summary": "Delete an asset",
+      "tags": [
+        "Assets"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/requesters",
+      "operationId": "listRequesters",
+      "summary": "List all requesters",
+      "tags": [
+        "Requesters"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/requesters",
+      "operationId": "createRequester",
+      "summary": "Create a requester",
+      "tags": [
+        "Requesters"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/requesters/{requester_id}",
+      "operationId": "getRequester",
+      "summary": "View a requester",
+      "tags": [
+        "Requesters"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/requesters/{requester_id}",
+      "operationId": "updateRequester",
+      "summary": "Update a requester",
+      "tags": [
+        "Requesters"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/requesters/{requester_id}",
+      "operationId": "deleteRequester",
+      "summary": "Delete a requester",
+      "tags": [
+        "Requesters"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/agents",
+      "operationId": "listAgents",
+      "summary": "List all agents",
+      "tags": [
+        "Agents"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/agents/{agent_id}",
+      "operationId": "getAgent",
+      "summary": "View an agent",
+      "tags": [
+        "Agents"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/vendors",
+      "operationId": "listVendors",
+      "summary": "List all vendors",
+      "tags": [
+        "Vendors"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/vendors",
+      "operationId": "createVendor",
+      "summary": "Create a vendor",
+      "tags": [
+        "Vendors"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/products",
+      "operationId": "listProducts",
+      "summary": "List all products",
+      "tags": [
+        "Products"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/locations",
+      "operationId": "listLocations",
+      "summary": "List all locations",
+      "tags": [
+        "Locations"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/departments",
+      "operationId": "listDepartments",
+      "summary": "List all departments",
+      "tags": [
+        "Departments"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/service_catalog/items",
+      "operationId": "listServiceCatalogItems",
+      "summary": "List all service catalog items",
+      "tags": [
+        "Service Catalog"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/service_catalog/items/{item_id}",
+      "operationId": "getServiceCatalogItem",
+      "summary": "View a service catalog item",
+      "tags": [
+        "Service Catalog"
+      ]
+    }
+  ]
+}

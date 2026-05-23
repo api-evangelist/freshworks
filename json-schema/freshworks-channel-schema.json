@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Channel",
+  "title": "Channel",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique ID of the channel."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the channel."
+    },
+    "icon": {
+      "type": "object",
+      "description": "Channel icon details.",
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL of the icon image."
+        }
+      }
+    },
+    "enabled": {
+      "type": "boolean",
+      "description": "Whether the channel is enabled."
+    },
+    "public": {
+      "type": "boolean",
+      "description": "Whether the channel is public."
+    },
+    "welcome_message": {
+      "type": "object",
+      "description": "Welcome message configuration.",
+      "properties": {
+        "message_parts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "text": {
+                "type": "object",
+                "properties": {
+                  "content": {
+                    "type": "string",
+                    "description": "Welcome message text."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "updated_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the channel was last updated."
+    }
+  }
+}

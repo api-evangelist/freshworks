@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Conversation",
+  "title": "Conversation",
+  "type": "object",
+  "properties": {
+    "conversation_id": {
+      "type": "string",
+      "description": "Unique ID of the conversation."
+    },
+    "app_id": {
+      "type": "string",
+      "description": "ID of the Freshchat application."
+    },
+    "channel_id": {
+      "type": "string",
+      "description": "ID of the channel."
+    },
+    "status": {
+      "type": "string",
+      "description": "Status of the conversation (new, assigned, resolved, reopened).",
+      "enum": [
+        "new",
+        "assigned",
+        "resolved",
+        "reopened"
+      ]
+    },
+    "assigned_agent_id": {
+      "type": "string",
+      "description": "ID of the assigned agent."
+    },
+    "assigned_group_id": {
+      "type": "string",
+      "description": "ID of the assigned group."
+    },
+    "users": {
+      "type": "array",
+      "description": "Users involved in the conversation.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "User ID."
+          }
+        }
+      }
+    },
+    "created_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the conversation was created."
+    }
+  }
+}

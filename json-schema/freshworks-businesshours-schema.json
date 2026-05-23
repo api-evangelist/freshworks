@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/BusinessHours",
+  "title": "BusinessHours",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique ID of the business hours configuration."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the business hours configuration."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the business hours."
+    },
+    "time_zone": {
+      "type": "string",
+      "description": "Time zone for the business hours."
+    },
+    "is_default": {
+      "type": "boolean",
+      "description": "Whether this is the default business hours."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the configuration was created."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the configuration was last updated."
+    }
+  }
+}

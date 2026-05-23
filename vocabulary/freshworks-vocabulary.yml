@@ -1,0 +1,31 @@
+name: Freshworks Domain Vocabulary
+provider: Freshworks
+providerId: freshworks
+description: Tag-derived vocabulary for the Freshworks API surface; sourced from openapi/ tags.
+terms:
+- term: Agents
+  description: Manage service desk agents and their configurations.
+- term: Assets
+  description: Manage IT assets including hardware, software, and configurations.
+- term: Changes
+  description: Manage change requests for controlled modifications to IT infrastructure.
+- term: Conversations
+  description: Manage ticket conversations including replies and notes.
+- term: Departments
+  description: Manage organizational department records.
+- term: Locations
+  description: Manage office and facility locations.
+- term: Problems
+  description: Manage problem records for root cause analysis of recurring incidents.
+- term: Products
+  description: Manage product records tracked in the service desk.
+- term: Releases
+  description: Manage release records for deploying changes to production.
+- term: Requesters
+  description: Manage requesters who submit tickets to the service desk.
+- term: Service Catalog
+  description: Manage service catalog items available for request.
+- term: Tickets
+  description: Manage IT service desk tickets including incidents, service requests, and their lifecycle.
+- term: Vendors
+  description: Manage vendor records for IT procurement and contracts.

@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/TimeEntry",
+  "title": "TimeEntry",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique ID of the time entry."
+    },
+    "agent_id": {
+      "type": "integer",
+      "description": "ID of the agent who logged the time."
+    },
+    "billable": {
+      "type": "boolean",
+      "description": "Whether the time entry is billable."
+    },
+    "executed_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the work was executed."
+    },
+    "note": {
+      "type": "string",
+      "description": "Note describing the work performed."
+    },
+    "start_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Start time of the time entry."
+    },
+    "time_spent": {
+      "type": "string",
+      "description": "Duration of time spent in HH:MM format."
+    },
+    "timer_running": {
+      "type": "boolean",
+      "description": "Whether the timer is currently running."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the time entry was created."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the time entry was last updated."
+    }
+  }
+}

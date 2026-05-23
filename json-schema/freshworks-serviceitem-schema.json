@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ServiceItem",
+  "title": "ServiceItem",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique ID of the service item."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the service item."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description."
+    },
+    "short_description": {
+      "type": "string",
+      "description": "Short description for catalog listing."
+    },
+    "category_id": {
+      "type": "integer",
+      "description": "ID of the service category."
+    },
+    "display_id": {
+      "type": "integer",
+      "description": "Display ID for the item."
+    },
+    "delivery_time": {
+      "type": "integer",
+      "description": "Expected delivery time in hours."
+    },
+    "visibility": {
+      "type": "integer",
+      "description": "Visibility setting."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when created."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when last updated."
+    }
+  }
+}

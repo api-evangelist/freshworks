@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/SalesActivityCreate",
+  "title": "SalesActivityCreate",
+  "type": "object",
+  "required": [
+    "title",
+    "owner_id",
+    "sales_activity_type_id",
+    "start_date",
+    "end_date"
+  ],
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Title of the activity."
+    },
+    "notes": {
+      "type": "string",
+      "description": "Notes."
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Start date."
+    },
+    "end_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "End date."
+    },
+    "sales_activity_type_id": {
+      "type": "integer",
+      "description": "Activity type ID."
+    },
+    "owner_id": {
+      "type": "integer",
+      "description": "Owner ID."
+    },
+    "targetable_type": {
+      "type": "string",
+      "description": "Associated record type."
+    },
+    "targetable_id": {
+      "type": "integer",
+      "description": "Associated record ID."
+    }
+  }
+}

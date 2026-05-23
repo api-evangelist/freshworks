@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/JobPosting",
+  "title": "JobPosting",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique ID of the job posting."
+    },
+    "title": {
+      "type": "string",
+      "description": "Title of the job posting."
+    },
+    "description": {
+      "type": "string",
+      "description": "Full job description."
+    },
+    "status": {
+      "type": "string",
+      "description": "Status of the posting.",
+      "enum": [
+        "draft",
+        "published",
+        "on_hold",
+        "closed"
+      ]
+    },
+    "branch_id": {
+      "type": "integer",
+      "description": "ID of the branch."
+    },
+    "department_id": {
+      "type": "integer",
+      "description": "ID of the department."
+    },
+    "type": {
+      "type": "string",
+      "description": "Employment type (full_time, part_time, contract)."
+    },
+    "experience": {
+      "type": "string",
+      "description": "Required experience level."
+    },
+    "remote": {
+      "type": "boolean",
+      "description": "Whether the position is remote."
+    },
+    "salary": {
+      "type": "object",
+      "description": "Salary range information.",
+      "properties": {
+        "min": {
+          "type": "number",
+          "description": "Minimum salary."
+        },
+        "max": {
+          "type": "number",
+          "description": "Maximum salary."
+        },
+        "currency": {
+          "type": "string",
+          "description": "Currency code."
+        }
+      }
+    },
+    "closing_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Closing date for applications."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when created."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when last updated."
+    }
+  }
+}

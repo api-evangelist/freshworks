@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/CompanyCreate",
+  "title": "CompanyCreate",
+  "type": "object",
+  "required": [
+    "name"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the company."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the company."
+    },
+    "note": {
+      "type": "string",
+      "description": "Notes about the company."
+    },
+    "domains": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Email domains associated with the company."
+    },
+    "health_score": {
+      "type": "string",
+      "description": "Health score of the company account."
+    },
+    "account_tier": {
+      "type": "string",
+      "description": "Tier of the company account."
+    },
+    "renewal_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date of account renewal."
+    },
+    "industry": {
+      "type": "string",
+      "description": "Industry sector."
+    },
+    "custom_fields": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Key-value pairs for custom fields."
+    }
+  }
+}

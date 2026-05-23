@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Problem",
+  "title": "Problem",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique ID of the problem."
+    },
+    "subject": {
+      "type": "string",
+      "description": "Subject of the problem."
+    },
+    "description": {
+      "type": "string",
+      "description": "HTML description."
+    },
+    "status": {
+      "type": "integer",
+      "description": "Status of the problem. 1=Open, 2=Change Requested, 3=Closed."
+    },
+    "priority": {
+      "type": "integer",
+      "description": "Priority. 1=Low, 2=Medium, 3=High, 4=Urgent."
+    },
+    "impact": {
+      "type": "integer",
+      "description": "Impact. 1=Low, 2=Medium, 3=High."
+    },
+    "agent_id": {
+      "type": "integer",
+      "description": "ID of the assigned agent."
+    },
+    "group_id": {
+      "type": "integer",
+      "description": "ID of the assigned group."
+    },
+    "department_id": {
+      "type": "integer",
+      "description": "ID of the department."
+    },
+    "known_error": {
+      "type": "boolean",
+      "description": "Whether this is a known error."
+    },
+    "due_by": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Due date for resolution."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when created."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when last updated."
+    }
+  }
+}

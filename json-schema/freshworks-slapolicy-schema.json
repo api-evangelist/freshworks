@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/SLAPolicy",
+  "title": "SLAPolicy",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique ID of the SLA policy."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the SLA policy."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the SLA policy."
+    },
+    "is_default": {
+      "type": "boolean",
+      "description": "Whether this is the default SLA policy."
+    },
+    "active": {
+      "type": "boolean",
+      "description": "Whether the SLA policy is active."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the SLA policy was created."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the SLA policy was last updated."
+    }
+  }
+}

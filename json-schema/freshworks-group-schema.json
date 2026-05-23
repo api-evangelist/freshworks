@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Group",
+  "title": "Group",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique ID of the group."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the group."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the group."
+    },
+    "routing_type": {
+      "type": "string",
+      "description": "Conversation routing type for the group."
+    },
+    "agents": {
+      "type": "array",
+      "description": "IDs of agents in the group.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "created_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the group was created."
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/TeamCreate",
+  "title": "TeamCreate",
+  "type": "object",
+  "required": [
+    "name"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the team."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description."
+    },
+    "user_ids": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "description": "IDs of users to include."
+    }
+  }
+}

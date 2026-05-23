@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/SatisfactionRating",
+  "title": "SatisfactionRating",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique ID of the satisfaction rating."
+    },
+    "survey_id": {
+      "type": "integer",
+      "description": "ID of the associated survey."
+    },
+    "user_id": {
+      "type": "integer",
+      "description": "ID of the user who provided the rating."
+    },
+    "agent_id": {
+      "type": "integer",
+      "description": "ID of the agent who handled the ticket."
+    },
+    "ticket_id": {
+      "type": "integer",
+      "description": "ID of the ticket that was rated."
+    },
+    "rating": {
+      "type": "integer",
+      "description": "Satisfaction rating value."
+    },
+    "feedback": {
+      "type": "string",
+      "description": "Feedback text from the customer."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the rating was created."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the rating was last updated."
+    }
+  }
+}

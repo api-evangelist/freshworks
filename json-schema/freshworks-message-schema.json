@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Message",
+  "title": "Message",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique ID of the message."
+    },
+    "message_type": {
+      "type": "string",
+      "description": "Type of message (normal, private, system).",
+      "enum": [
+        "normal",
+        "private",
+        "system"
+      ]
+    },
+    "actor_type": {
+      "type": "string",
+      "description": "Type of actor who sent the message (user, agent, system).",
+      "enum": [
+        "user",
+        "agent",
+        "system"
+      ]
+    },
+    "actor_id": {
+      "type": "string",
+      "description": "ID of the actor."
+    },
+    "message_parts": {
+      "type": "array",
+      "description": "Parts that compose the message content.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "object",
+            "properties": {
+              "content": {
+                "type": "string",
+                "description": "Text content of the message part."
+              }
+            }
+          },
+          "image": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "format": "uri",
+                "description": "URL of the image."
+              }
+            }
+          }
+        }
+      }
+    },
+    "reply_parts": {
+      "type": "array",
+      "description": "Response enablers for agent or bot messages allowing quick replies.",
+      "items": {
+        "type": "object"
+      }
+    },
+    "created_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the message was created."
+    }
+  }
+}

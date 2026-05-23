@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/CallMetric",
+  "title": "CallMetric",
+  "type": "object",
+  "properties": {
+    "total_calls": {
+      "type": "integer",
+      "description": "Total number of calls."
+    },
+    "answered_calls": {
+      "type": "integer",
+      "description": "Number of answered calls."
+    },
+    "missed_calls": {
+      "type": "integer",
+      "description": "Number of missed calls."
+    },
+    "abandoned_calls": {
+      "type": "integer",
+      "description": "Number of abandoned calls."
+    },
+    "voicemails": {
+      "type": "integer",
+      "description": "Number of voicemails."
+    },
+    "average_talk_time": {
+      "type": "integer",
+      "description": "Average talk time in seconds."
+    },
+    "average_wait_time": {
+      "type": "integer",
+      "description": "Average wait time in seconds."
+    },
+    "average_handle_time": {
+      "type": "integer",
+      "description": "Average handle time in seconds."
+    }
+  }
+}

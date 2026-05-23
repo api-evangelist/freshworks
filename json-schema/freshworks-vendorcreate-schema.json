@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/VendorCreate",
+  "title": "VendorCreate",
+  "type": "object",
+  "required": [
+    "name"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the vendor."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description."
+    },
+    "primary_contact": {
+      "type": "string",
+      "description": "Primary contact person."
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Vendor email address."
+    },
+    "phone": {
+      "type": "string",
+      "description": "Phone number."
+    },
+    "address": {
+      "type": "object",
+      "properties": {
+        "line1": {
+          "type": "string",
+          "description": "Address line 1."
+        },
+        "line2": {
+          "type": "string",
+          "description": "Address line 2."
+        },
+        "city": {
+          "type": "string",
+          "description": "City."
+        },
+        "state": {
+          "type": "string",
+          "description": "State or province."
+        },
+        "country": {
+          "type": "string",
+          "description": "Country."
+        },
+        "zip_code": {
+          "type": "string",
+          "description": "Postal or ZIP code."
+        }
+      }
+    }
+  }
+}

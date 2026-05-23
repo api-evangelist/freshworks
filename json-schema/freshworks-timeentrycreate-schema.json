@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/TimeEntryCreate",
+  "title": "TimeEntryCreate",
+  "type": "object",
+  "required": [
+    "time_spent"
+  ],
+  "properties": {
+    "agent_id": {
+      "type": "integer",
+      "description": "ID of the agent logging the time."
+    },
+    "billable": {
+      "type": "boolean",
+      "description": "Whether the time entry is billable."
+    },
+    "executed_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the work was executed."
+    },
+    "note": {
+      "type": "string",
+      "description": "Note describing the work performed."
+    },
+    "time_spent": {
+      "type": "string",
+      "description": "Duration of time spent in HH:MM format."
+    }
+  }
+}
