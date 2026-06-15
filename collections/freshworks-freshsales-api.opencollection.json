@@ -1,0 +1,763 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Freshworks Freshsales API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Contacts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all contacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.myfreshworks.com/crm/sales/api/contacts",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Field to sort by."
+              },
+              {
+                "name": "sort_type",
+                "value": "",
+                "type": "query",
+                "description": "Sort order direction."
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Pre-defined view filter to apply."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of all contacts in the CRM. Supports filtering and sorting by various contact fields."
+        },
+        {
+          "info": {
+            "name": "Create a contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.myfreshworks.com/crm/sales/api/contacts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new contact in the CRM with the specified properties."
+        },
+        {
+          "info": {
+            "name": "View a contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.myfreshworks.com/crm/sales/api/contacts/:contact_id",
+            "params": [
+              {
+                "name": "contact_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the contact."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific contact by their ID."
+        },
+        {
+          "info": {
+            "name": "Update a contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.myfreshworks.com/crm/sales/api/contacts/:contact_id",
+            "params": [
+              {
+                "name": "contact_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the contact."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the properties of an existing contact."
+        },
+        {
+          "info": {
+            "name": "Delete a contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.myfreshworks.com/crm/sales/api/contacts/:contact_id",
+            "params": [
+              {
+                "name": "contact_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the contact."
+              }
+            ]
+          },
+          "docs": "Deletes a contact from the CRM."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.myfreshworks.com/crm/sales/api/sales_accounts",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Field to sort by."
+              },
+              {
+                "name": "sort_type",
+                "value": "",
+                "type": "query",
+                "description": "Sort order direction."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of all company accounts in the CRM."
+        },
+        {
+          "info": {
+            "name": "Create an account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.myfreshworks.com/crm/sales/api/sales_accounts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new company account in the CRM."
+        },
+        {
+          "info": {
+            "name": "View an account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.myfreshworks.com/crm/sales/api/sales_accounts/:account_id",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the account."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific company account by its ID."
+        },
+        {
+          "info": {
+            "name": "Update an account",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.myfreshworks.com/crm/sales/api/sales_accounts/:account_id",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the account."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the properties of an existing company account."
+        },
+        {
+          "info": {
+            "name": "Delete an account",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.myfreshworks.com/crm/sales/api/sales_accounts/:account_id",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the account."
+              }
+            ]
+          },
+          "docs": "Deletes a company account from the CRM."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Deals",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all deals",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.myfreshworks.com/crm/sales/api/deals",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Field to sort by."
+              },
+              {
+                "name": "sort_type",
+                "value": "",
+                "type": "query",
+                "description": "Sort order direction."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of all deals in the CRM pipeline."
+        },
+        {
+          "info": {
+            "name": "Create a deal",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.myfreshworks.com/crm/sales/api/deals",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new deal in the sales pipeline."
+        },
+        {
+          "info": {
+            "name": "View a deal",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.myfreshworks.com/crm/sales/api/deals/:deal_id",
+            "params": [
+              {
+                "name": "deal_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the deal."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific deal by its ID."
+        },
+        {
+          "info": {
+            "name": "Update a deal",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.myfreshworks.com/crm/sales/api/deals/:deal_id",
+            "params": [
+              {
+                "name": "deal_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the deal."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the properties of an existing deal."
+        },
+        {
+          "info": {
+            "name": "Delete a deal",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.myfreshworks.com/crm/sales/api/deals/:deal_id",
+            "params": [
+              {
+                "name": "deal_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the deal."
+              }
+            ]
+          },
+          "docs": "Deletes a deal from the CRM."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Leads",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all leads",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.myfreshworks.com/crm/sales/api/leads",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Field to sort by."
+              },
+              {
+                "name": "sort_type",
+                "value": "",
+                "type": "query",
+                "description": "Sort order direction."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of all leads in the CRM."
+        },
+        {
+          "info": {
+            "name": "Create a lead",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.myfreshworks.com/crm/sales/api/leads",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new lead in the CRM."
+        },
+        {
+          "info": {
+            "name": "View a lead",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.myfreshworks.com/crm/sales/api/leads/:lead_id",
+            "params": [
+              {
+                "name": "lead_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the lead."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific lead by their ID."
+        },
+        {
+          "info": {
+            "name": "Update a lead",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.myfreshworks.com/crm/sales/api/leads/:lead_id",
+            "params": [
+              {
+                "name": "lead_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the lead."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the properties of an existing lead."
+        },
+        {
+          "info": {
+            "name": "Delete a lead",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.myfreshworks.com/crm/sales/api/leads/:lead_id",
+            "params": [
+              {
+                "name": "lead_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the lead."
+              }
+            ]
+          },
+          "docs": "Deletes a lead from the CRM."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Tasks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all tasks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.myfreshworks.com/crm/sales/api/tasks",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination."
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter tasks by status (open, due_today, due_tomorrow, overdue, completed)."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of all tasks in the CRM."
+        },
+        {
+          "info": {
+            "name": "Create a task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.myfreshworks.com/crm/sales/api/tasks",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new task in the CRM."
+        },
+        {
+          "info": {
+            "name": "View a task",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.myfreshworks.com/crm/sales/api/tasks/:task_id",
+            "params": [
+              {
+                "name": "task_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the task."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific task by its ID."
+        },
+        {
+          "info": {
+            "name": "Update a task",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.myfreshworks.com/crm/sales/api/tasks/:task_id",
+            "params": [
+              {
+                "name": "task_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the task."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the properties of an existing task."
+        },
+        {
+          "info": {
+            "name": "Delete a task",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.myfreshworks.com/crm/sales/api/tasks/:task_id",
+            "params": [
+              {
+                "name": "task_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the task."
+              }
+            ]
+          },
+          "docs": "Deletes a task from the CRM."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Appointments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all appointments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.myfreshworks.com/crm/sales/api/appointments",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination."
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter appointments by time range."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of all appointments in the CRM."
+        },
+        {
+          "info": {
+            "name": "Create an appointment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.myfreshworks.com/crm/sales/api/appointments",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new appointment or meeting in the CRM."
+        },
+        {
+          "info": {
+            "name": "View an appointment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.myfreshworks.com/crm/sales/api/appointments/:appointment_id",
+            "params": [
+              {
+                "name": "appointment_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the appointment."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific appointment by its ID."
+        },
+        {
+          "info": {
+            "name": "Delete an appointment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.myfreshworks.com/crm/sales/api/appointments/:appointment_id",
+            "params": [
+              {
+                "name": "appointment_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the appointment."
+              }
+            ]
+          },
+          "docs": "Deletes an appointment from the CRM."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Notes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a note",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.myfreshworks.com/crm/sales/api/notes",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new note attached to a CRM record (contact, account, deal, or lead)."
+        },
+        {
+          "info": {
+            "name": "Delete a note",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.myfreshworks.com/crm/sales/api/notes/:note_id",
+            "params": [
+              {
+                "name": "note_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the note."
+              }
+            ]
+          },
+          "docs": "Deletes a note from the CRM."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Sales Activities",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all sales activities",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.myfreshworks.com/crm/sales/api/sales_activities",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of all sales activities in the CRM."
+        },
+        {
+          "info": {
+            "name": "Create a sales activity",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.myfreshworks.com/crm/sales/api/sales_activities",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new sales activity record in the CRM."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

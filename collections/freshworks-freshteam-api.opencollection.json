@@ -1,0 +1,401 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Freshworks Freshteam API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Employees",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all employees",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshteam.com/api/employees",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Field to sort by."
+              },
+              {
+                "name": "sort_type",
+                "value": "",
+                "type": "query",
+                "description": "Sort direction (asc or desc)."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by employment status."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of all employees in the Freshteam system. Supports filtering by status and sort options."
+        },
+        {
+          "info": {
+            "name": "View an employee",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshteam.com/api/employees/:employee_id",
+            "params": [
+              {
+                "name": "employee_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the employee."
+              }
+            ]
+          },
+          "docs": "Retrieves the full details of a specific employee by their ID."
+        },
+        {
+          "info": {
+            "name": "Update an employee",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.freshteam.com/api/employees/:employee_id",
+            "params": [
+              {
+                "name": "employee_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the employee."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the properties of an existing employee record."
+        },
+        {
+          "info": {
+            "name": "List all employee fields",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshteam.com/api/employee_fields"
+          },
+          "docs": "Retrieves the list of all employee form fields, including custom fields and their configurations."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Job Postings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all job postings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshteam.com/api/job_postings",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by posting status (draft, published, on_hold, closed)."
+              }
+            ]
+          },
+          "docs": "Retrieves a list of all job postings in the Freshteam system."
+        },
+        {
+          "info": {
+            "name": "View a job posting",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshteam.com/api/job_postings/:job_posting_id",
+            "params": [
+              {
+                "name": "job_posting_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the job posting."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific job posting by its ID."
+        },
+        {
+          "info": {
+            "name": "List applicant fields for a job posting",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshteam.com/api/job_postings/:job_posting_id/applicant_fields",
+            "params": [
+              {
+                "name": "job_posting_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the job posting."
+              }
+            ]
+          },
+          "docs": "Retrieves the list of applicant form fields for a specific job posting, including required and custom fields."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Applicants",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List applicants for a job posting",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshteam.com/api/job_postings/:job_posting_id/applicants",
+            "params": [
+              {
+                "name": "job_posting_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the job posting."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of all applicants for a specific job posting."
+        },
+        {
+          "info": {
+            "name": "Create an applicant for a job posting",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshteam.com/api/job_postings/:job_posting_id/applicants",
+            "params": [
+              {
+                "name": "job_posting_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the job posting."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new applicant for a specific job posting. This is used to programmatically submit job applications."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Branches",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all branches",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshteam.com/api/branches"
+          },
+          "docs": "Retrieves a list of all organizational branches or office locations."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Departments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all departments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshteam.com/api/departments"
+          },
+          "docs": "Retrieves a list of all organizational departments."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Sub-Departments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all sub-departments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshteam.com/api/sub_departments"
+          },
+          "docs": "Retrieves a list of all sub-departments within the organization."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Levels",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all levels",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshteam.com/api/levels"
+          },
+          "docs": "Retrieves a list of all employee levels and designations."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Time Off",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all time-off types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshteam.com/api/time_off_types"
+          },
+          "docs": "Retrieves a list of all time-off types configured in Freshteam such as vacation, sick leave, and personal days."
+        },
+        {
+          "info": {
+            "name": "List all time-off requests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshteam.com/api/time_offs",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination."
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by employee user ID."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by request status."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of all employee time-off requests."
+        },
+        {
+          "info": {
+            "name": "Create a time-off request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshteam.com/api/time_offs",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new time-off request for an employee."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Roles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all roles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshteam.com/api/roles"
+          },
+          "docs": "Retrieves a list of all user roles and their permissions."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

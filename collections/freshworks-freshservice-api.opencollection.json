@@ -1,0 +1,984 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Freshworks Freshservice API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tickets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all tickets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshservice.com/api/v2/tickets",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (max 100)."
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Pre-defined filter to apply."
+              },
+              {
+                "name": "requester_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter tickets by requester ID."
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "Filter tickets by requester email."
+              },
+              {
+                "name": "updated_since",
+                "value": "",
+                "type": "query",
+                "description": "Return tickets updated after this timestamp."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Filter tickets by type (Incident, Service Request)."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of all tickets in the service desk. Results can be filtered by various criteria including status, priority, type, and requester."
+        },
+        {
+          "info": {
+            "name": "Create a ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshservice.com/api/v2/tickets",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new ticket in the service desk. Requires at minimum a requester identification, subject, description, status, and priority."
+        },
+        {
+          "info": {
+            "name": "View a ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshservice.com/api/v2/tickets/:ticket_id",
+            "params": [
+              {
+                "name": "ticket_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the ticket."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific ticket by its ID."
+        },
+        {
+          "info": {
+            "name": "Update a ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.freshservice.com/api/v2/tickets/:ticket_id",
+            "params": [
+              {
+                "name": "ticket_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the ticket."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the properties of an existing ticket."
+        },
+        {
+          "info": {
+            "name": "Delete a ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.freshservice.com/api/v2/tickets/:ticket_id",
+            "params": [
+              {
+                "name": "ticket_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the ticket."
+              }
+            ]
+          },
+          "docs": "Deletes a ticket from the service desk permanently."
+        },
+        {
+          "info": {
+            "name": "Restore a deleted ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.freshservice.com/api/v2/tickets/:ticket_id/restore",
+            "params": [
+              {
+                "name": "ticket_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the ticket."
+              }
+            ]
+          },
+          "docs": "Restores a previously deleted ticket."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Conversations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all conversations of a ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshservice.com/api/v2/tickets/:ticket_id/conversations",
+            "params": [
+              {
+                "name": "ticket_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the ticket."
+              }
+            ]
+          },
+          "docs": "Retrieves all conversations associated with a specific ticket."
+        },
+        {
+          "info": {
+            "name": "Reply to a ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshservice.com/api/v2/tickets/:ticket_id/reply",
+            "params": [
+              {
+                "name": "ticket_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the ticket."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a reply to a ticket visible to the requester."
+        },
+        {
+          "info": {
+            "name": "Create a note on a ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshservice.com/api/v2/tickets/:ticket_id/notes",
+            "params": [
+              {
+                "name": "ticket_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the ticket."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a private or public note to a ticket."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Problems",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all problems",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshservice.com/api/v2/problems",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (max 100)."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of all problem records in the service desk for root cause analysis and resolution."
+        },
+        {
+          "info": {
+            "name": "Create a problem",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshservice.com/api/v2/problems",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new problem record in the service desk for tracking and resolving the root cause of incidents."
+        },
+        {
+          "info": {
+            "name": "View a problem",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshservice.com/api/v2/problems/:problem_id",
+            "params": [
+              {
+                "name": "problem_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the problem."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific problem by its ID."
+        },
+        {
+          "info": {
+            "name": "Update a problem",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.freshservice.com/api/v2/problems/:problem_id",
+            "params": [
+              {
+                "name": "problem_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the problem."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the properties of an existing problem record."
+        },
+        {
+          "info": {
+            "name": "Delete a problem",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.freshservice.com/api/v2/problems/:problem_id",
+            "params": [
+              {
+                "name": "problem_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the problem."
+              }
+            ]
+          },
+          "docs": "Deletes a problem record from the service desk."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Changes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all changes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshservice.com/api/v2/changes",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (max 100)."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of all change requests in the service desk."
+        },
+        {
+          "info": {
+            "name": "Create a change request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshservice.com/api/v2/changes",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new change request for tracking controlled modifications to IT infrastructure and services."
+        },
+        {
+          "info": {
+            "name": "View a change request",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshservice.com/api/v2/changes/:change_id",
+            "params": [
+              {
+                "name": "change_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the change request."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific change request by its ID."
+        },
+        {
+          "info": {
+            "name": "Update a change request",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.freshservice.com/api/v2/changes/:change_id",
+            "params": [
+              {
+                "name": "change_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the change request."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the properties of an existing change request."
+        },
+        {
+          "info": {
+            "name": "Delete a change request",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.freshservice.com/api/v2/changes/:change_id",
+            "params": [
+              {
+                "name": "change_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the change request."
+              }
+            ]
+          },
+          "docs": "Deletes a change request from the service desk."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Releases",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all releases",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshservice.com/api/v2/releases",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (max 100)."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of all release records in the service desk."
+        },
+        {
+          "info": {
+            "name": "Create a release",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshservice.com/api/v2/releases",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new release record for deploying changes to production."
+        },
+        {
+          "info": {
+            "name": "View a release",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshservice.com/api/v2/releases/:release_id",
+            "params": [
+              {
+                "name": "release_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the release."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific release by its ID."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Assets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all assets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshservice.com/api/v2/assets",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (max 100)."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of all IT assets tracked in the service desk including hardware, software, and other resources."
+        },
+        {
+          "info": {
+            "name": "Create an asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshservice.com/api/v2/assets",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new IT asset record in the service desk."
+        },
+        {
+          "info": {
+            "name": "View an asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshservice.com/api/v2/assets/:asset_id",
+            "params": [
+              {
+                "name": "asset_id",
+                "value": "",
+                "type": "path",
+                "description": "The display ID of the asset."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific IT asset by its display ID."
+        },
+        {
+          "info": {
+            "name": "Update an asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.freshservice.com/api/v2/assets/:asset_id",
+            "params": [
+              {
+                "name": "asset_id",
+                "value": "",
+                "type": "path",
+                "description": "The display ID of the asset."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the properties of an existing IT asset."
+        },
+        {
+          "info": {
+            "name": "Delete an asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.freshservice.com/api/v2/assets/:asset_id",
+            "params": [
+              {
+                "name": "asset_id",
+                "value": "",
+                "type": "path",
+                "description": "The display ID of the asset."
+              }
+            ]
+          },
+          "docs": "Permanently deletes an IT asset from the service desk."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Requesters",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all requesters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshservice.com/api/v2/requesters",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (max 100)."
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "Filter requesters by email address."
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Search query to filter requesters by name or email."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of all requesters in the service desk."
+        },
+        {
+          "info": {
+            "name": "Create a requester",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshservice.com/api/v2/requesters",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new requester in the service desk."
+        },
+        {
+          "info": {
+            "name": "View a requester",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshservice.com/api/v2/requesters/:requester_id",
+            "params": [
+              {
+                "name": "requester_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the requester."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific requester by their ID."
+        },
+        {
+          "info": {
+            "name": "Update a requester",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.freshservice.com/api/v2/requesters/:requester_id",
+            "params": [
+              {
+                "name": "requester_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the requester."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the properties of an existing requester."
+        },
+        {
+          "info": {
+            "name": "Delete a requester",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.freshservice.com/api/v2/requesters/:requester_id",
+            "params": [
+              {
+                "name": "requester_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the requester."
+              }
+            ]
+          },
+          "docs": "Deletes a requester from the service desk."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Agents",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all agents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshservice.com/api/v2/agents",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (max 100)."
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "Filter agents by email address."
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "Filter agents by active state."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of all service desk agents."
+        },
+        {
+          "info": {
+            "name": "View an agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshservice.com/api/v2/agents/:agent_id",
+            "params": [
+              {
+                "name": "agent_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the agent."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific agent by their ID."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Vendors",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all vendors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshservice.com/api/v2/vendors",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (max 100)."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of all vendor records in the service desk."
+        },
+        {
+          "info": {
+            "name": "Create a vendor",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshservice.com/api/v2/vendors",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new vendor record in the service desk."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Products",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all products",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshservice.com/api/v2/products"
+          },
+          "docs": "Retrieves a list of all products tracked in the service desk."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Locations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all locations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshservice.com/api/v2/locations"
+          },
+          "docs": "Retrieves a list of all office and facility locations."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Departments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all departments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshservice.com/api/v2/departments"
+          },
+          "docs": "Retrieves a list of all organizational departments."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Service Catalog",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all service catalog items",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshservice.com/api/v2/service_catalog/items",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (max 100)."
+              }
+            ]
+          },
+          "docs": "Retrieves a list of all items available in the service catalog for requesters to browse and request."
+        },
+        {
+          "info": {
+            "name": "View a service catalog item",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshservice.com/api/v2/service_catalog/items/:item_id",
+            "params": [
+              {
+                "name": "item_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the service catalog item."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific service catalog item."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
