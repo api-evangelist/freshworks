@@ -10,7 +10,7 @@ apis:
       - Customer Support
       - Helpdesk
       - Ticketing
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     baseURL: https://domain.freshdesk.com/api/v2
     humanURL: https://developers.freshdesk.com/api/
     properties:
@@ -31,7 +31,7 @@ apis:
       - ITSM
       - Service Desk
       - Ticketing
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     baseURL: https://domain.freshservice.com/api/v2
     humanURL: https://api.freshservice.com/
     properties:
@@ -53,7 +53,7 @@ apis:
       - Deals
       - Leads
       - Sales
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     baseURL: https://domain.myfreshworks.com/crm/sales/api
     humanURL: https://developers.freshworks.com/crm/api/
     properties:
@@ -75,7 +75,7 @@ apis:
       - Customer Engagement
       - Live Chat
       - Messaging
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     baseURL: https://api.freshchat.com/v2
     humanURL: https://developers.freshchat.com/api/
     properties:
@@ -97,7 +97,7 @@ apis:
       - Phone
       - Telephony
       - Voice
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     baseURL: https://domain.freshcaller.com/api/v1
     humanURL: https://developers.freshcaller.com/api/
     properties:
@@ -119,7 +119,7 @@ apis:
       - HR
       - Human Resources
       - Recruiting
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     baseURL: https://domain.freshteam.com/api
     humanURL: https://developers.freshworks.com/api-sdk/freshteam/
     properties:
@@ -139,7 +139,7 @@ apis:
       - Email Marketing
       - Marketing
       - Marketing Automation
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     baseURL: https://api.example.com
     humanURL: https://developer.freshmarketer.com/
     properties:
@@ -159,7 +159,7 @@ apis:
       - Integrations
       - Platform
       - SDK
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     baseURL: https://api.example.com
     humanURL: https://developers.freshworks.com/docs/
     properties:
