@@ -1,0 +1,42 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/freshworks-freshcaller-api-openapi.yml, openapi/freshworks-freshchat-api-openapi.yml,
+  openapi/freshworks-freshdesk-api-openapi.yml, openapi/freshworks-freshsales-api-openapi.yml,
+  openapi/freshworks-freshservice-api-openapi.yml, openapi/freshworks-freshteam-api-openapi.yml
+summary:
+  types:
+  - apiKey
+  - http
+  api_key_in:
+  - header
+schemes:
+- name: apiKeyAuth
+  type: apiKey
+  in: header
+  parameter: X-Api-Auth
+  description: API key authentication. The API key can be found in your Freshcaller admin settings.
+  sources:
+  - openapi/freshworks-freshcaller-api-openapi.yml
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  description: Bearer token authentication. Obtain the API token from the Freshchat admin settings
+    panel.
+  sources:
+  - openapi/freshworks-freshchat-api-openapi.yml
+  - openapi/freshworks-freshteam-api-openapi.yml
+- name: basicAuth
+  type: http
+  scheme: basic
+  description: Use your API key as the username and X as the password. The API key can be found
+    in your Freshdesk profile settings.
+  sources:
+  - openapi/freshworks-freshdesk-api-openapi.yml
+  - openapi/freshworks-freshservice-api-openapi.yml
+- name: apiKeyAuth
+  type: apiKey
+  in: header
+  parameter: Authorization
+  description: Token-based authentication. Use the format "Token token=your_api_key".
+  sources:
+  - openapi/freshworks-freshsales-api-openapi.yml
