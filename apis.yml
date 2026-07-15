@@ -170,6 +170,8 @@ apis:
       Freshworks product ecosystem. It provides tools for creating apps for Freshdesk, Freshservice, Freshsales, and
       other Freshworks products using a unified development framework.
 common:
+  - type: AgenticAccess
+    url: agentic-access/freshworks-agentic-access.yml
   - type: DomainSecurity
     url: security/freshworks-domain-security.yml
   - type: Authentication
