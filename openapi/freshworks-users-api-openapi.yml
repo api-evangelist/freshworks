@@ -1,0 +1,301 @@
+openapi: 3.1.0
+info:
+  title: Freshworks Freshcaller Accounts Users API
+  description: The Freshcaller API provides access to cloud-based phone system functionality for contact center operations. It allows developers to export call data, call recordings, user information, and agent team details stored in the Freshcaller system. The API supports integration of voice and telephony workflows into broader business applications, enabling organizations to automate call center reporting, synchronize agent data, and build custom dashboards around their phone operations.
+  version: '1.0'
+  contact:
+    name: Freshworks Support
+    url: https://support.freshcaller.com/
+  termsOfService: https://www.freshworks.com/terms/
+servers:
+- url: https://{domain}.freshcaller.com/api/v1
+  description: Freshcaller Production Server
+  variables:
+    domain:
+      default: yourdomain
+      description: Your Freshcaller subdomain
+security:
+- apiKeyAuth: []
+tags:
+- name: Users
+  description: Manage agent users in the Freshcaller system including creation, updates, and status management.
+paths:
+  /users:
+    get:
+      operationId: listUsers
+      summary: List all users
+      description: Retrieves a list of all agent users configured in the Freshcaller system, including their status and role information.
+      tags:
+      - Users
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PerPageParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  users:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createUser
+      summary: Create a user
+      description: Creates a new agent user in the Freshcaller system.
+      tags:
+      - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+      responses:
+        '201':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /users/{user_id}:
+    get:
+      operationId: getUser
+      summary: View a user
+      description: Retrieves the details of a specific user by their ID.
+      tags:
+      - Users
+      parameters:
+      - $ref: '#/components/parameters/UserIdParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateUser
+      summary: Update a user
+      description: Updates the properties of an existing agent user.
+      tags:
+      - Users
+      parameters:
+      - $ref: '#/components/parameters/UserIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+      responses:
+        '200':
+          description: User updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /user_statuses:
+    get:
+      operationId: listUserStatuses
+      summary: List all user statuses
+      description: Retrieves the current availability status of all agent users in the Freshcaller system.
+      tags:
+      - Users
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user_statuses:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/UserStatus'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the user.
+        name:
+          type: string
+          description: Full name of the user.
+        email:
+          type: string
+          format: email
+          description: Email address.
+        phone:
+          type: string
+          description: Phone number.
+        role:
+          type: string
+          description: Role of the user (admin, supervisor, agent).
+        available:
+          type: boolean
+          description: Whether the user is currently available.
+        team_ids:
+          type: array
+          items:
+            type: integer
+          description: IDs of teams the user belongs to.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when last updated.
+    UserStatus:
+      type: object
+      properties:
+        user_id:
+          type: integer
+          description: ID of the user.
+        name:
+          type: string
+          description: Name of the user.
+        available:
+          type: boolean
+          description: Whether the user is available.
+        on_call:
+          type: boolean
+          description: Whether the user is currently on a call.
+        status:
+          type: string
+          description: Current status label.
+    UserCreate:
+      type: object
+      required:
+      - name
+      - email
+      properties:
+        name:
+          type: string
+          description: Full name of the user.
+        email:
+          type: string
+          format: email
+          description: Email address.
+        phone:
+          type: string
+          description: Phone number.
+        role:
+          type: string
+          description: Role to assign (admin, supervisor, agent).
+        team_ids:
+          type: array
+          items:
+            type: integer
+          description: IDs of teams to assign.
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Human-readable error message.
+    Meta:
+      type: object
+      properties:
+        total_pages:
+          type: integer
+          description: Total number of pages.
+        total:
+          type: integer
+          description: Total number of records.
+        current_page:
+          type: integer
+          description: Current page number.
+  parameters:
+    PageParam:
+      name: page
+      in: query
+      description: Page number for pagination.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    UserIdParam:
+      name: user_id
+      in: path
+      required: true
+      description: The ID of the user.
+      schema:
+        type: integer
+    PerPageParam:
+      name: per_page
+      in: query
+      description: Number of results per page.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 25
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Auth
+      description: API key authentication. The API key can be found in your Freshcaller admin settings.
+externalDocs:
+  description: Freshcaller API Documentation
+  url: https://developers.freshcaller.com/api/

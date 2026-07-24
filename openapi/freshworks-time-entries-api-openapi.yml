@@ -1,0 +1,186 @@
+openapi: 3.1.0
+info:
+  title: Freshworks Freshcaller Accounts Time Entries API
+  description: The Freshcaller API provides access to cloud-based phone system functionality for contact center operations. It allows developers to export call data, call recordings, user information, and agent team details stored in the Freshcaller system. The API supports integration of voice and telephony workflows into broader business applications, enabling organizations to automate call center reporting, synchronize agent data, and build custom dashboards around their phone operations.
+  version: '1.0'
+  contact:
+    name: Freshworks Support
+    url: https://support.freshcaller.com/
+  termsOfService: https://www.freshworks.com/terms/
+servers:
+- url: https://{domain}.freshcaller.com/api/v1
+  description: Freshcaller Production Server
+  variables:
+    domain:
+      default: yourdomain
+      description: Your Freshcaller subdomain
+security:
+- apiKeyAuth: []
+tags:
+- name: Time Entries
+  description: Track time spent on tickets.
+paths:
+  /tickets/{ticket_id}/time_entries:
+    get:
+      operationId: listTicketTimeEntries
+      summary: List all time entries for a ticket
+      description: Retrieves all time entries logged against a specific ticket.
+      tags:
+      - Time Entries
+      parameters:
+      - $ref: '#/components/parameters/TicketIdParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TimeEntry'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    post:
+      operationId: createTicketTimeEntry
+      summary: Create a time entry for a ticket
+      description: Logs a new time entry against a specific ticket for tracking time spent on support activities.
+      tags:
+      - Time Entries
+      parameters:
+      - $ref: '#/components/parameters/TicketIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TimeEntryCreate'
+      responses:
+        '201':
+          description: Time entry created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeEntry'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    TimeEntryCreate:
+      type: object
+      required:
+      - time_spent
+      properties:
+        agent_id:
+          type: integer
+          description: ID of the agent logging the time.
+        billable:
+          type: boolean
+          description: Whether the time entry is billable.
+        executed_at:
+          type: string
+          format: date-time
+          description: Timestamp when the work was executed.
+        note:
+          type: string
+          description: Note describing the work performed.
+        time_spent:
+          type: string
+          description: Duration of time spent in HH:MM format.
+    Error:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Human-readable error message.
+        errors:
+          type: array
+          description: List of specific validation errors.
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message for the field.
+              code:
+                type: string
+                description: Error code.
+    TimeEntry:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the time entry.
+        agent_id:
+          type: integer
+          description: ID of the agent who logged the time.
+        billable:
+          type: boolean
+          description: Whether the time entry is billable.
+        executed_at:
+          type: string
+          format: date-time
+          description: Timestamp when the work was executed.
+        note:
+          type: string
+          description: Note describing the work performed.
+        start_time:
+          type: string
+          format: date-time
+          description: Start time of the time entry.
+        time_spent:
+          type: string
+          description: Duration of time spent in HH:MM format.
+        timer_running:
+          type: boolean
+          description: Whether the timer is currently running.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the time entry was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the time entry was last updated.
+  parameters:
+    TicketIdParam:
+      name: ticket_id
+      in: path
+      required: true
+      description: The ID of the ticket.
+      schema:
+        type: integer
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Auth
+      description: API key authentication. The API key can be found in your Freshcaller admin settings.
+externalDocs:
+  description: Freshcaller API Documentation
+  url: https://developers.freshcaller.com/api/

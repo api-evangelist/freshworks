@@ -1,0 +1,240 @@
+openapi: 3.1.0
+info:
+  title: Freshworks Freshcaller Accounts Releases API
+  description: The Freshcaller API provides access to cloud-based phone system functionality for contact center operations. It allows developers to export call data, call recordings, user information, and agent team details stored in the Freshcaller system. The API supports integration of voice and telephony workflows into broader business applications, enabling organizations to automate call center reporting, synchronize agent data, and build custom dashboards around their phone operations.
+  version: '1.0'
+  contact:
+    name: Freshworks Support
+    url: https://support.freshcaller.com/
+  termsOfService: https://www.freshworks.com/terms/
+servers:
+- url: https://{domain}.freshcaller.com/api/v1
+  description: Freshcaller Production Server
+  variables:
+    domain:
+      default: yourdomain
+      description: Your Freshcaller subdomain
+security:
+- apiKeyAuth: []
+tags:
+- name: Releases
+  description: Manage release records for deploying changes to production.
+paths:
+  /releases:
+    get:
+      operationId: listReleases
+      summary: List all releases
+      description: Retrieves a paginated list of all release records in the service desk.
+      tags:
+      - Releases
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PerPageParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  releases:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Release'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createRelease
+      summary: Create a release
+      description: Creates a new release record for deploying changes to production.
+      tags:
+      - Releases
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReleaseCreate'
+      responses:
+        '201':
+          description: Release created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  release:
+                    $ref: '#/components/schemas/Release'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /releases/{release_id}:
+    get:
+      operationId: getRelease
+      summary: View a release
+      description: Retrieves the details of a specific release by its ID.
+      tags:
+      - Releases
+      parameters:
+      - name: release_id
+        in: path
+        required: true
+        description: The ID of the release.
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  release:
+                    $ref: '#/components/schemas/Release'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    ReleaseCreate:
+      type: object
+      required:
+      - subject
+      - description
+      - status
+      - priority
+      - release_type
+      - planned_start_date
+      - planned_end_date
+      properties:
+        subject:
+          type: string
+          description: Subject of the release.
+        description:
+          type: string
+          description: HTML description.
+        status:
+          type: integer
+          description: Status.
+        priority:
+          type: integer
+          description: Priority.
+        release_type:
+          type: integer
+          description: Type of release.
+        planned_start_date:
+          type: string
+          format: date-time
+          description: Planned start date.
+        planned_end_date:
+          type: string
+          format: date-time
+          description: Planned end date.
+    Release:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the release.
+        subject:
+          type: string
+          description: Subject of the release.
+        description:
+          type: string
+          description: HTML description.
+        status:
+          type: integer
+          description: Status. 1=Open, 2=On Hold, 3=In Progress, 4=Incomplete, 5=Completed.
+        priority:
+          type: integer
+          description: Priority. 1=Low, 2=Medium, 3=High, 4=Urgent.
+        release_type:
+          type: integer
+          description: Type. 1=Minor, 2=Standard, 3=Major, 4=Emergency.
+        planned_start_date:
+          type: string
+          format: date-time
+          description: Planned start date.
+        planned_end_date:
+          type: string
+          format: date-time
+          description: Planned end date.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when last updated.
+    Error:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Human-readable error message.
+        errors:
+          type: array
+          description: List of specific validation errors.
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message.
+              code:
+                type: string
+                description: Error code.
+  parameters:
+    PageParam:
+      name: page
+      in: query
+      description: Page number for pagination.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    PerPageParam:
+      name: per_page
+      in: query
+      description: Number of results per page (max 100).
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 30
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Auth
+      description: API key authentication. The API key can be found in your Freshcaller admin settings.
+externalDocs:
+  description: Freshcaller API Documentation
+  url: https://developers.freshcaller.com/api/

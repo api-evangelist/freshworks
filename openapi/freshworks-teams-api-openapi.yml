@@ -1,0 +1,244 @@
+openapi: 3.1.0
+info:
+  title: Freshworks Freshcaller Accounts Teams API
+  description: The Freshcaller API provides access to cloud-based phone system functionality for contact center operations. It allows developers to export call data, call recordings, user information, and agent team details stored in the Freshcaller system. The API supports integration of voice and telephony workflows into broader business applications, enabling organizations to automate call center reporting, synchronize agent data, and build custom dashboards around their phone operations.
+  version: '1.0'
+  contact:
+    name: Freshworks Support
+    url: https://support.freshcaller.com/
+  termsOfService: https://www.freshworks.com/terms/
+servers:
+- url: https://{domain}.freshcaller.com/api/v1
+  description: Freshcaller Production Server
+  variables:
+    domain:
+      default: yourdomain
+      description: Your Freshcaller subdomain
+security:
+- apiKeyAuth: []
+tags:
+- name: Teams
+  description: Manage agent teams for call routing and organization.
+paths:
+  /teams:
+    get:
+      operationId: listTeams
+      summary: List all teams
+      description: Retrieves a list of all agent teams configured in the Freshcaller system for call routing purposes.
+      tags:
+      - Teams
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PerPageParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  teams:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Team'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createTeam
+      summary: Create a team
+      description: Creates a new agent team in the Freshcaller system for call routing and organizational purposes.
+      tags:
+      - Teams
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TeamCreate'
+      responses:
+        '201':
+          description: Team created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  team:
+                    $ref: '#/components/schemas/Team'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /teams/{team_id}:
+    get:
+      operationId: getTeam
+      summary: View a team
+      description: Retrieves the details of a specific team by its ID.
+      tags:
+      - Teams
+      parameters:
+      - $ref: '#/components/parameters/TeamIdParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  team:
+                    $ref: '#/components/schemas/Team'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateTeam
+      summary: Update a team
+      description: Updates the properties of an existing team.
+      tags:
+      - Teams
+      parameters:
+      - $ref: '#/components/parameters/TeamIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TeamCreate'
+      responses:
+        '200':
+          description: Team updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  team:
+                    $ref: '#/components/schemas/Team'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    Team:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the team.
+        name:
+          type: string
+          description: Name of the team.
+        description:
+          type: string
+          description: Description of the team.
+        user_ids:
+          type: array
+          items:
+            type: integer
+          description: IDs of users in the team.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when last updated.
+    TeamCreate:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Name of the team.
+        description:
+          type: string
+          description: Description.
+        user_ids:
+          type: array
+          items:
+            type: integer
+          description: IDs of users to include.
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Human-readable error message.
+    Meta:
+      type: object
+      properties:
+        total_pages:
+          type: integer
+          description: Total number of pages.
+        total:
+          type: integer
+          description: Total number of records.
+        current_page:
+          type: integer
+          description: Current page number.
+  parameters:
+    PageParam:
+      name: page
+      in: query
+      description: Page number for pagination.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    TeamIdParam:
+      name: team_id
+      in: path
+      required: true
+      description: The ID of the team.
+      schema:
+        type: integer
+    PerPageParam:
+      name: per_page
+      in: query
+      description: Number of results per page.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 25
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Auth
+      description: API key authentication. The API key can be found in your Freshcaller admin settings.
+externalDocs:
+  description: Freshcaller API Documentation
+  url: https://developers.freshcaller.com/api/

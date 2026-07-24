@@ -1,0 +1,285 @@
+openapi: 3.1.0
+info:
+  title: Freshworks Freshcaller Accounts Companies API
+  description: The Freshcaller API provides access to cloud-based phone system functionality for contact center operations. It allows developers to export call data, call recordings, user information, and agent team details stored in the Freshcaller system. The API supports integration of voice and telephony workflows into broader business applications, enabling organizations to automate call center reporting, synchronize agent data, and build custom dashboards around their phone operations.
+  version: '1.0'
+  contact:
+    name: Freshworks Support
+    url: https://support.freshcaller.com/
+  termsOfService: https://www.freshworks.com/terms/
+servers:
+- url: https://{domain}.freshcaller.com/api/v1
+  description: Freshcaller Production Server
+  variables:
+    domain:
+      default: yourdomain
+      description: Your Freshcaller subdomain
+security:
+- apiKeyAuth: []
+tags:
+- name: Companies
+  description: Manage company records associated with contacts.
+paths:
+  /companies:
+    get:
+      operationId: listCompanies
+      summary: List all companies
+      description: Retrieves a paginated list of all companies in the helpdesk.
+      tags:
+      - Companies
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PerPageParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Company'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createCompany
+      summary: Create a company
+      description: Creates a new company record in the helpdesk.
+      tags:
+      - Companies
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyCreate'
+      responses:
+        '201':
+          description: Company created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /companies/{company_id}:
+    get:
+      operationId: getCompany
+      summary: View a company
+      description: Retrieves the details of a specific company by its ID.
+      tags:
+      - Companies
+      parameters:
+      - $ref: '#/components/parameters/CompanyIdParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateCompany
+      summary: Update a company
+      description: Updates the properties of an existing company record.
+      tags:
+      - Companies
+      parameters:
+      - $ref: '#/components/parameters/CompanyIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyCreate'
+      responses:
+        '200':
+          description: Company updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteCompany
+      summary: Delete a company
+      description: Deletes a company record from the helpdesk.
+      tags:
+      - Companies
+      parameters:
+      - $ref: '#/components/parameters/CompanyIdParam'
+      responses:
+        '204':
+          description: Company deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  parameters:
+    PageParam:
+      name: page
+      in: query
+      description: Page number for pagination.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    CompanyIdParam:
+      name: company_id
+      in: path
+      required: true
+      description: The ID of the company.
+      schema:
+        type: integer
+    PerPageParam:
+      name: per_page
+      in: query
+      description: Number of results per page (max 100).
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 30
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Human-readable error message.
+        errors:
+          type: array
+          description: List of specific validation errors.
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message for the field.
+              code:
+                type: string
+                description: Error code.
+    Company:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the company.
+        name:
+          type: string
+          description: Name of the company.
+        description:
+          type: string
+          description: Description of the company.
+        note:
+          type: string
+          description: Notes about the company.
+        domains:
+          type: array
+          items:
+            type: string
+          description: Email domains associated with the company.
+        health_score:
+          type: string
+          description: Health score of the company account.
+        account_tier:
+          type: string
+          description: Tier of the company account.
+        renewal_date:
+          type: string
+          format: date
+          description: Date of account renewal.
+        industry:
+          type: string
+          description: Industry sector of the company.
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: Key-value pairs for custom fields.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the company was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the company was last updated.
+    CompanyCreate:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Name of the company.
+        description:
+          type: string
+          description: Description of the company.
+        note:
+          type: string
+          description: Notes about the company.
+        domains:
+          type: array
+          items:
+            type: string
+          description: Email domains associated with the company.
+        health_score:
+          type: string
+          description: Health score of the company account.
+        account_tier:
+          type: string
+          description: Tier of the company account.
+        renewal_date:
+          type: string
+          format: date
+          description: Date of account renewal.
+        industry:
+          type: string
+          description: Industry sector.
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: Key-value pairs for custom fields.
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Auth
+      description: API key authentication. The API key can be found in your Freshcaller admin settings.
+externalDocs:
+  description: Freshcaller API Documentation
+  url: https://developers.freshcaller.com/api/

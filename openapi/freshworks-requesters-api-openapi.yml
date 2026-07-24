@@ -1,0 +1,311 @@
+openapi: 3.1.0
+info:
+  title: Freshworks Freshcaller Accounts Requesters API
+  description: The Freshcaller API provides access to cloud-based phone system functionality for contact center operations. It allows developers to export call data, call recordings, user information, and agent team details stored in the Freshcaller system. The API supports integration of voice and telephony workflows into broader business applications, enabling organizations to automate call center reporting, synchronize agent data, and build custom dashboards around their phone operations.
+  version: '1.0'
+  contact:
+    name: Freshworks Support
+    url: https://support.freshcaller.com/
+  termsOfService: https://www.freshworks.com/terms/
+servers:
+- url: https://{domain}.freshcaller.com/api/v1
+  description: Freshcaller Production Server
+  variables:
+    domain:
+      default: yourdomain
+      description: Your Freshcaller subdomain
+security:
+- apiKeyAuth: []
+tags:
+- name: Requesters
+  description: Manage requesters who submit tickets to the service desk.
+paths:
+  /requesters:
+    get:
+      operationId: listRequesters
+      summary: List all requesters
+      description: Retrieves a paginated list of all requesters in the service desk.
+      tags:
+      - Requesters
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PerPageParam'
+      - name: email
+        in: query
+        description: Filter requesters by email address.
+        schema:
+          type: string
+          format: email
+      - name: query
+        in: query
+        description: Search query to filter requesters by name or email.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  requesters:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Requester'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createRequester
+      summary: Create a requester
+      description: Creates a new requester in the service desk.
+      tags:
+      - Requesters
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequesterCreate'
+      responses:
+        '201':
+          description: Requester created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  requester:
+                    $ref: '#/components/schemas/Requester'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /requesters/{requester_id}:
+    get:
+      operationId: getRequester
+      summary: View a requester
+      description: Retrieves the details of a specific requester by their ID.
+      tags:
+      - Requesters
+      parameters:
+      - $ref: '#/components/parameters/RequesterIdParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  requester:
+                    $ref: '#/components/schemas/Requester'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateRequester
+      summary: Update a requester
+      description: Updates the properties of an existing requester.
+      tags:
+      - Requesters
+      parameters:
+      - $ref: '#/components/parameters/RequesterIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequesterCreate'
+      responses:
+        '200':
+          description: Requester updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  requester:
+                    $ref: '#/components/schemas/Requester'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteRequester
+      summary: Delete a requester
+      description: Deletes a requester from the service desk.
+      tags:
+      - Requesters
+      parameters:
+      - $ref: '#/components/parameters/RequesterIdParam'
+      responses:
+        '204':
+          description: Requester deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  parameters:
+    PageParam:
+      name: page
+      in: query
+      description: Page number for pagination.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    RequesterIdParam:
+      name: requester_id
+      in: path
+      required: true
+      description: The ID of the requester.
+      schema:
+        type: integer
+    PerPageParam:
+      name: per_page
+      in: query
+      description: Number of results per page (max 100).
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 30
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Human-readable error message.
+        errors:
+          type: array
+          description: List of specific validation errors.
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message.
+              code:
+                type: string
+                description: Error code.
+    Requester:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the requester.
+        first_name:
+          type: string
+          description: First name.
+        last_name:
+          type: string
+          description: Last name.
+        primary_email:
+          type: string
+          format: email
+          description: Primary email address.
+        work_phone_number:
+          type: string
+          description: Work phone number.
+        mobile_phone_number:
+          type: string
+          description: Mobile phone number.
+        job_title:
+          type: string
+          description: Job title.
+        department_id:
+          type: integer
+          description: ID of the department.
+        location_id:
+          type: integer
+          description: ID of the location.
+        is_agent:
+          type: boolean
+          description: Whether the requester is also an agent.
+        active:
+          type: boolean
+          description: Whether the requester is active.
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: Custom field values.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when last updated.
+    RequesterCreate:
+      type: object
+      required:
+      - first_name
+      - primary_email
+      properties:
+        first_name:
+          type: string
+          description: First name.
+        last_name:
+          type: string
+          description: Last name.
+        primary_email:
+          type: string
+          format: email
+          description: Primary email address.
+        work_phone_number:
+          type: string
+          description: Work phone number.
+        mobile_phone_number:
+          type: string
+          description: Mobile phone number.
+        job_title:
+          type: string
+          description: Job title.
+        department_id:
+          type: integer
+          description: ID of the department.
+        location_id:
+          type: integer
+          description: ID of the location.
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: Custom field values.
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Auth
+      description: API key authentication. The API key can be found in your Freshcaller admin settings.
+externalDocs:
+  description: Freshcaller API Documentation
+  url: https://developers.freshcaller.com/api/

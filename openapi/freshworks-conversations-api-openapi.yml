@@ -1,0 +1,505 @@
+openapi: 3.1.0
+info:
+  title: Freshworks Freshcaller Accounts Conversations API
+  description: The Freshcaller API provides access to cloud-based phone system functionality for contact center operations. It allows developers to export call data, call recordings, user information, and agent team details stored in the Freshcaller system. The API supports integration of voice and telephony workflows into broader business applications, enabling organizations to automate call center reporting, synchronize agent data, and build custom dashboards around their phone operations.
+  version: '1.0'
+  contact:
+    name: Freshworks Support
+    url: https://support.freshcaller.com/
+  termsOfService: https://www.freshworks.com/terms/
+servers:
+- url: https://{domain}.freshcaller.com/api/v1
+  description: Freshcaller Production Server
+  variables:
+    domain:
+      default: yourdomain
+      description: Your Freshcaller subdomain
+security:
+- apiKeyAuth: []
+tags:
+- name: Conversations
+  description: Manage customer conversations and their lifecycle.
+paths:
+  /conversations:
+    get:
+      operationId: listConversations
+      summary: List all conversations
+      description: Retrieves a paginated list of all conversations. The response does not include messages or user details by default.
+      tags:
+      - Conversations
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/ItemsPerPageParam'
+      - name: status
+        in: query
+        description: Filter conversations by status (new, assigned, resolved, reopened).
+        schema:
+          type: string
+      - name: assigned_agent_id
+        in: query
+        description: Filter by assigned agent ID.
+        schema:
+          type: string
+      - name: assigned_group_id
+        in: query
+        description: Filter by assigned group ID.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  conversations:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Conversation'
+                  links:
+                    $ref: '#/components/schemas/PaginationLinks'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createConversation
+      summary: Create a conversation
+      description: Creates a new conversation with an initial message. Requires a user ID or user details and the message content.
+      tags:
+      - Conversations
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConversationCreate'
+      responses:
+        '200':
+          description: Conversation created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  conversation_id:
+                    type: string
+                    description: ID of the created conversation.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /conversations/{conversation_id}:
+    get:
+      operationId: getConversation
+      summary: View a conversation
+      description: Retrieves the details of a specific conversation by its ID. Messages and user attributes are not included by default.
+      tags:
+      - Conversations
+      parameters:
+      - $ref: '#/components/parameters/ConversationIdParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conversation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateConversation
+      summary: Update a conversation
+      description: Updates the properties of an existing conversation such as status and assignment.
+      tags:
+      - Conversations
+      parameters:
+      - $ref: '#/components/parameters/ConversationIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConversationUpdate'
+      responses:
+        '200':
+          description: Conversation updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conversation'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /tickets/{ticket_id}/conversations:
+    get:
+      operationId: listTicketConversations
+      summary: List all conversations of a ticket
+      description: Retrieves all conversations (replies and notes) associated with a specific ticket.
+      tags:
+      - Conversations
+      parameters:
+      - $ref: '#/components/parameters/TicketIdParam'
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PerPageParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Conversation_2'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /tickets/{ticket_id}/reply:
+    post:
+      operationId: replyToTicket
+      summary: Reply to a ticket
+      description: Adds a public reply to a ticket. The reply is sent to all recipients associated with the ticket.
+      tags:
+      - Conversations
+      parameters:
+      - $ref: '#/components/parameters/TicketIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReplyCreate'
+      responses:
+        '201':
+          description: Reply created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conversation_2'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /tickets/{ticket_id}/notes:
+    post:
+      operationId: createNote
+      summary: Create a note on a ticket
+      description: Adds a private or public note to a ticket. Notes are used for internal communication or additional context.
+      tags:
+      - Conversations
+      parameters:
+      - $ref: '#/components/parameters/TicketIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NoteCreate'
+      responses:
+        '201':
+          description: Note created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conversation_2'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  parameters:
+    TicketIdParam:
+      name: ticket_id
+      in: path
+      required: true
+      description: The ID of the ticket.
+      schema:
+        type: integer
+    PageParam:
+      name: page
+      in: query
+      description: Page number for pagination.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    ItemsPerPageParam:
+      name: items_per_page
+      in: query
+      description: Number of items per page.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 50
+        default: 20
+    ConversationIdParam:
+      name: conversation_id
+      in: path
+      required: true
+      description: The ID of the conversation.
+      schema:
+        type: string
+    PerPageParam:
+      name: per_page
+      in: query
+      description: Number of results per page (max 100).
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 30
+  schemas:
+    NoteCreate:
+      type: object
+      required:
+      - body
+      properties:
+        body:
+          type: string
+          description: HTML content of the note.
+        private:
+          type: boolean
+          description: Whether the note is private (internal only).
+          default: true
+        incoming:
+          type: boolean
+          description: Whether the note is incoming.
+          default: false
+    Conversation:
+      type: object
+      properties:
+        conversation_id:
+          type: string
+          description: Unique ID of the conversation.
+        app_id:
+          type: string
+          description: ID of the Freshchat application.
+        channel_id:
+          type: string
+          description: ID of the channel.
+        status:
+          type: string
+          description: Status of the conversation (new, assigned, resolved, reopened).
+          enum:
+          - new
+          - assigned
+          - resolved
+          - reopened
+        assigned_agent_id:
+          type: string
+          description: ID of the assigned agent.
+        assigned_group_id:
+          type: string
+          description: ID of the assigned group.
+        users:
+          type: array
+          description: Users involved in the conversation.
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: User ID.
+        created_time:
+          type: string
+          format: date-time
+          description: Timestamp when the conversation was created.
+    ReplyCreate:
+      type: object
+      required:
+      - body
+      properties:
+        body:
+          type: string
+          description: HTML content of the reply.
+        cc_emails:
+          type: array
+          items:
+            type: string
+            format: email
+          description: Email addresses to CC.
+        bcc_emails:
+          type: array
+          items:
+            type: string
+            format: email
+          description: Email addresses to BCC.
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Human-readable error message.
+    MessageCreate:
+      type: object
+      required:
+      - message_parts
+      - actor_type
+      - actor_id
+      properties:
+        message_type:
+          type: string
+          description: Type of message.
+          enum:
+          - normal
+          - private
+          default: normal
+        actor_type:
+          type: string
+          description: Type of actor sending the message.
+          enum:
+          - user
+          - agent
+        actor_id:
+          type: string
+          description: ID of the actor sending the message.
+        message_parts:
+          type: array
+          description: Parts composing the message content.
+          items:
+            type: object
+            properties:
+              text:
+                type: object
+                properties:
+                  content:
+                    type: string
+                    description: Text content.
+    ConversationUpdate:
+      type: object
+      properties:
+        status:
+          type: string
+          description: New status for the conversation.
+          enum:
+          - new
+          - assigned
+          - resolved
+          - reopened
+        assigned_agent_id:
+          type: string
+          description: ID of the agent to assign.
+        assigned_group_id:
+          type: string
+          description: ID of the group to assign.
+    PaginationLinks:
+      type: object
+      properties:
+        next_page:
+          type: string
+          format: uri
+          description: URL for the next page of results.
+        prev_page:
+          type: string
+          format: uri
+          description: URL for the previous page of results.
+    ConversationCreate:
+      type: object
+      required:
+      - app_id
+      - channel_id
+      - messages
+      properties:
+        app_id:
+          type: string
+          description: ID of the Freshchat application.
+        channel_id:
+          type: string
+          description: ID of the channel.
+        users:
+          type: array
+          description: Users to involve in the conversation.
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: User ID.
+        messages:
+          type: array
+          description: Initial messages for the conversation.
+          items:
+            $ref: '#/components/schemas/MessageCreate'
+    Conversation_2:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the conversation.
+        body:
+          type: string
+          description: HTML content of the conversation.
+        body_text:
+          type: string
+          description: Plain text content of the conversation.
+        incoming:
+          type: boolean
+          description: Whether the conversation was incoming from the customer.
+        private:
+          type: boolean
+          description: Whether the conversation is a private note.
+        user_id:
+          type: integer
+          description: ID of the user who created the conversation.
+        support_email:
+          type: string
+          description: Support email address used for the conversation.
+        ticket_id:
+          type: integer
+          description: ID of the ticket this conversation belongs to.
+        to_emails:
+          type: array
+          items:
+            type: string
+            format: email
+          description: Email addresses the conversation was sent to.
+        cc_emails:
+          type: array
+          items:
+            type: string
+            format: email
+          description: CC email addresses on the conversation.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the conversation was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the conversation was last updated.
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Auth
+      description: API key authentication. The API key can be found in your Freshcaller admin settings.
+externalDocs:
+  description: Freshcaller API Documentation
+  url: https://developers.freshcaller.com/api/

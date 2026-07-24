@@ -1,0 +1,256 @@
+openapi: 3.1.0
+info:
+  title: Freshworks Freshcaller Accounts Appointments API
+  description: The Freshcaller API provides access to cloud-based phone system functionality for contact center operations. It allows developers to export call data, call recordings, user information, and agent team details stored in the Freshcaller system. The API supports integration of voice and telephony workflows into broader business applications, enabling organizations to automate call center reporting, synchronize agent data, and build custom dashboards around their phone operations.
+  version: '1.0'
+  contact:
+    name: Freshworks Support
+    url: https://support.freshcaller.com/
+  termsOfService: https://www.freshworks.com/terms/
+servers:
+- url: https://{domain}.freshcaller.com/api/v1
+  description: Freshcaller Production Server
+  variables:
+    domain:
+      default: yourdomain
+      description: Your Freshcaller subdomain
+security:
+- apiKeyAuth: []
+tags:
+- name: Appointments
+  description: Manage scheduled appointments and meetings.
+paths:
+  /appointments:
+    get:
+      operationId: listAppointments
+      summary: List all appointments
+      description: Retrieves a paginated list of all appointments in the CRM.
+      tags:
+      - Appointments
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - name: filter
+        in: query
+        description: Filter appointments by time range.
+        schema:
+          type: string
+          enum:
+          - upcoming
+          - past
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  appointments:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Appointment'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createAppointment
+      summary: Create an appointment
+      description: Creates a new appointment or meeting in the CRM.
+      tags:
+      - Appointments
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppointmentCreate'
+      responses:
+        '200':
+          description: Appointment created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  appointment:
+                    $ref: '#/components/schemas/Appointment'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /appointments/{appointment_id}:
+    get:
+      operationId: getAppointment
+      summary: View an appointment
+      description: Retrieves the details of a specific appointment by its ID.
+      tags:
+      - Appointments
+      parameters:
+      - name: appointment_id
+        in: path
+        required: true
+        description: The ID of the appointment.
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  appointment:
+                    $ref: '#/components/schemas/Appointment'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteAppointment
+      summary: Delete an appointment
+      description: Deletes an appointment from the CRM.
+      tags:
+      - Appointments
+      parameters:
+      - name: appointment_id
+        in: path
+        required: true
+        description: The ID of the appointment.
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: Appointment deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    Appointment:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the appointment.
+        title:
+          type: string
+          description: Title of the appointment.
+        description:
+          type: string
+          description: Description.
+        from_date:
+          type: string
+          format: date-time
+          description: Start date and time.
+        end_date:
+          type: string
+          format: date-time
+          description: End date and time.
+        location:
+          type: string
+          description: Location of the appointment.
+        creater_id:
+          type: integer
+          description: ID of the creator.
+        targetable_type:
+          type: string
+          description: Type of associated record.
+        targetable_id:
+          type: integer
+          description: ID of associated record.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when last updated.
+    Error:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Human-readable error message.
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message.
+              code:
+                type: string
+                description: Error code.
+    AppointmentCreate:
+      type: object
+      required:
+      - title
+      - from_date
+      - end_date
+      properties:
+        title:
+          type: string
+          description: Title of the appointment.
+        description:
+          type: string
+          description: Description.
+        from_date:
+          type: string
+          format: date-time
+          description: Start date and time.
+        end_date:
+          type: string
+          format: date-time
+          description: End date and time.
+        location:
+          type: string
+          description: Location.
+        targetable_type:
+          type: string
+          description: Type of associated record.
+        targetable_id:
+          type: integer
+          description: ID of associated record.
+  parameters:
+    PageParam:
+      name: page
+      in: query
+      description: Page number for pagination.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Auth
+      description: API key authentication. The API key can be found in your Freshcaller admin settings.
+externalDocs:
+  description: Freshcaller API Documentation
+  url: https://developers.freshcaller.com/api/

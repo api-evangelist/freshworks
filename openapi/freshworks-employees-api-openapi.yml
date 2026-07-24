@@ -1,0 +1,339 @@
+openapi: 3.1.0
+info:
+  title: Freshworks Freshcaller Accounts Employees API
+  description: The Freshcaller API provides access to cloud-based phone system functionality for contact center operations. It allows developers to export call data, call recordings, user information, and agent team details stored in the Freshcaller system. The API supports integration of voice and telephony workflows into broader business applications, enabling organizations to automate call center reporting, synchronize agent data, and build custom dashboards around their phone operations.
+  version: '1.0'
+  contact:
+    name: Freshworks Support
+    url: https://support.freshcaller.com/
+  termsOfService: https://www.freshworks.com/terms/
+servers:
+- url: https://{domain}.freshcaller.com/api/v1
+  description: Freshcaller Production Server
+  variables:
+    domain:
+      default: yourdomain
+      description: Your Freshcaller subdomain
+security:
+- apiKeyAuth: []
+tags:
+- name: Employees
+  description: Manage employee records including personal information, job details, and employment history.
+paths:
+  /employees:
+    get:
+      operationId: listEmployees
+      summary: List all employees
+      description: Retrieves a paginated list of all employees in the Freshteam system. Supports filtering by status and sort options.
+      tags:
+      - Employees
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - name: sort
+        in: query
+        description: Field to sort by.
+        schema:
+          type: string
+      - name: sort_type
+        in: query
+        description: Sort direction (asc or desc).
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+      - name: status
+        in: query
+        description: Filter by employment status.
+        schema:
+          type: string
+          enum:
+          - active
+          - inactive
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Employee'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /employees/{employee_id}:
+    get:
+      operationId: getEmployee
+      summary: View an employee
+      description: Retrieves the full details of a specific employee by their ID.
+      tags:
+      - Employees
+      parameters:
+      - $ref: '#/components/parameters/EmployeeIdParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateEmployee
+      summary: Update an employee
+      description: Updates the properties of an existing employee record.
+      tags:
+      - Employees
+      parameters:
+      - $ref: '#/components/parameters/EmployeeIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmployeeUpdate'
+      responses:
+        '200':
+          description: Employee updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /employee_fields:
+    get:
+      operationId: listEmployeeFields
+      summary: List all employee fields
+      description: Retrieves the list of all employee form fields, including custom fields and their configurations.
+      tags:
+      - Employees
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Field'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  parameters:
+    PageParam:
+      name: page
+      in: query
+      description: Page number for pagination.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    EmployeeIdParam:
+      name: employee_id
+      in: path
+      required: true
+      description: The ID of the employee.
+      schema:
+        type: integer
+  schemas:
+    Field:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the field.
+        name:
+          type: string
+          description: Internal name of the field.
+        label:
+          type: string
+          description: Display label.
+        field_type:
+          type: string
+          description: Type of field (text, dropdown, checkbox, etc).
+        required:
+          type: boolean
+          description: Whether the field is required.
+        position:
+          type: integer
+          description: Display position order.
+        choices:
+          type: array
+          description: Available choices for dropdown fields.
+          items:
+            type: string
+    EmployeeUpdate:
+      type: object
+      properties:
+        first_name:
+          type: string
+          description: First name.
+        last_name:
+          type: string
+          description: Last name.
+        official_email:
+          type: string
+          format: email
+          description: Official work email.
+        designation:
+          type: string
+          description: Job designation.
+        phone_number:
+          type: string
+          description: Phone number.
+        branch_id:
+          type: integer
+          description: Branch ID.
+        department_id:
+          type: integer
+          description: Department ID.
+        sub_department_id:
+          type: integer
+          description: Sub-department ID.
+        reporting_to_id:
+          type: integer
+          description: Reporting manager ID.
+        level_id:
+          type: integer
+          description: Level ID.
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: Custom field values.
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Human-readable error message.
+    Employee:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the employee.
+        first_name:
+          type: string
+          description: First name.
+        last_name:
+          type: string
+          description: Last name.
+        official_email:
+          type: string
+          format: email
+          description: Official work email address.
+        personal_email:
+          type: string
+          format: email
+          description: Personal email address.
+        employee_id:
+          type: string
+          description: Employee ID number.
+        status:
+          type: string
+          description: Employment status (active, inactive).
+        designation:
+          type: string
+          description: Job designation or title.
+        phone_number:
+          type: string
+          description: Phone number.
+        date_of_birth:
+          type: string
+          format: date
+          description: Date of birth.
+        joining_date:
+          type: string
+          format: date
+          description: Date of joining the organization.
+        branch_id:
+          type: integer
+          description: ID of the branch.
+        department_id:
+          type: integer
+          description: ID of the department.
+        sub_department_id:
+          type: integer
+          description: ID of the sub-department.
+        reporting_to_id:
+          type: integer
+          description: ID of the reporting manager.
+        level_id:
+          type: integer
+          description: ID of the employee level.
+        role_id:
+          type: integer
+          description: ID of the assigned role.
+        gender:
+          type: string
+          description: Gender.
+        address:
+          type: object
+          description: Address information.
+          properties:
+            street:
+              type: string
+              description: Street address.
+            city:
+              type: string
+              description: City.
+            state:
+              type: string
+              description: State or province.
+            country:
+              type: string
+              description: Country.
+            zip_code:
+              type: string
+              description: ZIP or postal code.
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: Custom field values.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when last updated.
+  responses:
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Auth
+      description: API key authentication. The API key can be found in your Freshcaller admin settings.
+externalDocs:
+  description: Freshcaller API Documentation
+  url: https://developers.freshcaller.com/api/

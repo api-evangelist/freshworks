@@ -1,0 +1,301 @@
+openapi: 3.1.0
+info:
+  title: Freshworks Freshcaller Accounts Problems API
+  description: The Freshcaller API provides access to cloud-based phone system functionality for contact center operations. It allows developers to export call data, call recordings, user information, and agent team details stored in the Freshcaller system. The API supports integration of voice and telephony workflows into broader business applications, enabling organizations to automate call center reporting, synchronize agent data, and build custom dashboards around their phone operations.
+  version: '1.0'
+  contact:
+    name: Freshworks Support
+    url: https://support.freshcaller.com/
+  termsOfService: https://www.freshworks.com/terms/
+servers:
+- url: https://{domain}.freshcaller.com/api/v1
+  description: Freshcaller Production Server
+  variables:
+    domain:
+      default: yourdomain
+      description: Your Freshcaller subdomain
+security:
+- apiKeyAuth: []
+tags:
+- name: Problems
+  description: Manage problem records for root cause analysis of recurring incidents.
+paths:
+  /problems:
+    get:
+      operationId: listProblems
+      summary: List all problems
+      description: Retrieves a paginated list of all problem records in the service desk for root cause analysis and resolution.
+      tags:
+      - Problems
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PerPageParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  problems:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Problem'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createProblem
+      summary: Create a problem
+      description: Creates a new problem record in the service desk for tracking and resolving the root cause of incidents.
+      tags:
+      - Problems
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProblemCreate'
+      responses:
+        '201':
+          description: Problem created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  problem:
+                    $ref: '#/components/schemas/Problem'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /problems/{problem_id}:
+    get:
+      operationId: getProblem
+      summary: View a problem
+      description: Retrieves the details of a specific problem by its ID.
+      tags:
+      - Problems
+      parameters:
+      - $ref: '#/components/parameters/ProblemIdParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  problem:
+                    $ref: '#/components/schemas/Problem'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateProblem
+      summary: Update a problem
+      description: Updates the properties of an existing problem record.
+      tags:
+      - Problems
+      parameters:
+      - $ref: '#/components/parameters/ProblemIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProblemCreate'
+      responses:
+        '200':
+          description: Problem updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  problem:
+                    $ref: '#/components/schemas/Problem'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteProblem
+      summary: Delete a problem
+      description: Deletes a problem record from the service desk.
+      tags:
+      - Problems
+      parameters:
+      - $ref: '#/components/parameters/ProblemIdParam'
+      responses:
+        '204':
+          description: Problem deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  parameters:
+    PageParam:
+      name: page
+      in: query
+      description: Page number for pagination.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    ProblemIdParam:
+      name: problem_id
+      in: path
+      required: true
+      description: The ID of the problem.
+      schema:
+        type: integer
+    PerPageParam:
+      name: per_page
+      in: query
+      description: Number of results per page (max 100).
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 30
+  schemas:
+    Problem:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the problem.
+        subject:
+          type: string
+          description: Subject of the problem.
+        description:
+          type: string
+          description: HTML description.
+        status:
+          type: integer
+          description: Status of the problem. 1=Open, 2=Change Requested, 3=Closed.
+        priority:
+          type: integer
+          description: Priority. 1=Low, 2=Medium, 3=High, 4=Urgent.
+        impact:
+          type: integer
+          description: Impact. 1=Low, 2=Medium, 3=High.
+        agent_id:
+          type: integer
+          description: ID of the assigned agent.
+        group_id:
+          type: integer
+          description: ID of the assigned group.
+        department_id:
+          type: integer
+          description: ID of the department.
+        known_error:
+          type: boolean
+          description: Whether this is a known error.
+        due_by:
+          type: string
+          format: date-time
+          description: Due date for resolution.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when last updated.
+    Error:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Human-readable error message.
+        errors:
+          type: array
+          description: List of specific validation errors.
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message.
+              code:
+                type: string
+                description: Error code.
+    ProblemCreate:
+      type: object
+      required:
+      - subject
+      - description
+      - status
+      - priority
+      - impact
+      properties:
+        subject:
+          type: string
+          description: Subject of the problem.
+        description:
+          type: string
+          description: HTML description.
+        status:
+          type: integer
+          description: Status of the problem.
+        priority:
+          type: integer
+          description: Priority.
+        impact:
+          type: integer
+          description: Impact level.
+        agent_id:
+          type: integer
+          description: ID of the agent to assign.
+        group_id:
+          type: integer
+          description: ID of the group to assign.
+        department_id:
+          type: integer
+          description: ID of the department.
+        known_error:
+          type: boolean
+          description: Whether this is a known error.
+        due_by:
+          type: string
+          format: date-time
+          description: Due date.
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Auth
+      description: API key authentication. The API key can be found in your Freshcaller admin settings.
+externalDocs:
+  description: Freshcaller API Documentation
+  url: https://developers.freshcaller.com/api/

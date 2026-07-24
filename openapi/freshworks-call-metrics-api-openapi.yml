@@ -1,0 +1,110 @@
+openapi: 3.1.0
+info:
+  title: Freshworks Freshcaller Accounts Call Metrics API
+  description: The Freshcaller API provides access to cloud-based phone system functionality for contact center operations. It allows developers to export call data, call recordings, user information, and agent team details stored in the Freshcaller system. The API supports integration of voice and telephony workflows into broader business applications, enabling organizations to automate call center reporting, synchronize agent data, and build custom dashboards around their phone operations.
+  version: '1.0'
+  contact:
+    name: Freshworks Support
+    url: https://support.freshcaller.com/
+  termsOfService: https://www.freshworks.com/terms/
+servers:
+- url: https://{domain}.freshcaller.com/api/v1
+  description: Freshcaller Production Server
+  variables:
+    domain:
+      default: yourdomain
+      description: Your Freshcaller subdomain
+security:
+- apiKeyAuth: []
+tags:
+- name: Call Metrics
+  description: Access call center metrics and analytics data.
+paths:
+  /call_metrics:
+    get:
+      operationId: listCallMetrics
+      summary: List call metrics
+      description: Retrieves aggregated call center metrics and analytics data for the specified time period.
+      tags:
+      - Call Metrics
+      parameters:
+      - name: by_time[from]
+        in: query
+        description: Start of the time range (ISO 8601).
+        schema:
+          type: string
+          format: date-time
+      - name: by_time[to]
+        in: query
+        description: End of the time range (ISO 8601).
+        schema:
+          type: string
+          format: date-time
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  call_metrics:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CallMetric'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Human-readable error message.
+    CallMetric:
+      type: object
+      properties:
+        total_calls:
+          type: integer
+          description: Total number of calls.
+        answered_calls:
+          type: integer
+          description: Number of answered calls.
+        missed_calls:
+          type: integer
+          description: Number of missed calls.
+        abandoned_calls:
+          type: integer
+          description: Number of abandoned calls.
+        voicemails:
+          type: integer
+          description: Number of voicemails.
+        average_talk_time:
+          type: integer
+          description: Average talk time in seconds.
+        average_wait_time:
+          type: integer
+          description: Average wait time in seconds.
+        average_handle_time:
+          type: integer
+          description: Average handle time in seconds.
+  responses:
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Auth
+      description: API key authentication. The API key can be found in your Freshcaller admin settings.
+externalDocs:
+  description: Freshcaller API Documentation
+  url: https://developers.freshcaller.com/api/

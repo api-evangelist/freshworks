@@ -1,0 +1,318 @@
+openapi: 3.1.0
+info:
+  title: Freshworks Freshcaller Accounts Agents API
+  description: The Freshcaller API provides access to cloud-based phone system functionality for contact center operations. It allows developers to export call data, call recordings, user information, and agent team details stored in the Freshcaller system. The API supports integration of voice and telephony workflows into broader business applications, enabling organizations to automate call center reporting, synchronize agent data, and build custom dashboards around their phone operations.
+  version: '1.0'
+  contact:
+    name: Freshworks Support
+    url: https://support.freshcaller.com/
+  termsOfService: https://www.freshworks.com/terms/
+servers:
+- url: https://{domain}.freshcaller.com/api/v1
+  description: Freshcaller Production Server
+  variables:
+    domain:
+      default: yourdomain
+      description: Your Freshcaller subdomain
+security:
+- apiKeyAuth: []
+tags:
+- name: Agents
+  description: Manage chat agents and their availability.
+paths:
+  /agents:
+    get:
+      operationId: listAgents
+      summary: List all agents
+      description: Retrieves a list of all agents configured for the Freshchat account, including their availability status.
+      tags:
+      - Agents
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/ItemsPerPageParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  agents:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Agent'
+                  links:
+                    $ref: '#/components/schemas/PaginationLinks'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /agents/{agent_id}:
+    get:
+      operationId: getAgent
+      summary: View an agent
+      description: Retrieves the metadata and availability status of a specific agent.
+      tags:
+      - Agents
+      parameters:
+      - $ref: '#/components/parameters/AgentIdParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Agent'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateAgent
+      summary: Update an agent
+      description: Updates the properties of an existing agent.
+      tags:
+      - Agents
+      parameters:
+      - $ref: '#/components/parameters/AgentIdParam_2'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentUpdate'
+      responses:
+        '200':
+          description: Agent updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Agent_2'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    Error_2:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Human-readable error message.
+        errors:
+          type: array
+          description: List of specific validation errors.
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message for the field.
+              code:
+                type: string
+                description: Error code.
+    AgentUpdate:
+      type: object
+      properties:
+        occasional:
+          type: boolean
+          description: Whether the agent is occasional.
+        group_ids:
+          type: array
+          items:
+            type: integer
+          description: IDs of groups to assign.
+        role_ids:
+          type: array
+          items:
+            type: integer
+          description: IDs of roles to assign.
+        ticket_scope:
+          type: integer
+          description: Scope of tickets the agent can access.
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Human-readable error message.
+    Agent_2:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the agent.
+        contact:
+          type: object
+          description: Contact information for the agent.
+          properties:
+            name:
+              type: string
+              description: Name of the agent.
+            email:
+              type: string
+              format: email
+              description: Email address of the agent.
+            phone:
+              type: string
+              description: Phone number of the agent.
+            mobile:
+              type: string
+              description: Mobile number of the agent.
+            job_title:
+              type: string
+              description: Job title of the agent.
+        type:
+          type: string
+          description: Type of agent (support_agent, field_agent, collaborator).
+        occasional:
+          type: boolean
+          description: Whether the agent is an occasional agent.
+        available:
+          type: boolean
+          description: Whether the agent is currently available.
+        group_ids:
+          type: array
+          items:
+            type: integer
+          description: IDs of groups the agent belongs to.
+        role_ids:
+          type: array
+          items:
+            type: integer
+          description: IDs of roles assigned to the agent.
+        ticket_scope:
+          type: integer
+          description: Scope of tickets the agent can access.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the agent was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the agent was last updated.
+    PaginationLinks:
+      type: object
+      properties:
+        next_page:
+          type: string
+          format: uri
+          description: URL for the next page of results.
+        prev_page:
+          type: string
+          format: uri
+          description: URL for the previous page of results.
+    Agent:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique ID of the agent.
+        email:
+          type: string
+          format: email
+          description: Email address.
+        first_name:
+          type: string
+          description: First name.
+        last_name:
+          type: string
+          description: Last name.
+        avatar:
+          type: object
+          description: Avatar image details.
+          properties:
+            url:
+              type: string
+              format: uri
+              description: URL of the avatar image.
+        biography:
+          type: string
+          description: Agent biography.
+        is_deactivated:
+          type: boolean
+          description: Whether the agent is deactivated.
+        groups:
+          type: array
+          description: Groups the agent belongs to.
+          items:
+            type: string
+        availability:
+          type: string
+          description: Current availability status.
+          enum:
+          - online
+          - offline
+        created_time:
+          type: string
+          format: date-time
+          description: Timestamp when the agent was created.
+  parameters:
+    AgentIdParam_2:
+      name: agent_id
+      in: path
+      required: true
+      description: The ID of the agent.
+      schema:
+        type: integer
+    PageParam:
+      name: page
+      in: query
+      description: Page number for pagination.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    ItemsPerPageParam:
+      name: items_per_page
+      in: query
+      description: Number of items per page.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 50
+        default: 20
+    AgentIdParam:
+      name: agent_id
+      in: path
+      required: true
+      description: The ID of the agent.
+      schema:
+        type: string
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_2'
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Auth
+      description: API key authentication. The API key can be found in your Freshcaller admin settings.
+externalDocs:
+  description: Freshcaller API Documentation
+  url: https://developers.freshcaller.com/api/

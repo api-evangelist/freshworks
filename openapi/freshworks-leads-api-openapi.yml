@@ -1,0 +1,321 @@
+openapi: 3.1.0
+info:
+  title: Freshworks Freshcaller Accounts Leads API
+  description: The Freshcaller API provides access to cloud-based phone system functionality for contact center operations. It allows developers to export call data, call recordings, user information, and agent team details stored in the Freshcaller system. The API supports integration of voice and telephony workflows into broader business applications, enabling organizations to automate call center reporting, synchronize agent data, and build custom dashboards around their phone operations.
+  version: '1.0'
+  contact:
+    name: Freshworks Support
+    url: https://support.freshcaller.com/
+  termsOfService: https://www.freshworks.com/terms/
+servers:
+- url: https://{domain}.freshcaller.com/api/v1
+  description: Freshcaller Production Server
+  variables:
+    domain:
+      default: yourdomain
+      description: Your Freshcaller subdomain
+security:
+- apiKeyAuth: []
+tags:
+- name: Leads
+  description: Manage sales leads before they are converted to contacts or accounts.
+paths:
+  /leads:
+    get:
+      operationId: listLeads
+      summary: List all leads
+      description: Retrieves a paginated list of all leads in the CRM.
+      tags:
+      - Leads
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/SortTypeParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  leads:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Lead'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createLead
+      summary: Create a lead
+      description: Creates a new lead in the CRM.
+      tags:
+      - Leads
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LeadCreate'
+      responses:
+        '200':
+          description: Lead created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  lead:
+                    $ref: '#/components/schemas/Lead'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /leads/{lead_id}:
+    get:
+      operationId: getLead
+      summary: View a lead
+      description: Retrieves the details of a specific lead by their ID.
+      tags:
+      - Leads
+      parameters:
+      - $ref: '#/components/parameters/LeadIdParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  lead:
+                    $ref: '#/components/schemas/Lead'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateLead
+      summary: Update a lead
+      description: Updates the properties of an existing lead.
+      tags:
+      - Leads
+      parameters:
+      - $ref: '#/components/parameters/LeadIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LeadCreate'
+      responses:
+        '200':
+          description: Lead updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  lead:
+                    $ref: '#/components/schemas/Lead'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteLead
+      summary: Delete a lead
+      description: Deletes a lead from the CRM.
+      tags:
+      - Leads
+      parameters:
+      - $ref: '#/components/parameters/LeadIdParam'
+      responses:
+        '204':
+          description: Lead deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    LeadCreate:
+      type: object
+      properties:
+        first_name:
+          type: string
+          description: First name.
+        last_name:
+          type: string
+          description: Last name.
+        email:
+          type: string
+          format: email
+          description: Email address.
+        work_number:
+          type: string
+          description: Work phone number.
+        mobile_number:
+          type: string
+          description: Mobile phone number.
+        job_title:
+          type: string
+          description: Job title.
+        lead_source_id:
+          type: integer
+          description: ID of the lead source.
+        owner_id:
+          type: integer
+          description: ID of the owning agent.
+        custom_field:
+          type: object
+          additionalProperties: true
+          description: Custom field values.
+    Error:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Human-readable error message.
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message.
+              code:
+                type: string
+                description: Error code.
+    Meta:
+      type: object
+      properties:
+        total_pages:
+          type: integer
+          description: Total number of pages.
+        total:
+          type: integer
+          description: Total number of records.
+    Lead:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the lead.
+        first_name:
+          type: string
+          description: First name.
+        last_name:
+          type: string
+          description: Last name.
+        email:
+          type: string
+          format: email
+          description: Email address.
+        work_number:
+          type: string
+          description: Work phone number.
+        mobile_number:
+          type: string
+          description: Mobile phone number.
+        company:
+          type: object
+          description: Company information.
+          properties:
+            name:
+              type: string
+              description: Company name.
+        job_title:
+          type: string
+          description: Job title.
+        lead_source_id:
+          type: integer
+          description: ID of the lead source.
+        lead_stage_id:
+          type: integer
+          description: ID of the lead stage.
+        owner_id:
+          type: integer
+          description: ID of the owning sales agent.
+        lead_score:
+          type: integer
+          description: Lead score.
+        custom_field:
+          type: object
+          additionalProperties: true
+          description: Custom field values.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when last updated.
+  parameters:
+    SortTypeParam:
+      name: sort_type
+      in: query
+      description: Sort order direction.
+      schema:
+        type: string
+        enum:
+        - asc
+        - desc
+    PageParam:
+      name: page
+      in: query
+      description: Page number for pagination.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    SortParam:
+      name: sort
+      in: query
+      description: Field to sort by.
+      schema:
+        type: string
+    LeadIdParam:
+      name: lead_id
+      in: path
+      required: true
+      description: The ID of the lead.
+      schema:
+        type: integer
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Auth
+      description: API key authentication. The API key can be found in your Freshcaller admin settings.
+externalDocs:
+  description: Freshcaller API Documentation
+  url: https://developers.freshcaller.com/api/

@@ -1,0 +1,235 @@
+openapi: 3.1.0
+info:
+  title: Freshworks Freshcaller Accounts Messages API
+  description: The Freshcaller API provides access to cloud-based phone system functionality for contact center operations. It allows developers to export call data, call recordings, user information, and agent team details stored in the Freshcaller system. The API supports integration of voice and telephony workflows into broader business applications, enabling organizations to automate call center reporting, synchronize agent data, and build custom dashboards around their phone operations.
+  version: '1.0'
+  contact:
+    name: Freshworks Support
+    url: https://support.freshcaller.com/
+  termsOfService: https://www.freshworks.com/terms/
+servers:
+- url: https://{domain}.freshcaller.com/api/v1
+  description: Freshcaller Production Server
+  variables:
+    domain:
+      default: yourdomain
+      description: Your Freshcaller subdomain
+security:
+- apiKeyAuth: []
+tags:
+- name: Messages
+  description: Send and retrieve messages within conversations.
+paths:
+  /conversations/{conversation_id}/messages:
+    get:
+      operationId: listConversationMessages
+      summary: List messages in a conversation
+      description: Retrieves all messages within a specific conversation, ordered by creation time.
+      tags:
+      - Messages
+      parameters:
+      - $ref: '#/components/parameters/ConversationIdParam'
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/ItemsPerPageParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  messages:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Message'
+                  links:
+                    $ref: '#/components/schemas/PaginationLinks'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    post:
+      operationId: sendMessage
+      summary: Send a message in a conversation
+      description: Sends a new message in an existing conversation. The message can be sent on behalf of an agent or the system.
+      tags:
+      - Messages
+      parameters:
+      - $ref: '#/components/parameters/ConversationIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessageCreate'
+      responses:
+        '200':
+          description: Message sent successfully
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  parameters:
+    PageParam:
+      name: page
+      in: query
+      description: Page number for pagination.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    ItemsPerPageParam:
+      name: items_per_page
+      in: query
+      description: Number of items per page.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 50
+        default: 20
+    ConversationIdParam:
+      name: conversation_id
+      in: path
+      required: true
+      description: The ID of the conversation.
+      schema:
+        type: string
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Human-readable error message.
+    MessageCreate:
+      type: object
+      required:
+      - message_parts
+      - actor_type
+      - actor_id
+      properties:
+        message_type:
+          type: string
+          description: Type of message.
+          enum:
+          - normal
+          - private
+          default: normal
+        actor_type:
+          type: string
+          description: Type of actor sending the message.
+          enum:
+          - user
+          - agent
+        actor_id:
+          type: string
+          description: ID of the actor sending the message.
+        message_parts:
+          type: array
+          description: Parts composing the message content.
+          items:
+            type: object
+            properties:
+              text:
+                type: object
+                properties:
+                  content:
+                    type: string
+                    description: Text content.
+    PaginationLinks:
+      type: object
+      properties:
+        next_page:
+          type: string
+          format: uri
+          description: URL for the next page of results.
+        prev_page:
+          type: string
+          format: uri
+          description: URL for the previous page of results.
+    Message:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique ID of the message.
+        message_type:
+          type: string
+          description: Type of message (normal, private, system).
+          enum:
+          - normal
+          - private
+          - system
+        actor_type:
+          type: string
+          description: Type of actor who sent the message (user, agent, system).
+          enum:
+          - user
+          - agent
+          - system
+        actor_id:
+          type: string
+          description: ID of the actor.
+        message_parts:
+          type: array
+          description: Parts that compose the message content.
+          items:
+            type: object
+            properties:
+              text:
+                type: object
+                properties:
+                  content:
+                    type: string
+                    description: Text content of the message part.
+              image:
+                type: object
+                properties:
+                  url:
+                    type: string
+                    format: uri
+                    description: URL of the image.
+        reply_parts:
+          type: array
+          description: Response enablers for agent or bot messages allowing quick replies.
+          items:
+            type: object
+        created_time:
+          type: string
+          format: date-time
+          description: Timestamp when the message was created.
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Auth
+      description: API key authentication. The API key can be found in your Freshcaller admin settings.
+externalDocs:
+  description: Freshcaller API Documentation
+  url: https://developers.freshcaller.com/api/

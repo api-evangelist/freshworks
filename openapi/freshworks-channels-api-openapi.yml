@@ -1,0 +1,143 @@
+openapi: 3.1.0
+info:
+  title: Freshworks Freshcaller Accounts Channels API
+  description: The Freshcaller API provides access to cloud-based phone system functionality for contact center operations. It allows developers to export call data, call recordings, user information, and agent team details stored in the Freshcaller system. The API supports integration of voice and telephony workflows into broader business applications, enabling organizations to automate call center reporting, synchronize agent data, and build custom dashboards around their phone operations.
+  version: '1.0'
+  contact:
+    name: Freshworks Support
+    url: https://support.freshcaller.com/
+  termsOfService: https://www.freshworks.com/terms/
+servers:
+- url: https://{domain}.freshcaller.com/api/v1
+  description: Freshcaller Production Server
+  variables:
+    domain:
+      default: yourdomain
+      description: Your Freshcaller subdomain
+security:
+- apiKeyAuth: []
+tags:
+- name: Channels
+  description: Manage messaging channels and their configurations.
+paths:
+  /channels:
+    get:
+      operationId: listChannels
+      summary: List all channels
+      description: Retrieves a list of all messaging channels configured in the Freshchat account.
+      tags:
+      - Channels
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  channels:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Channel'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /channels/{channel_id}:
+    get:
+      operationId: getChannel
+      summary: View a channel
+      description: Retrieves the details of a specific messaging channel.
+      tags:
+      - Channels
+      parameters:
+      - name: channel_id
+        in: path
+        required: true
+        description: The ID of the channel.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Channel'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Human-readable error message.
+    Channel:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique ID of the channel.
+        name:
+          type: string
+          description: Name of the channel.
+        icon:
+          type: object
+          description: Channel icon details.
+          properties:
+            url:
+              type: string
+              format: uri
+              description: URL of the icon image.
+        enabled:
+          type: boolean
+          description: Whether the channel is enabled.
+        public:
+          type: boolean
+          description: Whether the channel is public.
+        welcome_message:
+          type: object
+          description: Welcome message configuration.
+          properties:
+            message_parts:
+              type: array
+              items:
+                type: object
+                properties:
+                  text:
+                    type: object
+                    properties:
+                      content:
+                        type: string
+                        description: Welcome message text.
+        updated_time:
+          type: string
+          format: date-time
+          description: Timestamp when the channel was last updated.
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Auth
+      description: API key authentication. The API key can be found in your Freshcaller admin settings.
+externalDocs:
+  description: Freshcaller API Documentation
+  url: https://developers.freshcaller.com/api/

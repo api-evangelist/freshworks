@@ -1,0 +1,108 @@
+openapi: 3.1.0
+info:
+  title: Freshworks Freshcaller Accounts Branches API
+  description: The Freshcaller API provides access to cloud-based phone system functionality for contact center operations. It allows developers to export call data, call recordings, user information, and agent team details stored in the Freshcaller system. The API supports integration of voice and telephony workflows into broader business applications, enabling organizations to automate call center reporting, synchronize agent data, and build custom dashboards around their phone operations.
+  version: '1.0'
+  contact:
+    name: Freshworks Support
+    url: https://support.freshcaller.com/
+  termsOfService: https://www.freshworks.com/terms/
+servers:
+- url: https://{domain}.freshcaller.com/api/v1
+  description: Freshcaller Production Server
+  variables:
+    domain:
+      default: yourdomain
+      description: Your Freshcaller subdomain
+security:
+- apiKeyAuth: []
+tags:
+- name: Branches
+  description: Manage organizational branch or office locations.
+paths:
+  /branches:
+    get:
+      operationId: listBranches
+      summary: List all branches
+      description: Retrieves a list of all organizational branches or office locations.
+      tags:
+      - Branches
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Branch'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Human-readable error message.
+    Branch:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the branch.
+        name:
+          type: string
+          description: Name of the branch.
+        city:
+          type: string
+          description: City.
+        state:
+          type: string
+          description: State or province.
+        country:
+          type: string
+          description: Country.
+        zip:
+          type: string
+          description: ZIP or postal code.
+        time_zone:
+          type: string
+          description: Time zone.
+        currency:
+          type: string
+          description: Local currency code.
+        main_office:
+          type: boolean
+          description: Whether this is the main office.
+        date_format:
+          type: string
+          description: Date format used at this branch.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when last updated.
+  responses:
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Auth
+      description: API key authentication. The API key can be found in your Freshcaller admin settings.
+externalDocs:
+  description: Freshcaller API Documentation
+  url: https://developers.freshcaller.com/api/

@@ -1,0 +1,284 @@
+openapi: 3.1.0
+info:
+  title: Freshworks Freshcaller Accounts Groups API
+  description: The Freshcaller API provides access to cloud-based phone system functionality for contact center operations. It allows developers to export call data, call recordings, user information, and agent team details stored in the Freshcaller system. The API supports integration of voice and telephony workflows into broader business applications, enabling organizations to automate call center reporting, synchronize agent data, and build custom dashboards around their phone operations.
+  version: '1.0'
+  contact:
+    name: Freshworks Support
+    url: https://support.freshcaller.com/
+  termsOfService: https://www.freshworks.com/terms/
+servers:
+- url: https://{domain}.freshcaller.com/api/v1
+  description: Freshcaller Production Server
+  variables:
+    domain:
+      default: yourdomain
+      description: Your Freshcaller subdomain
+security:
+- apiKeyAuth: []
+tags:
+- name: Groups
+  description: Manage agent groups for conversation routing.
+paths:
+  /groups:
+    get:
+      operationId: listGroups
+      summary: List all groups
+      description: Retrieves a list of all agent groups configured for conversation routing.
+      tags:
+      - Groups
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  groups:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Group'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createGroup
+      summary: Create a group
+      description: Creates a new agent group in the helpdesk.
+      tags:
+      - Groups
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupCreate'
+      responses:
+        '201':
+          description: Group created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group_2'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /groups/{group_id}:
+    get:
+      operationId: getGroup
+      summary: View a group
+      description: Retrieves the details of a specific agent group.
+      tags:
+      - Groups
+      parameters:
+      - name: group_id
+        in: path
+        required: true
+        description: The ID of the group.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateGroup
+      summary: Update a group
+      description: Updates the properties of an existing agent group.
+      tags:
+      - Groups
+      parameters:
+      - $ref: '#/components/parameters/GroupIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupCreate'
+      responses:
+        '200':
+          description: Group updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group_2'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteGroup
+      summary: Delete a group
+      description: Deletes an agent group from the helpdesk.
+      tags:
+      - Groups
+      parameters:
+      - $ref: '#/components/parameters/GroupIdParam'
+      responses:
+        '204':
+          description: Group deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    Error_2:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Human-readable error message.
+        errors:
+          type: array
+          description: List of specific validation errors.
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message for the field.
+              code:
+                type: string
+                description: Error code.
+    GroupCreate:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Name of the group.
+        description:
+          type: string
+          description: Description of the group.
+        agent_ids:
+          type: array
+          items:
+            type: integer
+          description: IDs of agents to include.
+        auto_ticket_assign:
+          type: boolean
+          description: Whether to enable auto ticket assignment.
+        escalate_to:
+          type: integer
+          description: Agent ID to escalate unassigned tickets to.
+        unassigned_for:
+          type: string
+          description: Time duration after which tickets are escalated.
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Human-readable error message.
+    Group:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique ID of the group.
+        name:
+          type: string
+          description: Name of the group.
+        description:
+          type: string
+          description: Description of the group.
+        routing_type:
+          type: string
+          description: Conversation routing type for the group.
+        agents:
+          type: array
+          description: IDs of agents in the group.
+          items:
+            type: string
+        created_time:
+          type: string
+          format: date-time
+          description: Timestamp when the group was created.
+    Group_2:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the group.
+        name:
+          type: string
+          description: Name of the group.
+        description:
+          type: string
+          description: Description of the group.
+        agent_ids:
+          type: array
+          items:
+            type: integer
+          description: IDs of agents in the group.
+        auto_ticket_assign:
+          type: boolean
+          description: Whether auto ticket assignment is enabled.
+        escalate_to:
+          type: integer
+          description: Agent ID to escalate unassigned tickets to.
+        unassigned_for:
+          type: string
+          description: Time duration after which tickets are escalated.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the group was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the group was last updated.
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_2'
+  parameters:
+    GroupIdParam:
+      name: group_id
+      in: path
+      required: true
+      description: The ID of the group.
+      schema:
+        type: integer
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Auth
+      description: API key authentication. The API key can be found in your Freshcaller admin settings.
+externalDocs:
+  description: Freshcaller API Documentation
+  url: https://developers.freshcaller.com/api/

@@ -1,0 +1,105 @@
+openapi: 3.1.0
+info:
+  title: Freshworks Freshcaller Accounts SLA Policies API
+  description: The Freshcaller API provides access to cloud-based phone system functionality for contact center operations. It allows developers to export call data, call recordings, user information, and agent team details stored in the Freshcaller system. The API supports integration of voice and telephony workflows into broader business applications, enabling organizations to automate call center reporting, synchronize agent data, and build custom dashboards around their phone operations.
+  version: '1.0'
+  contact:
+    name: Freshworks Support
+    url: https://support.freshcaller.com/
+  termsOfService: https://www.freshworks.com/terms/
+servers:
+- url: https://{domain}.freshcaller.com/api/v1
+  description: Freshcaller Production Server
+  variables:
+    domain:
+      default: yourdomain
+      description: Your Freshcaller subdomain
+security:
+- apiKeyAuth: []
+tags:
+- name: SLA Policies
+  description: Manage SLA policies for ticket response and resolution targets.
+paths:
+  /sla_policies:
+    get:
+      operationId: listSLAPolicies
+      summary: List all SLA policies
+      description: Retrieves a list of all SLA policies configured in the helpdesk.
+      tags:
+      - SLA Policies
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SLAPolicy'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Human-readable error message.
+        errors:
+          type: array
+          description: List of specific validation errors.
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message for the field.
+              code:
+                type: string
+                description: Error code.
+    SLAPolicy:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the SLA policy.
+        name:
+          type: string
+          description: Name of the SLA policy.
+        description:
+          type: string
+          description: Description of the SLA policy.
+        is_default:
+          type: boolean
+          description: Whether this is the default SLA policy.
+        active:
+          type: boolean
+          description: Whether the SLA policy is active.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the SLA policy was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the SLA policy was last updated.
+  responses:
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Auth
+      description: API key authentication. The API key can be found in your Freshcaller admin settings.
+externalDocs:
+  description: Freshcaller API Documentation
+  url: https://developers.freshcaller.com/api/

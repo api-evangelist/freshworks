@@ -1,0 +1,287 @@
+openapi: 3.1.0
+info:
+  title: Freshworks Freshcaller Accounts Tasks API
+  description: The Freshcaller API provides access to cloud-based phone system functionality for contact center operations. It allows developers to export call data, call recordings, user information, and agent team details stored in the Freshcaller system. The API supports integration of voice and telephony workflows into broader business applications, enabling organizations to automate call center reporting, synchronize agent data, and build custom dashboards around their phone operations.
+  version: '1.0'
+  contact:
+    name: Freshworks Support
+    url: https://support.freshcaller.com/
+  termsOfService: https://www.freshworks.com/terms/
+servers:
+- url: https://{domain}.freshcaller.com/api/v1
+  description: Freshcaller Production Server
+  variables:
+    domain:
+      default: yourdomain
+      description: Your Freshcaller subdomain
+security:
+- apiKeyAuth: []
+tags:
+- name: Tasks
+  description: Manage tasks associated with sales activities.
+paths:
+  /tasks:
+    get:
+      operationId: listTasks
+      summary: List all tasks
+      description: Retrieves a paginated list of all tasks in the CRM.
+      tags:
+      - Tasks
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - name: filter
+        in: query
+        description: Filter tasks by status (open, due_today, due_tomorrow, overdue, completed).
+        schema:
+          type: string
+          enum:
+          - open
+          - due_today
+          - due_tomorrow
+          - overdue
+          - completed
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tasks:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Task'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createTask
+      summary: Create a task
+      description: Creates a new task in the CRM.
+      tags:
+      - Tasks
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskCreate'
+      responses:
+        '200':
+          description: Task created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  task:
+                    $ref: '#/components/schemas/Task'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /tasks/{task_id}:
+    get:
+      operationId: getTask
+      summary: View a task
+      description: Retrieves the details of a specific task by its ID.
+      tags:
+      - Tasks
+      parameters:
+      - $ref: '#/components/parameters/TaskIdParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  task:
+                    $ref: '#/components/schemas/Task'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateTask
+      summary: Update a task
+      description: Updates the properties of an existing task.
+      tags:
+      - Tasks
+      parameters:
+      - $ref: '#/components/parameters/TaskIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskCreate'
+      responses:
+        '200':
+          description: Task updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  task:
+                    $ref: '#/components/schemas/Task'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteTask
+      summary: Delete a task
+      description: Deletes a task from the CRM.
+      tags:
+      - Tasks
+      parameters:
+      - $ref: '#/components/parameters/TaskIdParam'
+      responses:
+        '204':
+          description: Task deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  parameters:
+    TaskIdParam:
+      name: task_id
+      in: path
+      required: true
+      description: The ID of the task.
+      schema:
+        type: integer
+    PageParam:
+      name: page
+      in: query
+      description: Page number for pagination.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Human-readable error message.
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message.
+              code:
+                type: string
+                description: Error code.
+    Task:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the task.
+        title:
+          type: string
+          description: Title of the task.
+        description:
+          type: string
+          description: Description of the task.
+        due_date:
+          type: string
+          format: date-time
+          description: Due date and time.
+        owner_id:
+          type: integer
+          description: ID of the task owner.
+        status:
+          type: integer
+          description: Status of the task. 0=Open, 1=Completed.
+        task_type_id:
+          type: integer
+          description: ID of the task type.
+        outcome_id:
+          type: integer
+          description: ID of the task outcome.
+        targetable_type:
+          type: string
+          description: Type of the associated record (Contact, Deal, Lead).
+        targetable_id:
+          type: integer
+          description: ID of the associated record.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when last updated.
+    TaskCreate:
+      type: object
+      required:
+      - title
+      - due_date
+      - owner_id
+      properties:
+        title:
+          type: string
+          description: Title of the task.
+        description:
+          type: string
+          description: Description.
+        due_date:
+          type: string
+          format: date-time
+          description: Due date and time.
+        owner_id:
+          type: integer
+          description: ID of the task owner.
+        task_type_id:
+          type: integer
+          description: ID of the task type.
+        targetable_type:
+          type: string
+          description: Type of associated record.
+        targetable_id:
+          type: integer
+          description: ID of associated record.
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Auth
+      description: API key authentication. The API key can be found in your Freshcaller admin settings.
+externalDocs:
+  description: Freshcaller API Documentation
+  url: https://developers.freshcaller.com/api/

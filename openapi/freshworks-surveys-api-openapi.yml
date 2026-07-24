@@ -1,0 +1,138 @@
+openapi: 3.1.0
+info:
+  title: Freshworks Freshcaller Accounts Surveys API
+  description: The Freshcaller API provides access to cloud-based phone system functionality for contact center operations. It allows developers to export call data, call recordings, user information, and agent team details stored in the Freshcaller system. The API supports integration of voice and telephony workflows into broader business applications, enabling organizations to automate call center reporting, synchronize agent data, and build custom dashboards around their phone operations.
+  version: '1.0'
+  contact:
+    name: Freshworks Support
+    url: https://support.freshcaller.com/
+  termsOfService: https://www.freshworks.com/terms/
+servers:
+- url: https://{domain}.freshcaller.com/api/v1
+  description: Freshcaller Production Server
+  variables:
+    domain:
+      default: yourdomain
+      description: Your Freshcaller subdomain
+security:
+- apiKeyAuth: []
+tags:
+- name: Surveys
+  description: Manage customer satisfaction surveys.
+paths:
+  /surveys/satisfaction_ratings:
+    get:
+      operationId: listSatisfactionRatings
+      summary: List all satisfaction ratings
+      description: Retrieves a list of all customer satisfaction ratings received for helpdesk tickets.
+      tags:
+      - Surveys
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PerPageParam'
+      - name: created_since
+        in: query
+        description: Filter ratings created since this timestamp.
+        schema:
+          type: string
+          format: date-time
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SatisfactionRating'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  parameters:
+    PageParam:
+      name: page
+      in: query
+      description: Page number for pagination.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    PerPageParam:
+      name: per_page
+      in: query
+      description: Number of results per page (max 100).
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 30
+  schemas:
+    Error:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Human-readable error message.
+        errors:
+          type: array
+          description: List of specific validation errors.
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message for the field.
+              code:
+                type: string
+                description: Error code.
+    SatisfactionRating:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the satisfaction rating.
+        survey_id:
+          type: integer
+          description: ID of the associated survey.
+        user_id:
+          type: integer
+          description: ID of the user who provided the rating.
+        agent_id:
+          type: integer
+          description: ID of the agent who handled the ticket.
+        ticket_id:
+          type: integer
+          description: ID of the ticket that was rated.
+        rating:
+          type: integer
+          description: Satisfaction rating value.
+        feedback:
+          type: string
+          description: Feedback text from the customer.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the rating was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the rating was last updated.
+  responses:
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Auth
+      description: API key authentication. The API key can be found in your Freshcaller admin settings.
+externalDocs:
+  description: Freshcaller API Documentation
+  url: https://developers.freshcaller.com/api/

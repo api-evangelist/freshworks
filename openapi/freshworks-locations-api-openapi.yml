@@ -1,0 +1,135 @@
+openapi: 3.1.0
+info:
+  title: Freshworks Freshcaller Accounts Locations API
+  description: The Freshcaller API provides access to cloud-based phone system functionality for contact center operations. It allows developers to export call data, call recordings, user information, and agent team details stored in the Freshcaller system. The API supports integration of voice and telephony workflows into broader business applications, enabling organizations to automate call center reporting, synchronize agent data, and build custom dashboards around their phone operations.
+  version: '1.0'
+  contact:
+    name: Freshworks Support
+    url: https://support.freshcaller.com/
+  termsOfService: https://www.freshworks.com/terms/
+servers:
+- url: https://{domain}.freshcaller.com/api/v1
+  description: Freshcaller Production Server
+  variables:
+    domain:
+      default: yourdomain
+      description: Your Freshcaller subdomain
+security:
+- apiKeyAuth: []
+tags:
+- name: Locations
+  description: Manage office and facility locations.
+paths:
+  /locations:
+    get:
+      operationId: listLocations
+      summary: List all locations
+      description: Retrieves a list of all office and facility locations.
+      tags:
+      - Locations
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  locations:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Location'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Human-readable error message.
+        errors:
+          type: array
+          description: List of specific validation errors.
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message.
+              code:
+                type: string
+                description: Error code.
+    Location:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the location.
+        name:
+          type: string
+          description: Name of the location.
+        address:
+          type: object
+          description: Address of the location.
+          properties:
+            line1:
+              type: string
+              description: Address line 1.
+            line2:
+              type: string
+              description: Address line 2.
+            city:
+              type: string
+              description: City.
+            state:
+              type: string
+              description: State or province.
+            country:
+              type: string
+              description: Country.
+            zip_code:
+              type: string
+              description: Postal or ZIP code.
+        contact:
+          type: object
+          description: Contact information.
+          properties:
+            name:
+              type: string
+              description: Contact name.
+            phone:
+              type: string
+              description: Contact phone.
+            email:
+              type: string
+              format: email
+              description: Contact email.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when last updated.
+  responses:
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Auth
+      description: API key authentication. The API key can be found in your Freshcaller admin settings.
+externalDocs:
+  description: Freshcaller API Documentation
+  url: https://developers.freshcaller.com/api/

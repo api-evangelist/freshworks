@@ -1,0 +1,350 @@
+openapi: 3.1.0
+info:
+  title: Freshworks Freshcaller Accounts Contacts API
+  description: The Freshcaller API provides access to cloud-based phone system functionality for contact center operations. It allows developers to export call data, call recordings, user information, and agent team details stored in the Freshcaller system. The API supports integration of voice and telephony workflows into broader business applications, enabling organizations to automate call center reporting, synchronize agent data, and build custom dashboards around their phone operations.
+  version: '1.0'
+  contact:
+    name: Freshworks Support
+    url: https://support.freshcaller.com/
+  termsOfService: https://www.freshworks.com/terms/
+servers:
+- url: https://{domain}.freshcaller.com/api/v1
+  description: Freshcaller Production Server
+  variables:
+    domain:
+      default: yourdomain
+      description: Your Freshcaller subdomain
+security:
+- apiKeyAuth: []
+tags:
+- name: Contacts
+  description: Manage customer contacts including creation, updates, merging, and deactivation.
+paths:
+  /contacts:
+    get:
+      operationId: listContacts
+      summary: List all contacts
+      description: Retrieves a paginated list of all contacts in the helpdesk. Supports filtering by email, phone, mobile, and company.
+      tags:
+      - Contacts
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/PerPageParam'
+      - name: email
+        in: query
+        description: Filter contacts by email address.
+        schema:
+          type: string
+          format: email
+      - name: phone
+        in: query
+        description: Filter contacts by phone number.
+        schema:
+          type: string
+      - name: company_id
+        in: query
+        description: Filter contacts by company ID.
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Contact'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createContact
+      summary: Create a contact
+      description: Creates a new contact in the helpdesk. At least one of name, email, phone, or mobile is required.
+      tags:
+      - Contacts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactCreate'
+      responses:
+        '201':
+          description: Contact created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /contacts/{contact_id}:
+    get:
+      operationId: getContact
+      summary: View a contact
+      description: Retrieves the details of a specific contact by their ID.
+      tags:
+      - Contacts
+      parameters:
+      - $ref: '#/components/parameters/ContactIdParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateContact
+      summary: Update a contact
+      description: Updates the properties of an existing contact.
+      tags:
+      - Contacts
+      parameters:
+      - $ref: '#/components/parameters/ContactIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactCreate'
+      responses:
+        '200':
+          description: Contact updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteContact
+      summary: Delete a contact
+      description: Soft-deletes a contact from the helpdesk.
+      tags:
+      - Contacts
+      parameters:
+      - $ref: '#/components/parameters/ContactIdParam'
+      responses:
+        '204':
+          description: Contact deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /contacts/{contact_id}/merge:
+    put:
+      operationId: mergeContacts
+      summary: Merge contacts
+      description: Merges secondary contacts into the primary contact specified by the contact_id path parameter.
+      tags:
+      - Contacts
+      parameters:
+      - $ref: '#/components/parameters/ContactIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - secondary_contact_ids
+              properties:
+                secondary_contact_ids:
+                  type: array
+                  description: Array of contact IDs to merge into the primary contact.
+                  items:
+                    type: integer
+      responses:
+        '200':
+          description: Contacts merged successfully
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  parameters:
+    ContactIdParam:
+      name: contact_id
+      in: path
+      required: true
+      description: The ID of the contact.
+      schema:
+        type: integer
+    PageParam:
+      name: page
+      in: query
+      description: Page number for pagination.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    PerPageParam:
+      name: per_page
+      in: query
+      description: Number of results per page (max 100).
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 30
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Human-readable error message.
+        errors:
+          type: array
+          description: List of specific validation errors.
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message for the field.
+              code:
+                type: string
+                description: Error code.
+    ContactCreate:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Full name of the contact.
+        email:
+          type: string
+          format: email
+          description: Primary email address.
+        phone:
+          type: string
+          description: Phone number.
+        mobile:
+          type: string
+          description: Mobile number.
+        address:
+          type: string
+          description: Address of the contact.
+        description:
+          type: string
+          description: Description or notes about the contact.
+        job_title:
+          type: string
+          description: Job title of the contact.
+        company_id:
+          type: integer
+          description: ID of the associated company.
+        language:
+          type: string
+          description: Language preference.
+        time_zone:
+          type: string
+          description: Time zone.
+        tags:
+          type: array
+          items:
+            type: string
+          description: Tags to associate.
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: Key-value pairs for custom fields.
+    Contact:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the contact.
+        name:
+          type: string
+          description: Full name of the contact.
+        email:
+          type: string
+          format: email
+          description: Primary email address of the contact.
+        phone:
+          type: string
+          description: Phone number of the contact.
+        mobile:
+          type: string
+          description: Mobile number of the contact.
+        address:
+          type: string
+          description: Address of the contact.
+        description:
+          type: string
+          description: Description or notes about the contact.
+        job_title:
+          type: string
+          description: Job title of the contact.
+        company_id:
+          type: integer
+          description: ID of the associated company.
+        language:
+          type: string
+          description: Language preference of the contact.
+        time_zone:
+          type: string
+          description: Time zone of the contact.
+        tags:
+          type: array
+          items:
+            type: string
+          description: Tags associated with the contact.
+        active:
+          type: boolean
+          description: Whether the contact is active.
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: Key-value pairs for custom fields.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the contact was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the contact was last updated.
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Auth
+      description: API key authentication. The API key can be found in your Freshcaller admin settings.
+externalDocs:
+  description: Freshcaller API Documentation
+  url: https://developers.freshcaller.com/api/

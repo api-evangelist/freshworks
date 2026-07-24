@@ -1,0 +1,316 @@
+openapi: 3.1.0
+info:
+  title: Freshworks Freshcaller Accounts Deals API
+  description: The Freshcaller API provides access to cloud-based phone system functionality for contact center operations. It allows developers to export call data, call recordings, user information, and agent team details stored in the Freshcaller system. The API supports integration of voice and telephony workflows into broader business applications, enabling organizations to automate call center reporting, synchronize agent data, and build custom dashboards around their phone operations.
+  version: '1.0'
+  contact:
+    name: Freshworks Support
+    url: https://support.freshcaller.com/
+  termsOfService: https://www.freshworks.com/terms/
+servers:
+- url: https://{domain}.freshcaller.com/api/v1
+  description: Freshcaller Production Server
+  variables:
+    domain:
+      default: yourdomain
+      description: Your Freshcaller subdomain
+security:
+- apiKeyAuth: []
+tags:
+- name: Deals
+  description: Manage sales deals and their pipeline progression.
+paths:
+  /deals:
+    get:
+      operationId: listDeals
+      summary: List all deals
+      description: Retrieves a paginated list of all deals in the CRM pipeline.
+      tags:
+      - Deals
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/SortTypeParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  deals:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Deal'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createDeal
+      summary: Create a deal
+      description: Creates a new deal in the sales pipeline.
+      tags:
+      - Deals
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DealCreate'
+      responses:
+        '200':
+          description: Deal created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  deal:
+                    $ref: '#/components/schemas/Deal'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /deals/{deal_id}:
+    get:
+      operationId: getDeal
+      summary: View a deal
+      description: Retrieves the details of a specific deal by its ID.
+      tags:
+      - Deals
+      parameters:
+      - $ref: '#/components/parameters/DealIdParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  deal:
+                    $ref: '#/components/schemas/Deal'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateDeal
+      summary: Update a deal
+      description: Updates the properties of an existing deal.
+      tags:
+      - Deals
+      parameters:
+      - $ref: '#/components/parameters/DealIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DealCreate'
+      responses:
+        '200':
+          description: Deal updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  deal:
+                    $ref: '#/components/schemas/Deal'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteDeal
+      summary: Delete a deal
+      description: Deletes a deal from the CRM.
+      tags:
+      - Deals
+      parameters:
+      - $ref: '#/components/parameters/DealIdParam'
+      responses:
+        '204':
+          description: Deal deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    DealCreate:
+      type: object
+      required:
+      - name
+      - amount
+      properties:
+        name:
+          type: string
+          description: Name of the deal.
+        amount:
+          type: number
+          description: Deal value amount.
+        expected_close:
+          type: string
+          format: date
+          description: Expected close date.
+        deal_stage_id:
+          type: integer
+          description: ID of the deal stage.
+        deal_pipeline_id:
+          type: integer
+          description: ID of the pipeline.
+        probability:
+          type: integer
+          description: Probability of closing.
+        sales_account_id:
+          type: integer
+          description: ID of the associated account.
+        owner_id:
+          type: integer
+          description: ID of the owning agent.
+        custom_field:
+          type: object
+          additionalProperties: true
+          description: Custom field values.
+    Error:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Human-readable error message.
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message.
+              code:
+                type: string
+                description: Error code.
+    Meta:
+      type: object
+      properties:
+        total_pages:
+          type: integer
+          description: Total number of pages.
+        total:
+          type: integer
+          description: Total number of records.
+    Deal:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the deal.
+        name:
+          type: string
+          description: Name of the deal.
+        amount:
+          type: number
+          description: Deal value amount.
+        expected_close:
+          type: string
+          format: date
+          description: Expected close date.
+        deal_stage_id:
+          type: integer
+          description: ID of the current deal stage.
+        deal_pipeline_id:
+          type: integer
+          description: ID of the deal pipeline.
+        probability:
+          type: integer
+          description: Probability of closing (0-100).
+          minimum: 0
+          maximum: 100
+        sales_account_id:
+          type: integer
+          description: ID of the associated account.
+        owner_id:
+          type: integer
+          description: ID of the owning sales agent.
+        currency_id:
+          type: integer
+          description: ID of the currency.
+        custom_field:
+          type: object
+          additionalProperties: true
+          description: Custom field values.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when last updated.
+  parameters:
+    SortTypeParam:
+      name: sort_type
+      in: query
+      description: Sort order direction.
+      schema:
+        type: string
+        enum:
+        - asc
+        - desc
+    PageParam:
+      name: page
+      in: query
+      description: Page number for pagination.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    SortParam:
+      name: sort
+      in: query
+      description: Field to sort by.
+      schema:
+        type: string
+    DealIdParam:
+      name: deal_id
+      in: path
+      required: true
+      description: The ID of the deal.
+      schema:
+        type: integer
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Auth
+      description: API key authentication. The API key can be found in your Freshcaller admin settings.
+externalDocs:
+  description: Freshcaller API Documentation
+  url: https://developers.freshcaller.com/api/

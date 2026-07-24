@@ -1,0 +1,340 @@
+openapi: 3.1.0
+info:
+  title: Freshworks Freshcaller Accounts API
+  description: The Freshcaller API provides access to cloud-based phone system functionality for contact center operations. It allows developers to export call data, call recordings, user information, and agent team details stored in the Freshcaller system. The API supports integration of voice and telephony workflows into broader business applications, enabling organizations to automate call center reporting, synchronize agent data, and build custom dashboards around their phone operations.
+  version: '1.0'
+  contact:
+    name: Freshworks Support
+    url: https://support.freshcaller.com/
+  termsOfService: https://www.freshworks.com/terms/
+servers:
+- url: https://{domain}.freshcaller.com/api/v1
+  description: Freshcaller Production Server
+  variables:
+    domain:
+      default: yourdomain
+      description: Your Freshcaller subdomain
+security:
+- apiKeyAuth: []
+tags:
+- name: Accounts
+  description: Manage company accounts with which you have business relationships.
+paths:
+  /sales_accounts:
+    get:
+      operationId: listAccounts
+      summary: List all accounts
+      description: Retrieves a paginated list of all company accounts in the CRM.
+      tags:
+      - Accounts
+      parameters:
+      - $ref: '#/components/parameters/PageParam'
+      - $ref: '#/components/parameters/SortParam'
+      - $ref: '#/components/parameters/SortTypeParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sales_accounts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Account'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createAccount
+      summary: Create an account
+      description: Creates a new company account in the CRM.
+      tags:
+      - Accounts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountCreate'
+      responses:
+        '200':
+          description: Account created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sales_account:
+                    $ref: '#/components/schemas/Account'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /sales_accounts/{account_id}:
+    get:
+      operationId: getAccount
+      summary: View an account
+      description: Retrieves the details of a specific company account by its ID.
+      tags:
+      - Accounts
+      parameters:
+      - $ref: '#/components/parameters/AccountIdParam'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sales_account:
+                    $ref: '#/components/schemas/Account'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateAccount
+      summary: Update an account
+      description: Updates the properties of an existing company account.
+      tags:
+      - Accounts
+      parameters:
+      - $ref: '#/components/parameters/AccountIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountCreate'
+      responses:
+        '200':
+          description: Account updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sales_account:
+                    $ref: '#/components/schemas/Account'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteAccount
+      summary: Delete an account
+      description: Deletes a company account from the CRM.
+      tags:
+      - Accounts
+      parameters:
+      - $ref: '#/components/parameters/AccountIdParam'
+      responses:
+        '204':
+          description: Account deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  parameters:
+    SortTypeParam:
+      name: sort_type
+      in: query
+      description: Sort order direction.
+      schema:
+        type: string
+        enum:
+        - asc
+        - desc
+    PageParam:
+      name: page
+      in: query
+      description: Page number for pagination.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    SortParam:
+      name: sort
+      in: query
+      description: Field to sort by.
+      schema:
+        type: string
+    AccountIdParam:
+      name: account_id
+      in: path
+      required: true
+      description: The ID of the account.
+      schema:
+        type: integer
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Human-readable error message.
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message.
+              code:
+                type: string
+                description: Error code.
+    Meta:
+      type: object
+      properties:
+        total_pages:
+          type: integer
+          description: Total number of pages.
+        total:
+          type: integer
+          description: Total number of records.
+    AccountCreate:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Name of the company.
+        address:
+          type: string
+          description: Address.
+        city:
+          type: string
+          description: City.
+        state:
+          type: string
+          description: State or province.
+        zipcode:
+          type: string
+          description: ZIP or postal code.
+        country:
+          type: string
+          description: Country.
+        phone:
+          type: string
+          description: Phone number.
+        website:
+          type: string
+          format: uri
+          description: Website URL.
+        number_of_employees:
+          type: integer
+          description: Number of employees.
+        annual_revenue:
+          type: number
+          description: Annual revenue.
+        industry_type_id:
+          type: integer
+          description: Industry type ID.
+        business_type_id:
+          type: integer
+          description: Business type ID.
+        owner_id:
+          type: integer
+          description: ID of the owning sales agent.
+        custom_field:
+          type: object
+          additionalProperties: true
+          description: Custom field values.
+    Account:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the account.
+        name:
+          type: string
+          description: Name of the company.
+        address:
+          type: string
+          description: Address.
+        city:
+          type: string
+          description: City.
+        state:
+          type: string
+          description: State or province.
+        zipcode:
+          type: string
+          description: ZIP or postal code.
+        country:
+          type: string
+          description: Country.
+        phone:
+          type: string
+          description: Phone number.
+        website:
+          type: string
+          format: uri
+          description: Website URL.
+        number_of_employees:
+          type: integer
+          description: Number of employees.
+        annual_revenue:
+          type: number
+          description: Annual revenue amount.
+        industry_type_id:
+          type: integer
+          description: ID of the industry type.
+        business_type_id:
+          type: integer
+          description: ID of the business type.
+        owner_id:
+          type: integer
+          description: ID of the owning sales agent.
+        custom_field:
+          type: object
+          additionalProperties: true
+          description: Custom field values.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when last updated.
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Auth
+      description: API key authentication. The API key can be found in your Freshcaller admin settings.
+externalDocs:
+  description: Freshcaller API Documentation
+  url: https://developers.freshcaller.com/api/
