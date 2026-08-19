@@ -1,0 +1,89 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Freshworks Freshcaller Accounts Job Postings API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Api-Auth",
+      "value": "{{X-Api-Auth}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Job Postings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all job postings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshcaller.com/api/v1/job_postings",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by posting status (draft, published, on_hold, closed)."
+              }
+            ]
+          },
+          "docs": "Retrieves a list of all job postings in the Freshteam system."
+        },
+        {
+          "info": {
+            "name": "View a job posting",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshcaller.com/api/v1/job_postings/:job_posting_id",
+            "params": [
+              {
+                "name": "job_posting_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the job posting."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific job posting by its ID."
+        },
+        {
+          "info": {
+            "name": "List applicant fields for a job posting",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshcaller.com/api/v1/job_postings/:job_posting_id/applicant_fields",
+            "params": [
+              {
+                "name": "job_posting_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the job posting."
+              }
+            ]
+          },
+          "docs": "Retrieves the list of applicant form fields for a specific job posting, including required and custom fields."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

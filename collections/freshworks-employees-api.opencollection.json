@@ -1,0 +1,116 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Freshworks Freshcaller Accounts Employees API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Api-Auth",
+      "value": "{{X-Api-Auth}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Employees",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all employees",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshcaller.com/api/v1/employees",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Field to sort by."
+              },
+              {
+                "name": "sort_type",
+                "value": "",
+                "type": "query",
+                "description": "Sort direction (asc or desc)."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by employment status."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of all employees in the Freshteam system. Supports filtering by status and sort options."
+        },
+        {
+          "info": {
+            "name": "View an employee",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshcaller.com/api/v1/employees/:employee_id",
+            "params": [
+              {
+                "name": "employee_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the employee."
+              }
+            ]
+          },
+          "docs": "Retrieves the full details of a specific employee by their ID."
+        },
+        {
+          "info": {
+            "name": "Update an employee",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.freshcaller.com/api/v1/employees/:employee_id",
+            "params": [
+              {
+                "name": "employee_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the employee."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the properties of an existing employee record."
+        },
+        {
+          "info": {
+            "name": "List all employee fields",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshcaller.com/api/v1/employee_fields"
+          },
+          "docs": "Retrieves the list of all employee form fields, including custom fields and their configurations."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

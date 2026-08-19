@@ -1,0 +1,952 @@
+{
+  "item": [
+    {
+      "id": "e9d75147-ce20-4ce8-84f9-8024f027aba8",
+      "name": "Employees",
+      "description": {
+        "content": "Manage employee records including personal information, job details, and employment history.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b426c39e-6e36-434b-ac43-535d819fba15",
+          "name": "List all employees",
+          "request": {
+            "name": "List all employees",
+            "description": {
+              "content": "Retrieves a paginated list of all employees in the Freshteam system. Supports filtering by status and sort options.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "employees"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number for pagination."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "<string>",
+                  "description": "Field to sort by."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_type",
+                  "value": "<string>",
+                  "description": "Sort direction (asc or desc)."
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by employment status."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Freshcaller subdomain",
+                  "type": "any",
+                  "value": "{{domain}}",
+                  "key": "domain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cd2c387d-d414-44b2-91fb-abf5b459a999",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "employees"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Freshcaller subdomain",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Auth",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 7884,\n    \"first_name\": \"string\",\n    \"last_name\": \"string\",\n    \"official_email\": \"5PPsqxIa8CEZfIx@FEKtJslClHYxhrCG.xrlf\",\n    \"personal_email\": \"dYDYREd5@uPrywYoCHqnWZNxqXqlRvVWYsqYI.xcx\",\n    \"employee_id\": \"string\",\n    \"status\": \"string\",\n    \"designation\": \"string\",\n    \"phone_number\": \"string\",\n    \"date_of_birth\": \"1979-07-27\",\n    \"joining_date\": \"2012-12-23\",\n    \"branch_id\": 3162,\n    \"department_id\": 1403,\n    \"sub_department_id\": 7829,\n    \"reporting_to_id\": 6650,\n    \"level_id\": 4709,\n    \"role_id\": 7146,\n    \"gender\": \"string\",\n    \"address\": {\n      \"street\": \"string\",\n      \"city\": \"string\",\n      \"state\": \"string\",\n      \"country\": \"string\",\n      \"zip_code\": \"string\"\n    },\n    \"custom_fields\": {\n      \"key_0\": true\n    },\n    \"created_at\": \"1962-07-23T03:13:20.374Z\",\n    \"updated_at\": \"1986-02-23T12:08:52.323Z\"\n  },\n  {\n    \"id\": 2247,\n    \"first_name\": \"string\",\n    \"last_name\": \"string\",\n    \"official_email\": \"lXttsw2q@KpGDCMZGqB.iwbo\",\n    \"personal_email\": \"sBHw@vHnOLMFZHrMnZxsLkuHfklmLAGjm.az\",\n    \"employee_id\": \"string\",\n    \"status\": \"string\",\n    \"designation\": \"string\",\n    \"phone_number\": \"string\",\n    \"date_of_birth\": \"1947-04-07\",\n    \"joining_date\": \"1976-06-17\",\n    \"branch_id\": 7443,\n    \"department_id\": 3881,\n    \"sub_department_id\": 5620,\n    \"reporting_to_id\": 4590,\n    \"level_id\": 1464,\n    \"role_id\": 136,\n    \"gender\": \"string\",\n    \"address\": {\n      \"street\": \"string\",\n      \"city\": \"string\",\n      \"state\": \"string\",\n      \"country\": \"string\",\n      \"zip_code\": \"string\"\n    },\n    \"custom_fields\": {\n      \"key_0\": false,\n      \"key_1\": 74.44965241197643\n    },\n    \"created_at\": \"2016-02-05T13:43:48.936Z\",\n    \"updated_at\": \"1988-01-03T22:16:56.787Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "679a07b9-0d22-43d4-89bc-65fb0e9a58c9",
+              "name": "Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "employees"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Freshcaller subdomain",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Auth",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6e96ff30-dfff-4354-815e-b2ee25bfb710",
+          "name": "View an employee",
+          "request": {
+            "name": "View an employee",
+            "description": {
+              "content": "Retrieves the full details of a specific employee by their ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "employees",
+                ":employee_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "employee_id",
+                  "description": "(Required) The ID of the employee."
+                },
+                {
+                  "description": "Your Freshcaller subdomain",
+                  "type": "any",
+                  "value": "{{domain}}",
+                  "key": "domain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7006ebcd-d62e-4ac3-af75-58188a88d903",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "employees",
+                    ":employee_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "employee_id",
+                      "description": "(Required) The ID of the employee."
+                    },
+                    {
+                      "description": "Your Freshcaller subdomain",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Auth",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 4395,\n  \"first_name\": \"string\",\n  \"last_name\": \"string\",\n  \"official_email\": \"fAHlyOkO8eJjoK@WHYxNJYuQTEgUNzhn.ltn\",\n  \"personal_email\": \"JcBSC@hHxqgbdtCeiykPGEaKxLoCKEhaDmSBO.lh\",\n  \"employee_id\": \"string\",\n  \"status\": \"string\",\n  \"designation\": \"string\",\n  \"phone_number\": \"string\",\n  \"date_of_birth\": \"1990-07-09\",\n  \"joining_date\": \"2004-11-18\",\n  \"branch_id\": 4429,\n  \"department_id\": 3685,\n  \"sub_department_id\": 3792,\n  \"reporting_to_id\": 3456,\n  \"level_id\": 7247,\n  \"role_id\": 6985,\n  \"gender\": \"string\",\n  \"address\": {\n    \"street\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"country\": \"string\",\n    \"zip_code\": \"string\"\n  },\n  \"custom_fields\": {\n    \"key_0\": true\n  },\n  \"created_at\": \"1997-05-09T09:40:27.969Z\",\n  \"updated_at\": \"2004-03-31T11:15:20.496Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0bd94dca-4d49-49f3-89bb-8352f74a0b57",
+              "name": "Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "employees",
+                    ":employee_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "employee_id",
+                      "description": "(Required) The ID of the employee."
+                    },
+                    {
+                      "description": "Your Freshcaller subdomain",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Auth",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e2d4b09e-1e30-412d-bff6-b4cfe989971e",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "employees",
+                    ":employee_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "employee_id",
+                      "description": "(Required) The ID of the employee."
+                    },
+                    {
+                      "description": "Your Freshcaller subdomain",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Auth",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "afa9f87b-9f55-4d69-b05e-6de991c7f937",
+          "name": "Update an employee",
+          "request": {
+            "name": "Update an employee",
+            "description": {
+              "content": "Updates the properties of an existing employee record.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "employees",
+                ":employee_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "employee_id",
+                  "description": "(Required) The ID of the employee."
+                },
+                {
+                  "description": "Your Freshcaller subdomain",
+                  "type": "any",
+                  "value": "{{domain}}",
+                  "key": "domain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"official_email\": \"<email>\",\n  \"designation\": \"<string>\",\n  \"phone_number\": \"<string>\",\n  \"branch_id\": \"<integer>\",\n  \"department_id\": \"<integer>\",\n  \"sub_department_id\": \"<integer>\",\n  \"reporting_to_id\": \"<integer>\",\n  \"level_id\": \"<integer>\",\n  \"custom_fields\": {\n    \"key_0\": 3624,\n    \"key_1\": 7967.518262866378\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "db54c749-6e3b-46d9-8426-de226cab73e5",
+              "name": "Employee updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "employees",
+                    ":employee_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "employee_id",
+                      "description": "(Required) The ID of the employee."
+                    },
+                    {
+                      "description": "Your Freshcaller subdomain",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Auth",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"official_email\": \"<email>\",\n  \"designation\": \"<string>\",\n  \"phone_number\": \"<string>\",\n  \"branch_id\": \"<integer>\",\n  \"department_id\": \"<integer>\",\n  \"sub_department_id\": \"<integer>\",\n  \"reporting_to_id\": \"<integer>\",\n  \"level_id\": \"<integer>\",\n  \"custom_fields\": {\n    \"key_0\": 3126.237395366986,\n    \"key_1\": \"string\",\n    \"key_2\": 6573.707670898433\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 4395,\n  \"first_name\": \"string\",\n  \"last_name\": \"string\",\n  \"official_email\": \"fAHlyOkO8eJjoK@WHYxNJYuQTEgUNzhn.ltn\",\n  \"personal_email\": \"JcBSC@hHxqgbdtCeiykPGEaKxLoCKEhaDmSBO.lh\",\n  \"employee_id\": \"string\",\n  \"status\": \"string\",\n  \"designation\": \"string\",\n  \"phone_number\": \"string\",\n  \"date_of_birth\": \"1990-07-09\",\n  \"joining_date\": \"2004-11-18\",\n  \"branch_id\": 4429,\n  \"department_id\": 3685,\n  \"sub_department_id\": 3792,\n  \"reporting_to_id\": 3456,\n  \"level_id\": 7247,\n  \"role_id\": 6985,\n  \"gender\": \"string\",\n  \"address\": {\n    \"street\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"country\": \"string\",\n    \"zip_code\": \"string\"\n  },\n  \"custom_fields\": {\n    \"key_0\": true\n  },\n  \"created_at\": \"1997-05-09T09:40:27.969Z\",\n  \"updated_at\": \"2004-03-31T11:15:20.496Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "622508f5-d9f4-4d5b-98ea-1af14e9b25aa",
+              "name": "The request body or parameters are invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "employees",
+                    ":employee_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "employee_id",
+                      "description": "(Required) The ID of the employee."
+                    },
+                    {
+                      "description": "Your Freshcaller subdomain",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Auth",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"official_email\": \"<email>\",\n  \"designation\": \"<string>\",\n  \"phone_number\": \"<string>\",\n  \"branch_id\": \"<integer>\",\n  \"department_id\": \"<integer>\",\n  \"sub_department_id\": \"<integer>\",\n  \"reporting_to_id\": \"<integer>\",\n  \"level_id\": \"<integer>\",\n  \"custom_fields\": {\n    \"key_0\": 3126.237395366986,\n    \"key_1\": \"string\",\n    \"key_2\": 6573.707670898433\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "665d500e-949d-4804-9074-c9d7806fb972",
+              "name": "Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "employees",
+                    ":employee_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "employee_id",
+                      "description": "(Required) The ID of the employee."
+                    },
+                    {
+                      "description": "Your Freshcaller subdomain",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Auth",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"official_email\": \"<email>\",\n  \"designation\": \"<string>\",\n  \"phone_number\": \"<string>\",\n  \"branch_id\": \"<integer>\",\n  \"department_id\": \"<integer>\",\n  \"sub_department_id\": \"<integer>\",\n  \"reporting_to_id\": \"<integer>\",\n  \"level_id\": \"<integer>\",\n  \"custom_fields\": {\n    \"key_0\": 3126.237395366986,\n    \"key_1\": \"string\",\n    \"key_2\": 6573.707670898433\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ffd7722b-9bab-469f-9a95-dc7a5679c1a6",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "employees",
+                    ":employee_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "employee_id",
+                      "description": "(Required) The ID of the employee."
+                    },
+                    {
+                      "description": "Your Freshcaller subdomain",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Auth",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"official_email\": \"<email>\",\n  \"designation\": \"<string>\",\n  \"phone_number\": \"<string>\",\n  \"branch_id\": \"<integer>\",\n  \"department_id\": \"<integer>\",\n  \"sub_department_id\": \"<integer>\",\n  \"reporting_to_id\": \"<integer>\",\n  \"level_id\": \"<integer>\",\n  \"custom_fields\": {\n    \"key_0\": 3126.237395366986,\n    \"key_1\": \"string\",\n    \"key_2\": 6573.707670898433\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b92ec019-228b-4e82-9335-fcd0ee888e26",
+          "name": "List all employee fields",
+          "request": {
+            "name": "List all employee fields",
+            "description": {
+              "content": "Retrieves the list of all employee form fields, including custom fields and their configurations.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "employee_fields"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Freshcaller subdomain",
+                  "type": "any",
+                  "value": "{{domain}}",
+                  "key": "domain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d9acdf16-d26c-4545-9ab0-fc68a2b7f296",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "employee_fields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Freshcaller subdomain",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Auth",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 5725,\n    \"name\": \"string\",\n    \"label\": \"string\",\n    \"field_type\": \"string\",\n    \"required\": true,\n    \"position\": 2153,\n    \"choices\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  {\n    \"id\": 4756,\n    \"name\": \"string\",\n    \"label\": \"string\",\n    \"field_type\": \"string\",\n    \"required\": true,\n    \"position\": 6221,\n    \"choices\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9bebbe23-8ab9-4d75-a463-3cb8486b610f",
+              "name": "Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "employee_fields"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Freshcaller subdomain",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Auth",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Your Freshcaller subdomain",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "yourdomain",
+      "key": "domain"
+    },
+    {
+      "type": "string",
+      "value": "https://{{domain}}.freshcaller.com/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-Api-Auth"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "f5920556-3ec1-4805-9780-460b1030d6f2",
+    "name": "Freshworks Freshcaller Accounts Employees API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Freshcaller API provides access to cloud-based phone system functionality for contact center operations. It allows developers to export call data, call recordings, user information, and agent team details stored in the Freshcaller system. The API supports integration of voice and telephony workflows into broader business applications, enabling organizations to automate call center reporting, synchronize agent data, and build custom dashboards around their phone operations.\n\nContact Support:\n Name: Freshworks Support",
+      "type": "text/plain"
+    }
+  }
+}

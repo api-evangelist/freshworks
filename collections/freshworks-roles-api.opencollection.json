@@ -1,0 +1,56 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Freshworks Freshcaller Accounts Roles API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Api-Auth",
+      "value": "{{X-Api-Auth}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Roles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all roles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshcaller.com/api/v1/roles"
+          },
+          "docs": "Retrieves a list of all agent roles configured in the helpdesk."
+        },
+        {
+          "info": {
+            "name": "View a role",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshcaller.com/api/v1/roles/:role_id",
+            "params": [
+              {
+                "name": "role_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the role to retrieve."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific agent role by its ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

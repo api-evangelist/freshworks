@@ -1,0 +1,57 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Freshworks Freshcaller Accounts Surveys API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Api-Auth",
+      "value": "{{X-Api-Auth}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Surveys",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all satisfaction ratings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshcaller.com/api/v1/surveys/satisfaction_ratings",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (max 100)."
+              },
+              {
+                "name": "created_since",
+                "value": "",
+                "type": "query",
+                "description": "Filter ratings created since this timestamp."
+              }
+            ]
+          },
+          "docs": "Retrieves a list of all customer satisfaction ratings received for helpdesk tickets."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

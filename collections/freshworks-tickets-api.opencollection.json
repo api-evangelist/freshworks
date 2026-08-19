@@ -1,0 +1,188 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Freshworks Freshcaller Accounts Tickets API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Api-Auth",
+      "value": "{{X-Api-Auth}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tickets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all tickets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshcaller.com/api/v1/tickets",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (max 100)."
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Pre-defined filter to apply. Options include new_and_my_open, watching, spam, deleted."
+              },
+              {
+                "name": "requester_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter tickets by requester ID."
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "Filter tickets by requester email."
+              },
+              {
+                "name": "updated_since",
+                "value": "",
+                "type": "query",
+                "description": "Return tickets updated after this timestamp in UTC format."
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Field to sort by."
+              },
+              {
+                "name": "order_type",
+                "value": "",
+                "type": "query",
+                "description": "Sort order direction."
+              }
+            ]
+          },
+          "docs": "Retrieves a list of all tickets in the helpdesk. Results can be filtered by various criteria including status, priority, and requester. Supports pagination with a default page size of 30."
+        },
+        {
+          "info": {
+            "name": "Create a ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshcaller.com/api/v1/tickets",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new ticket in the helpdesk. Requires at least a subject, description, and requester identification (email, phone, or requester_id). Supports attachments and custom fields."
+        },
+        {
+          "info": {
+            "name": "View a ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshcaller.com/api/v1/tickets/:ticket_id",
+            "params": [
+              {
+                "name": "ticket_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the ticket."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Include additional information in the response. Comma-separated values from conversations, requester, company, stats."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific ticket by its ID, including all ticket properties and custom fields."
+        },
+        {
+          "info": {
+            "name": "Update a ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.freshcaller.com/api/v1/tickets/:ticket_id",
+            "params": [
+              {
+                "name": "ticket_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the ticket."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the properties of an existing ticket. Only the fields included in the request body will be updated."
+        },
+        {
+          "info": {
+            "name": "Delete a ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.freshcaller.com/api/v1/tickets/:ticket_id",
+            "params": [
+              {
+                "name": "ticket_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the ticket."
+              }
+            ]
+          },
+          "docs": "Soft-deletes a ticket by moving it to the trash. The ticket can be restored later using the restore endpoint."
+        },
+        {
+          "info": {
+            "name": "Restore a deleted ticket",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.freshcaller.com/api/v1/tickets/:ticket_id/restore",
+            "params": [
+              {
+                "name": "ticket_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the ticket."
+              }
+            ]
+          },
+          "docs": "Restores a previously deleted ticket from the trash."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

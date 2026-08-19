@@ -1,0 +1,127 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Freshworks Freshcaller Accounts Problems API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Api-Auth",
+      "value": "{{X-Api-Auth}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Problems",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all problems",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshcaller.com/api/v1/problems",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (max 100)."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of all problem records in the service desk for root cause analysis and resolution."
+        },
+        {
+          "info": {
+            "name": "Create a problem",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshcaller.com/api/v1/problems",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new problem record in the service desk for tracking and resolving the root cause of incidents."
+        },
+        {
+          "info": {
+            "name": "View a problem",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshcaller.com/api/v1/problems/:problem_id",
+            "params": [
+              {
+                "name": "problem_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the problem."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific problem by its ID."
+        },
+        {
+          "info": {
+            "name": "Update a problem",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.freshcaller.com/api/v1/problems/:problem_id",
+            "params": [
+              {
+                "name": "problem_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the problem."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the properties of an existing problem record."
+        },
+        {
+          "info": {
+            "name": "Delete a problem",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.freshcaller.com/api/v1/problems/:problem_id",
+            "params": [
+              {
+                "name": "problem_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the problem."
+              }
+            ]
+          },
+          "docs": "Deletes a problem record from the service desk."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

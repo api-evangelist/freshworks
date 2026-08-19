@@ -1,0 +1,51 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Freshworks Freshcaller Accounts Call Metrics API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Api-Auth",
+      "value": "{{X-Api-Auth}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Call Metrics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List call metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshcaller.com/api/v1/call_metrics",
+            "params": [
+              {
+                "name": "by_time[from]",
+                "value": "",
+                "type": "query",
+                "description": "Start of the time range (ISO 8601)."
+              },
+              {
+                "name": "by_time[to]",
+                "value": "",
+                "type": "query",
+                "description": "End of the time range (ISO 8601)."
+              }
+            ]
+          },
+          "docs": "Retrieves aggregated call center metrics and analytics data for the specified time period."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

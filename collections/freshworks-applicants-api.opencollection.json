@@ -1,0 +1,74 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Freshworks Freshcaller Accounts Applicants API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Api-Auth",
+      "value": "{{X-Api-Auth}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Applicants",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List applicants for a job posting",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshcaller.com/api/v1/job_postings/:job_posting_id/applicants",
+            "params": [
+              {
+                "name": "job_posting_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the job posting."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of all applicants for a specific job posting."
+        },
+        {
+          "info": {
+            "name": "Create an applicant for a job posting",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshcaller.com/api/v1/job_postings/:job_posting_id/applicants",
+            "params": [
+              {
+                "name": "job_posting_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the job posting."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new applicant for a specific job posting. This is used to programmatically submit job applications."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

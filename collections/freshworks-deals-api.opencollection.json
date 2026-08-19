@@ -1,0 +1,133 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Freshworks Freshcaller Accounts Deals API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Api-Auth",
+      "value": "{{X-Api-Auth}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Deals",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all deals",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshcaller.com/api/v1/deals",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Field to sort by."
+              },
+              {
+                "name": "sort_type",
+                "value": "",
+                "type": "query",
+                "description": "Sort order direction."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of all deals in the CRM pipeline."
+        },
+        {
+          "info": {
+            "name": "Create a deal",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshcaller.com/api/v1/deals",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new deal in the sales pipeline."
+        },
+        {
+          "info": {
+            "name": "View a deal",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshcaller.com/api/v1/deals/:deal_id",
+            "params": [
+              {
+                "name": "deal_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the deal."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific deal by its ID."
+        },
+        {
+          "info": {
+            "name": "Update a deal",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.freshcaller.com/api/v1/deals/:deal_id",
+            "params": [
+              {
+                "name": "deal_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the deal."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the properties of an existing deal."
+        },
+        {
+          "info": {
+            "name": "Delete a deal",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.freshcaller.com/api/v1/deals/:deal_id",
+            "params": [
+              {
+                "name": "deal_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the deal."
+              }
+            ]
+          },
+          "docs": "Deletes a deal from the CRM."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

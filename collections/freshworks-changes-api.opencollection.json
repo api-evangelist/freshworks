@@ -1,0 +1,127 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Freshworks Freshcaller Accounts Changes API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Api-Auth",
+      "value": "{{X-Api-Auth}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Changes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all changes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshcaller.com/api/v1/changes",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (max 100)."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of all change requests in the service desk."
+        },
+        {
+          "info": {
+            "name": "Create a change request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshcaller.com/api/v1/changes",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new change request for tracking controlled modifications to IT infrastructure and services."
+        },
+        {
+          "info": {
+            "name": "View a change request",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshcaller.com/api/v1/changes/:change_id",
+            "params": [
+              {
+                "name": "change_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the change request."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific change request by its ID."
+        },
+        {
+          "info": {
+            "name": "Update a change request",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.freshcaller.com/api/v1/changes/:change_id",
+            "params": [
+              {
+                "name": "change_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the change request."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the properties of an existing change request."
+        },
+        {
+          "info": {
+            "name": "Delete a change request",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.freshcaller.com/api/v1/changes/:change_id",
+            "params": [
+              {
+                "name": "change_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the change request."
+              }
+            ]
+          },
+          "docs": "Deletes a change request from the service desk."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

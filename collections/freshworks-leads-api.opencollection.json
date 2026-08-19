@@ -1,0 +1,133 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Freshworks Freshcaller Accounts Leads API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Api-Auth",
+      "value": "{{X-Api-Auth}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Leads",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all leads",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshcaller.com/api/v1/leads",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Field to sort by."
+              },
+              {
+                "name": "sort_type",
+                "value": "",
+                "type": "query",
+                "description": "Sort order direction."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of all leads in the CRM."
+        },
+        {
+          "info": {
+            "name": "Create a lead",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshcaller.com/api/v1/leads",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new lead in the CRM."
+        },
+        {
+          "info": {
+            "name": "View a lead",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshcaller.com/api/v1/leads/:lead_id",
+            "params": [
+              {
+                "name": "lead_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the lead."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific lead by their ID."
+        },
+        {
+          "info": {
+            "name": "Update a lead",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.freshcaller.com/api/v1/leads/:lead_id",
+            "params": [
+              {
+                "name": "lead_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the lead."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the properties of an existing lead."
+        },
+        {
+          "info": {
+            "name": "Delete a lead",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.freshcaller.com/api/v1/leads/:lead_id",
+            "params": [
+              {
+                "name": "lead_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the lead."
+              }
+            ]
+          },
+          "docs": "Deletes a lead from the CRM."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

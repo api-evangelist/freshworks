@@ -1,0 +1,200 @@
+{
+  "item": [
+    {
+      "id": "4ae5e5fa-c968-4068-bdd2-ee4e9bfd836f",
+      "name": "Email Configs",
+      "description": {
+        "content": "Manage email configuration settings for the helpdesk.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7ae6ec21-2686-4f4f-a8d3-84bb0408ab04",
+          "name": "List all email configurations",
+          "request": {
+            "name": "List all email configurations",
+            "description": {
+              "content": "Retrieves a list of all email configurations for the helpdesk.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "email_configs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Freshcaller subdomain",
+                  "type": "any",
+                  "value": "{{domain}}",
+                  "key": "domain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e9175e40-475d-4e33-8bd7-63c4d7dbf79b",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "email_configs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Freshcaller subdomain",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Auth",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 6001,\n    \"name\": \"string\",\n    \"reply_email\": \"DzSBcAyZXsBX@RePCtjsbBNPWhbikWnUFQSHNlBHNiBrM.iwdw\",\n    \"support_email\": \"yJu5Sc@TxEUvchXXgrJNPW.lm\",\n    \"active\": true,\n    \"product_id\": 3842,\n    \"created_at\": \"2014-11-17T09:39:24.649Z\",\n    \"updated_at\": \"1986-08-02T18:44:04.976Z\"\n  },\n  {\n    \"id\": 7075,\n    \"name\": \"string\",\n    \"reply_email\": \"gi7MN@tI.gw\",\n    \"support_email\": \"cu3B@wkGIYuHCjNlzqZosARbfLuLaTegltkhf.mm\",\n    \"active\": false,\n    \"product_id\": 1156,\n    \"created_at\": \"1965-01-14T11:23:13.667Z\",\n    \"updated_at\": \"2021-10-08T09:22:18.038Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1324d249-fcfe-4c05-8976-d42cb6ee55e9",
+              "name": "Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "email_configs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Freshcaller subdomain",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Auth",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"errors\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\",\n      \"code\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Your Freshcaller subdomain",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "yourdomain",
+      "key": "domain"
+    },
+    {
+      "type": "string",
+      "value": "https://{{domain}}.freshcaller.com/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-Api-Auth"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "3722e9db-7ab6-4933-af50-f79499174a45",
+    "name": "Freshworks Freshcaller Accounts Email Configs API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Freshcaller API provides access to cloud-based phone system functionality for contact center operations. It allows developers to export call data, call recordings, user information, and agent team details stored in the Freshcaller system. The API supports integration of voice and telephony workflows into broader business applications, enabling organizations to automate call center reporting, synchronize agent data, and build custom dashboards around their phone operations.\n\nContact Support:\n Name: Freshworks Support",
+      "type": "text/plain"
+    }
+  }
+}

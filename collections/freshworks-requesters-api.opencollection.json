@@ -1,0 +1,139 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Freshworks Freshcaller Accounts Requesters API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Api-Auth",
+      "value": "{{X-Api-Auth}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Requesters",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all requesters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshcaller.com/api/v1/requesters",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination."
+              },
+              {
+                "name": "per_page",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page (max 100)."
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "Filter requesters by email address."
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Search query to filter requesters by name or email."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of all requesters in the service desk."
+        },
+        {
+          "info": {
+            "name": "Create a requester",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshcaller.com/api/v1/requesters",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new requester in the service desk."
+        },
+        {
+          "info": {
+            "name": "View a requester",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshcaller.com/api/v1/requesters/:requester_id",
+            "params": [
+              {
+                "name": "requester_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the requester."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific requester by their ID."
+        },
+        {
+          "info": {
+            "name": "Update a requester",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{domain}.freshcaller.com/api/v1/requesters/:requester_id",
+            "params": [
+              {
+                "name": "requester_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the requester."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the properties of an existing requester."
+        },
+        {
+          "info": {
+            "name": "Delete a requester",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.freshcaller.com/api/v1/requesters/:requester_id",
+            "params": [
+              {
+                "name": "requester_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the requester."
+              }
+            ]
+          },
+          "docs": "Deletes a requester from the service desk."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

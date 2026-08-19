@@ -1,0 +1,104 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Freshworks Freshcaller Accounts Appointments API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Api-Auth",
+      "value": "{{X-Api-Auth}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Appointments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all appointments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshcaller.com/api/v1/appointments",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination."
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter appointments by time range."
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of all appointments in the CRM."
+        },
+        {
+          "info": {
+            "name": "Create an appointment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{domain}.freshcaller.com/api/v1/appointments",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new appointment or meeting in the CRM."
+        },
+        {
+          "info": {
+            "name": "View an appointment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{domain}.freshcaller.com/api/v1/appointments/:appointment_id",
+            "params": [
+              {
+                "name": "appointment_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the appointment."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a specific appointment by its ID."
+        },
+        {
+          "info": {
+            "name": "Delete an appointment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{domain}.freshcaller.com/api/v1/appointments/:appointment_id",
+            "params": [
+              {
+                "name": "appointment_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the appointment."
+              }
+            ]
+          },
+          "docs": "Deletes an appointment from the CRM."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

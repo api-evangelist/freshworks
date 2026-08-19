@@ -1,0 +1,725 @@
+{
+  "item": [
+    {
+      "id": "9958b5c3-9ede-45bd-ad69-1a4f033df89e",
+      "name": "Calls",
+      "description": {
+        "content": "Access call records, call details, and call metrics from the Freshcaller system.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e0ab26d8-ec35-4eeb-843d-db6950502a81",
+          "name": "List all calls",
+          "request": {
+            "name": "List all calls",
+            "description": {
+              "content": "Retrieves a paginated list of all call records from the Freshcaller system including inbound, outbound, and missed calls.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "calls"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number for pagination."
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "25",
+                  "description": "Number of results per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "by_time[from]",
+                  "value": "<dateTime>",
+                  "description": "Filter calls from this timestamp (ISO 8601)."
+                },
+                {
+                  "disabled": false,
+                  "key": "by_time[to]",
+                  "value": "<dateTime>",
+                  "description": "Filter calls up to this timestamp (ISO 8601)."
+                },
+                {
+                  "disabled": false,
+                  "key": "has_ancestry",
+                  "value": "<boolean>",
+                  "description": "Filter calls that have parent-child relationships."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Freshcaller subdomain",
+                  "type": "any",
+                  "value": "{{domain}}",
+                  "key": "domain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "14e9a1fa-58ed-4ba6-be55-b1fa53719031",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "25"
+                    },
+                    {
+                      "key": "by_time[from]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "by_time[to]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "has_ancestry",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Freshcaller subdomain",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Auth",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"calls\": [\n    {\n      \"id\": 5193,\n      \"direction\": \"outgoing\",\n      \"status\": \"string\",\n      \"phone_number\": \"string\",\n      \"caller_number\": \"string\",\n      \"agent_id\": 1152,\n      \"queue_id\": 5219,\n      \"team_id\": 4566,\n      \"duration\": 6517,\n      \"bill_duration\": 8930,\n      \"talk_duration\": 4235,\n      \"hold_duration\": 7897,\n      \"wait_duration\": 6992,\n      \"has_recording\": true,\n      \"recording_url\": \"https://fZQCBApDNFEAhaiuVrykpOqCqcJPZeCJ.ccddaCwH25,KWqU7eQGXNMjttpe38trEzMORACIU5wh-hMcv7xO\",\n      \"notes\": \"string\",\n      \"created_at\": \"2003-08-06T15:12:56.227Z\",\n      \"updated_at\": \"1986-07-31T23:18:45.904Z\"\n    },\n    {\n      \"id\": 1339,\n      \"direction\": \"outgoing\",\n      \"status\": \"string\",\n      \"phone_number\": \"string\",\n      \"caller_number\": \"string\",\n      \"agent_id\": 7950,\n      \"queue_id\": 1943,\n      \"team_id\": 5364,\n      \"duration\": 2449,\n      \"bill_duration\": 9619,\n      \"talk_duration\": 8567,\n      \"hold_duration\": 7823,\n      \"wait_duration\": 6030,\n      \"has_recording\": true,\n      \"recording_url\": \"https://fSzThZLGfIZMsmGHMzvKi.hujaUE6YwH6JTlVBj+9t,lTy\",\n      \"notes\": \"string\",\n      \"created_at\": \"2009-01-30T02:12:50.185Z\",\n      \"updated_at\": \"1999-06-11T10:33:50.870Z\"\n    }\n  ],\n  \"meta\": {\n    \"total_pages\": 4107,\n    \"total\": 1538,\n    \"current_page\": 2676\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5fd76c1b-75de-440a-8240-bd5d04e65717",
+              "name": "Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "25"
+                    },
+                    {
+                      "key": "by_time[from]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "by_time[to]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "has_ancestry",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Freshcaller subdomain",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Auth",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "854a5f8f-186f-42a2-adee-c1dbd1e4cc80",
+          "name": "View a call",
+          "request": {
+            "name": "View a call",
+            "description": {
+              "content": "Retrieves the details of a specific call record by its ID, including call duration, participants, recording URL, and status.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "calls",
+                ":call_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "call_id",
+                  "description": "(Required) The ID of the call."
+                },
+                {
+                  "description": "Your Freshcaller subdomain",
+                  "type": "any",
+                  "value": "{{domain}}",
+                  "key": "domain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ed2e1fb1-55cd-4a50-9aff-77c6a5a52294",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls",
+                    ":call_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "call_id",
+                      "description": "(Required) The ID of the call."
+                    },
+                    {
+                      "description": "Your Freshcaller subdomain",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Auth",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"call\": {\n    \"id\": 640,\n    \"direction\": \"incoming\",\n    \"status\": \"string\",\n    \"phone_number\": \"string\",\n    \"caller_number\": \"string\",\n    \"agent_id\": 2504,\n    \"queue_id\": 1835,\n    \"team_id\": 4984,\n    \"duration\": 8796,\n    \"bill_duration\": 9621,\n    \"talk_duration\": 1719,\n    \"hold_duration\": 400,\n    \"wait_duration\": 8290,\n    \"has_recording\": true,\n    \"recording_url\": \"https://klthLSHJ.lhSiozyMjQW8,t+njwg65NRXAmovOQ6-tUNVZLtDbo\",\n    \"notes\": \"string\",\n    \"created_at\": \"1986-05-18T14:23:39.704Z\",\n    \"updated_at\": \"2004-02-13T05:31:38.500Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "297a5498-b029-43f4-a20a-ebe58cfb138d",
+              "name": "Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls",
+                    ":call_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "call_id",
+                      "description": "(Required) The ID of the call."
+                    },
+                    {
+                      "description": "Your Freshcaller subdomain",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Auth",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6721c3bf-7931-4f74-911c-9c8a9c62f13b",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls",
+                    ":call_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "call_id",
+                      "description": "(Required) The ID of the call."
+                    },
+                    {
+                      "description": "Your Freshcaller subdomain",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Auth",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e632d7b8-2565-42b0-ba3d-c9bcf74f4bb9",
+          "name": "Get call recording",
+          "request": {
+            "name": "Get call recording",
+            "description": {
+              "content": "Retrieves the recording URL for a specific call. The recording must be available and the account must have recording enabled.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "calls",
+                ":call_id",
+                "recording"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "call_id",
+                  "description": "(Required) The ID of the call."
+                },
+                {
+                  "description": "Your Freshcaller subdomain",
+                  "type": "any",
+                  "value": "{{domain}}",
+                  "key": "domain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ada2bc2a-b27e-4645-bb7c-2e035da7c99a",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls",
+                    ":call_id",
+                    "recording"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "call_id",
+                      "description": "(Required) The ID of the call."
+                    },
+                    {
+                      "description": "Your Freshcaller subdomain",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Auth",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"recording\": {\n    \"url\": \"https://OXXTuRjXhro.bpLPaMouBzHoMJTmLcrjeyfzq,huSEOz9qMZL.s.uKvKInnr9jV1nrO03cXla\",\n    \"duration\": 8148\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2be7c3b4-6ee5-4f83-ba0c-dda408b37a15",
+              "name": "Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls",
+                    ":call_id",
+                    "recording"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "call_id",
+                      "description": "(Required) The ID of the call."
+                    },
+                    {
+                      "description": "Your Freshcaller subdomain",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Auth",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fa14ac9f-a35c-49a7-9580-d284c2e86957",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "calls",
+                    ":call_id",
+                    "recording"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "call_id",
+                      "description": "(Required) The ID of the call."
+                    },
+                    {
+                      "description": "Your Freshcaller subdomain",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Auth",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Your Freshcaller subdomain",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "yourdomain",
+      "key": "domain"
+    },
+    {
+      "type": "string",
+      "value": "https://{{domain}}.freshcaller.com/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-Api-Auth"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "bf1511af-bd3c-45ea-971e-154578e933cc",
+    "name": "Freshworks Freshcaller Accounts Calls API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Freshcaller API provides access to cloud-based phone system functionality for contact center operations. It allows developers to export call data, call recordings, user information, and agent team details stored in the Freshcaller system. The API supports integration of voice and telephony workflows into broader business applications, enabling organizations to automate call center reporting, synchronize agent data, and build custom dashboards around their phone operations.\n\nContact Support:\n Name: Freshworks Support",
+      "type": "text/plain"
+    }
+  }
+}

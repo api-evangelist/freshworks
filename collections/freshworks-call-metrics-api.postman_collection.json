@@ -1,0 +1,231 @@
+{
+  "item": [
+    {
+      "id": "1e58d5de-7259-4d26-ba9d-bb3e922b9eec",
+      "name": "Call Metrics",
+      "description": {
+        "content": "Access call center metrics and analytics data.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8edcb231-b2e8-45de-b699-8ab062fe1289",
+          "name": "List call metrics",
+          "request": {
+            "name": "List call metrics",
+            "description": {
+              "content": "Retrieves aggregated call center metrics and analytics data for the specified time period.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "call_metrics"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "by_time[from]",
+                  "value": "<dateTime>",
+                  "description": "Start of the time range (ISO 8601)."
+                },
+                {
+                  "disabled": false,
+                  "key": "by_time[to]",
+                  "value": "<dateTime>",
+                  "description": "End of the time range (ISO 8601)."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Freshcaller subdomain",
+                  "type": "any",
+                  "value": "{{domain}}",
+                  "key": "domain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fad02f24-8866-444b-a3e9-84909239afc6",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "call_metrics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "by_time[from]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "by_time[to]",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Freshcaller subdomain",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Auth",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"call_metrics\": [\n    {\n      \"total_calls\": 6768,\n      \"answered_calls\": 6270,\n      \"missed_calls\": 4636,\n      \"abandoned_calls\": 4711,\n      \"voicemails\": 9090,\n      \"average_talk_time\": 5116,\n      \"average_wait_time\": 2377,\n      \"average_handle_time\": 7612\n    },\n    {\n      \"total_calls\": 5118,\n      \"answered_calls\": 2226,\n      \"missed_calls\": 8204,\n      \"abandoned_calls\": 2650,\n      \"voicemails\": 6760,\n      \"average_talk_time\": 1886,\n      \"average_wait_time\": 221,\n      \"average_handle_time\": 797\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0d7a921d-fce0-4989-afe2-eeda28793224",
+              "name": "Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "call_metrics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "by_time[from]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "by_time[to]",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Freshcaller subdomain",
+                      "type": "any",
+                      "value": "{{domain}}",
+                      "key": "domain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Api-Auth",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Your Freshcaller subdomain",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "yourdomain",
+      "key": "domain"
+    },
+    {
+      "type": "string",
+      "value": "https://{{domain}}.freshcaller.com/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-Api-Auth"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "d6b2f7e7-aa2e-40c9-8e34-f8b5a4da3ea9",
+    "name": "Freshworks Freshcaller Accounts Call Metrics API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Freshcaller API provides access to cloud-based phone system functionality for contact center operations. It allows developers to export call data, call recordings, user information, and agent team details stored in the Freshcaller system. The API supports integration of voice and telephony workflows into broader business applications, enabling organizations to automate call center reporting, synchronize agent data, and build custom dashboards around their phone operations.\n\nContact Support:\n Name: Freshworks Support",
+      "type": "text/plain"
+    }
+  }
+}
