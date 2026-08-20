@@ -42,6 +42,12 @@ apis:
   tags:
   - App Development
   - Extensions
+  - Integration
+  - Platform
+  - SDK
+  tags_raw:
+  - App Development
+  - Extensions
   - Integrations
   - Platform
   - SDK
@@ -61,6 +67,8 @@ apis:
   humanURL: https://developers.freshdesk.com/api/
   baseURL: https://domain.freshdesk.com/api/v2
   tags:
+  - Account
+  tags_raw:
   - Accounts
   properties:
   - type: OpenAPI
@@ -458,6 +466,8 @@ apis:
   humanURL: https://developers.freshdesk.com/api/
   baseURL: https://domain.freshdesk.com/api/v2
   tags:
+  - Group
+  tags_raw:
   - Groups
   properties:
   - type: OpenAPI
@@ -568,6 +578,8 @@ apis:
   humanURL: https://developers.freshdesk.com/api/
   baseURL: https://domain.freshdesk.com/api/v2
   tags:
+  - Message
+  tags_raw:
   - Messages
   properties:
   - type: OpenAPI
@@ -634,6 +646,8 @@ apis:
   humanURL: https://developers.freshdesk.com/api/
   baseURL: https://domain.freshdesk.com/api/v2
   tags:
+  - Product
+  tags_raw:
   - Products
   properties:
   - type: OpenAPI
@@ -832,6 +846,8 @@ apis:
   humanURL: https://developers.freshdesk.com/api/
   baseURL: https://domain.freshdesk.com/api/v2
   tags:
+  - Task
+  tags_raw:
   - Tasks
   properties:
   - type: OpenAPI
@@ -854,6 +870,8 @@ apis:
   humanURL: https://developers.freshdesk.com/api/
   baseURL: https://domain.freshdesk.com/api/v2
   tags:
+  - Team
+  tags_raw:
   - Teams
   properties:
   - type: OpenAPI
@@ -944,6 +962,8 @@ apis:
   humanURL: https://developers.freshdesk.com/api/
   baseURL: https://domain.freshdesk.com/api/v2
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
