@@ -1,21 +1,27 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Freshworks Freshcaller Accounts Channels API
-  description: The Freshcaller API provides access to cloud-based phone system functionality for contact center operations. It allows developers to export call data, call recordings, user information, and agent team details stored in the Freshcaller system. The API supports integration of voice and telephony workflows into broader business applications, enabling organizations to automate call center reporting, synchronize agent data, and build custom dashboards around their phone operations.
-  version: '1.0'
+  title: Freshworks Freshchat Channels API
+  description: The Freshchat API provides programmatic access to the Freshchat messaging platform for managing customer conversations and engagement. It supports operations for conversations, messages, agents, channels, and users. The API enables developers to automate customer communication workflows, integrate Freshchat with external systems, and build custom messaging solutions on top of the Freshchat platform. Authentication is handled via API tokens obtained from the Freshchat admin panel.
+  version: '2.0'
   contact:
     name: Freshworks Support
-    url: https://support.freshcaller.com/
+    url: https://support.freshchat.com/
   termsOfService: https://www.freshworks.com/terms/
 servers:
-- url: https://{domain}.freshcaller.com/api/v1
-  description: Freshcaller Production Server
+- url: https://{domain}.freshchat.com/v2
+  description: Freshchat Production Server (Standalone)
   variables:
     domain:
       default: yourdomain
-      description: Your Freshcaller subdomain
+      description: Your Freshchat account name
+- url: https://{domain}.myfreshworks.com/v2
+  description: Freshchat Production Server (Freshsales Suite)
+  variables:
+    domain:
+      default: yourdomain
+      description: Your Freshworks bundle alias
 security:
-- apiKeyAuth: []
+- bearerAuth: []
 tags:
 - name: Channels
   description: Manage messaging channels and their configurations.
@@ -133,11 +139,10 @@ components:
           format: date-time
           description: Timestamp when the channel was last updated.
   securitySchemes:
-    apiKeyAuth:
-      type: apiKey
-      in: header
-      name: X-Api-Auth
-      description: API key authentication. The API key can be found in your Freshcaller admin settings.
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token authentication. Obtain the API token from the Freshchat admin settings panel.
 externalDocs:
-  description: Freshcaller API Documentation
-  url: https://developers.freshcaller.com/api/
+  description: Freshchat API Documentation
+  url: https://developers.freshchat.com/api/

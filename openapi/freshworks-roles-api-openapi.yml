@@ -1,21 +1,22 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Freshworks Freshcaller Accounts Roles API
-  description: The Freshcaller API provides access to cloud-based phone system functionality for contact center operations. It allows developers to export call data, call recordings, user information, and agent team details stored in the Freshcaller system. The API supports integration of voice and telephony workflows into broader business applications, enabling organizations to automate call center reporting, synchronize agent data, and build custom dashboards around their phone operations.
-  version: '1.0'
-  contact:
-    name: Freshworks Support
-    url: https://support.freshcaller.com/
+  title: Freshworks Roles API
   termsOfService: https://www.freshworks.com/terms/
+  version: '1.0'
+  description: 'Operations tagged Roles across 2 of this provider''s published API definitions: freshworks-freshdesk-api-openapi.yml, freshworks-freshteam-api-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
-- url: https://{domain}.freshcaller.com/api/v1
-  description: Freshcaller Production Server
+- url: https://{domain}.freshdesk.com/api/v2
+  description: Freshdesk Production Server
   variables:
     domain:
       default: yourdomain
-      description: Your Freshcaller subdomain
-security:
-- apiKeyAuth: []
+      description: Your Freshdesk subdomain
+- url: https://{domain}.freshteam.com/api
+  description: Freshteam Production Server
+  variables:
+    domain:
+      default: yourdomain
+      description: Your Freshteam subdomain
 tags:
 - name: Roles
   description: Manage agent roles and permissions.
@@ -38,6 +39,15 @@ paths:
                   $ref: '#/components/schemas/Role'
         '401':
           $ref: '#/components/responses/Unauthorized'
+      security:
+      - basicAuth: []
+    servers:
+    - url: https://{domain}.freshdesk.com/api/v2
+      description: Freshdesk Production Server
+      variables:
+        domain:
+          default: yourdomain
+          description: Your Freshdesk subdomain
   /roles/{role_id}:
     get:
       operationId: getRole
@@ -63,6 +73,15 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
+      security:
+      - basicAuth: []
+    servers:
+    - url: https://{domain}.freshdesk.com/api/v2
+      description: Freshdesk Production Server
+      variables:
+        domain:
+          default: yourdomain
+          description: Your Freshdesk subdomain
 components:
   responses:
     NotFound:
@@ -78,6 +97,27 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
+    Error:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Human-readable error message.
+        errors:
+          type: array
+          description: List of specific validation errors.
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message for the field.
+              code:
+                type: string
+                description: Error code.
     Role:
       type: object
       properties:
@@ -101,33 +141,39 @@ components:
           type: string
           format: date-time
           description: Timestamp when the role was last updated.
-    Error:
+    Error_2:
       type: object
       properties:
-        description:
+        code:
+          type: string
+          description: Error code.
+        message:
           type: string
           description: Human-readable error message.
-        errors:
-          type: array
-          description: List of specific validation errors.
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                description: Field that caused the error.
-              message:
-                type: string
-                description: Error message for the field.
-              code:
-                type: string
-                description: Error code.
+    Role_2:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the role.
+        name:
+          type: string
+          description: Name of the role.
+        description:
+          type: string
+          description: Description.
+        default:
+          type: boolean
+          description: Whether this is a default system role.
   securitySchemes:
-    apiKeyAuth:
-      type: apiKey
-      in: header
-      name: X-Api-Auth
-      description: API key authentication. The API key can be found in your Freshcaller admin settings.
-externalDocs:
-  description: Freshcaller API Documentation
-  url: https://developers.freshcaller.com/api/
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Use your API key as the username and X as the password. The API key can be found in your Freshdesk profile settings.
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 Bearer token. Obtain access tokens via the Freshteam OAuth authorization flow.
+x-refined-from:
+- freshworks-freshdesk-api-openapi.yml
+- freshworks-freshteam-api-openapi.yml

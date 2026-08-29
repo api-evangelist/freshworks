@@ -1,19 +1,19 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Freshworks Freshcaller Accounts Tasks API
-  description: The Freshcaller API provides access to cloud-based phone system functionality for contact center operations. It allows developers to export call data, call recordings, user information, and agent team details stored in the Freshcaller system. The API supports integration of voice and telephony workflows into broader business applications, enabling organizations to automate call center reporting, synchronize agent data, and build custom dashboards around their phone operations.
+  title: Freshworks Freshsales Tasks API
+  description: The Freshsales API is a RESTful API that enables developers to access and manage CRM data within Freshsales. It supports operations for contacts, accounts, deals, leads, tasks, appointments, notes, and sales activities. The API uses token-based authentication and allows developers to read, modify, add, or delete CRM data, making it possible to build custom integrations, automate sales workflows, and synchronize Freshsales data with other business applications.
   version: '1.0'
   contact:
     name: Freshworks Support
-    url: https://support.freshcaller.com/
+    url: https://support.freshsales.io/
   termsOfService: https://www.freshworks.com/terms/
 servers:
-- url: https://{domain}.freshcaller.com/api/v1
-  description: Freshcaller Production Server
+- url: https://{domain}.myfreshworks.com/crm/sales/api
+  description: Freshsales Production Server
   variables:
     domain:
       default: yourdomain
-      description: Your Freshcaller subdomain
+      description: Your Freshworks bundle alias
 security:
 - apiKeyAuth: []
 tags:
@@ -149,23 +149,13 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    TaskIdParam:
-      name: task_id
-      in: path
-      required: true
-      description: The ID of the task.
-      schema:
-        type: integer
-    PageParam:
-      name: page
-      in: query
-      description: Page number for pagination.
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
   responses:
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     NotFound:
       description: The requested resource was not found.
       content:
@@ -174,12 +164,6 @@ components:
             $ref: '#/components/schemas/Error'
     Unauthorized:
       description: Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request body or parameters are invalid.
       content:
         application/json:
           schema:
@@ -205,6 +189,35 @@ components:
               code:
                 type: string
                 description: Error code.
+    TaskCreate:
+      type: object
+      required:
+      - title
+      - due_date
+      - owner_id
+      properties:
+        title:
+          type: string
+          description: Title of the task.
+        description:
+          type: string
+          description: Description.
+        due_date:
+          type: string
+          format: date-time
+          description: Due date and time.
+        owner_id:
+          type: integer
+          description: ID of the task owner.
+        task_type_id:
+          type: integer
+          description: ID of the task type.
+        targetable_type:
+          type: string
+          description: Type of associated record.
+        targetable_id:
+          type: integer
+          description: ID of associated record.
     Task:
       type: object
       properties:
@@ -247,41 +260,28 @@ components:
           type: string
           format: date-time
           description: Timestamp when last updated.
-    TaskCreate:
-      type: object
-      required:
-      - title
-      - due_date
-      - owner_id
-      properties:
-        title:
-          type: string
-          description: Title of the task.
-        description:
-          type: string
-          description: Description.
-        due_date:
-          type: string
-          format: date-time
-          description: Due date and time.
-        owner_id:
-          type: integer
-          description: ID of the task owner.
-        task_type_id:
-          type: integer
-          description: ID of the task type.
-        targetable_type:
-          type: string
-          description: Type of associated record.
-        targetable_id:
-          type: integer
-          description: ID of associated record.
+  parameters:
+    PageParam:
+      name: page
+      in: query
+      description: Page number for pagination.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    TaskIdParam:
+      name: task_id
+      in: path
+      required: true
+      description: The ID of the task.
+      schema:
+        type: integer
   securitySchemes:
     apiKeyAuth:
       type: apiKey
       in: header
-      name: X-Api-Auth
-      description: API key authentication. The API key can be found in your Freshcaller admin settings.
+      name: Authorization
+      description: Token-based authentication. Use the format "Token token=your_api_key".
 externalDocs:
-  description: Freshcaller API Documentation
-  url: https://developers.freshcaller.com/api/
+  description: Freshsales API Documentation
+  url: https://developers.freshworks.com/crm/api/

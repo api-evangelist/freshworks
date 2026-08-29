@@ -1014,6 +1014,9 @@ apis:
   - type: Documentation
     url: https://developers.freshworks.com/api-sdk/freshteam/
 common:
+  - type: CapabilityMap
+    url: capabilities/freshworks-capability-edges.yml
+    name: freshworks Business Capability Map
   - type: AgenticAccess
     url: agentic-access/freshworks-agentic-access.yml
   - type: DomainSecurity

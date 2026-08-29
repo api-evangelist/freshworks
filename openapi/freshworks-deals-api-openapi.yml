@@ -1,19 +1,19 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Freshworks Freshcaller Accounts Deals API
-  description: The Freshcaller API provides access to cloud-based phone system functionality for contact center operations. It allows developers to export call data, call recordings, user information, and agent team details stored in the Freshcaller system. The API supports integration of voice and telephony workflows into broader business applications, enabling organizations to automate call center reporting, synchronize agent data, and build custom dashboards around their phone operations.
+  title: Freshworks Freshsales Deals API
+  description: The Freshsales API is a RESTful API that enables developers to access and manage CRM data within Freshsales. It supports operations for contacts, accounts, deals, leads, tasks, appointments, notes, and sales activities. The API uses token-based authentication and allows developers to read, modify, add, or delete CRM data, making it possible to build custom integrations, automate sales workflows, and synchronize Freshsales data with other business applications.
   version: '1.0'
   contact:
     name: Freshworks Support
-    url: https://support.freshcaller.com/
+    url: https://support.freshsales.io/
   termsOfService: https://www.freshworks.com/terms/
 servers:
-- url: https://{domain}.freshcaller.com/api/v1
-  description: Freshcaller Production Server
+- url: https://{domain}.myfreshworks.com/crm/sales/api
+  description: Freshsales Production Server
   variables:
     domain:
       default: yourdomain
-      description: Your Freshcaller subdomain
+      description: Your Freshworks bundle alias
 security:
 - apiKeyAuth: []
 tags:
@@ -142,7 +142,46 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    Error:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Human-readable error message.
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message.
+              code:
+                type: string
+                description: Error code.
     DealCreate:
       type: object
       required:
@@ -178,35 +217,6 @@ components:
           type: object
           additionalProperties: true
           description: Custom field values.
-    Error:
-      type: object
-      properties:
-        description:
-          type: string
-          description: Human-readable error message.
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                description: Field that caused the error.
-              message:
-                type: string
-                description: Error message.
-              code:
-                type: string
-                description: Error code.
-    Meta:
-      type: object
-      properties:
-        total_pages:
-          type: integer
-          description: Total number of pages.
-        total:
-          type: integer
-          description: Total number of records.
     Deal:
       type: object
       properties:
@@ -255,16 +265,16 @@ components:
           type: string
           format: date-time
           description: Timestamp when last updated.
+    Meta:
+      type: object
+      properties:
+        total_pages:
+          type: integer
+          description: Total number of pages.
+        total:
+          type: integer
+          description: Total number of records.
   parameters:
-    SortTypeParam:
-      name: sort_type
-      in: query
-      description: Sort order direction.
-      schema:
-        type: string
-        enum:
-        - asc
-        - desc
     PageParam:
       name: page
       in: query
@@ -286,31 +296,21 @@ components:
       description: The ID of the deal.
       schema:
         type: integer
-  responses:
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    SortTypeParam:
+      name: sort_type
+      in: query
+      description: Sort order direction.
+      schema:
+        type: string
+        enum:
+        - asc
+        - desc
   securitySchemes:
     apiKeyAuth:
       type: apiKey
       in: header
-      name: X-Api-Auth
-      description: API key authentication. The API key can be found in your Freshcaller admin settings.
+      name: Authorization
+      description: Token-based authentication. Use the format "Token token=your_api_key".
 externalDocs:
-  description: Freshcaller API Documentation
-  url: https://developers.freshcaller.com/api/
+  description: Freshsales API Documentation
+  url: https://developers.freshworks.com/crm/api/

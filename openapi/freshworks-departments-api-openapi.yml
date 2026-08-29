@@ -1,21 +1,22 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Freshworks Freshcaller Accounts Departments API
-  description: The Freshcaller API provides access to cloud-based phone system functionality for contact center operations. It allows developers to export call data, call recordings, user information, and agent team details stored in the Freshcaller system. The API supports integration of voice and telephony workflows into broader business applications, enabling organizations to automate call center reporting, synchronize agent data, and build custom dashboards around their phone operations.
-  version: '1.0'
-  contact:
-    name: Freshworks Support
-    url: https://support.freshcaller.com/
+  title: Freshworks Departments API
   termsOfService: https://www.freshworks.com/terms/
+  version: '1.0'
+  description: 'Operations tagged Departments across 2 of this provider''s published API definitions: freshworks-freshservice-api-openapi.yml, freshworks-freshteam-api-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
-- url: https://{domain}.freshcaller.com/api/v1
-  description: Freshcaller Production Server
+- url: https://{domain}.freshservice.com/api/v2
+  description: Freshservice Production Server
   variables:
     domain:
       default: yourdomain
-      description: Your Freshcaller subdomain
-security:
-- apiKeyAuth: []
+      description: Your Freshservice subdomain
+- url: https://{domain}.freshteam.com/api
+  description: Freshteam Production Server
+  variables:
+    domain:
+      default: yourdomain
+      description: Your Freshteam subdomain
 tags:
 - name: Departments
   description: Manage organizational department records.
@@ -41,6 +42,15 @@ paths:
                       $ref: '#/components/schemas/Department'
         '401':
           $ref: '#/components/responses/Unauthorized'
+      security:
+      - basicAuth: []
+    servers:
+    - url: https://{domain}.freshservice.com/api/v2
+      description: Freshservice Production Server
+      variables:
+        domain:
+          default: yourdomain
+          description: Your Freshservice subdomain
 components:
   schemas:
     Error:
@@ -99,6 +109,32 @@ components:
           type: string
           format: date-time
           description: Timestamp when last updated.
+    Error_2:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Human-readable error message.
+    Department_2:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the department.
+        name:
+          type: string
+          description: Name of the department.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when last updated.
   responses:
     Unauthorized:
       description: Authentication credentials are missing or invalid.
@@ -107,11 +143,14 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   securitySchemes:
-    apiKeyAuth:
-      type: apiKey
-      in: header
-      name: X-Api-Auth
-      description: API key authentication. The API key can be found in your Freshcaller admin settings.
-externalDocs:
-  description: Freshcaller API Documentation
-  url: https://developers.freshcaller.com/api/
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Use your API key as the username and X as the password. The API key can be found in your Freshservice profile settings.
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 Bearer token. Obtain access tokens via the Freshteam OAuth authorization flow.
+x-refined-from:
+- freshworks-freshservice-api-openapi.yml
+- freshworks-freshteam-api-openapi.yml
