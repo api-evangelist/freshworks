@@ -566,6 +566,8 @@ apis:
   humanURL: https://developers.freshdesk.com/api/
   baseURL: https://domain.freshdesk.com/api/v2
   tags:
+  - Location
+  tags_raw:
   - Locations
   properties:
   - type: OpenAPI
