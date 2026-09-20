@@ -1,0 +1,170 @@
+slug: freshworks
+provider: freshworks
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 16
+edges:
+- tag: Job Postings
+  spec_file: freshworks-job-postings-api-openapi.yml
+  capability_id: BC-300.10
+  capability_id_l1: BC-300
+  capability_name: Talent Acquisition Management
+  confidence: 0.9
+  evidence: GET /job_postings listJobPostings List all job postings; GET /job_postings/{job_posting_id}/applicant_fields
+    List applicant fields for a job posting
+  reason: Job requisition postings and applicant field definitions are recruiting artefacts, squarely
+    Talent Acquisition Management.
+- tag: Applicants
+  spec_file: freshworks-applicants-api-openapi.yml
+  capability_id: BC-300.10
+  capability_id_l1: BC-300
+  capability_name: Talent Acquisition Management
+  confidence: 0.85
+  evidence: GET /job_postings/{job_posting_id}/applicants  listApplicants  List applicants for a job posting
+  reason: Operations manage applicants against job postings — recruiting/hiring, i.e. Talent Acquisition
+    Management. The Freshcaller title is unreliable per rule 6; operations clearly show applicant tracking.
+- tag: Changes
+  spec_file: freshworks-changes-api-openapi.yml
+  capability_id: BC-600.30
+  capability_id_l1: BC-600
+  capability_name: IT Service Management
+  confidence: 0.85
+  evidence: POST /changes  createChange  Create a change request
+  reason: Change request lifecycle CRUD is ITIL change management, part of IT Service Management (Freshservice).
+- tag: Problems
+  spec_file: freshworks-problems-api-openapi.yml
+  capability_id: BC-600.30
+  capability_id_l1: BC-600
+  capability_name: IT Service Management
+  confidence: 0.83
+  evidence: POST /problems createProblem Create a problem; GET /problems/{problem_id} getProblem View
+    a problem
+  reason: '''Problem'' as a first-class managed record with CRUD is the ITIL problem-management object
+    in Freshworks'' ITSM product (Freshservice), mapping to IT Service Management (incident, problem,
+    change).'
+- tag: Service Catalog
+  spec_file: freshworks-service-catalog-api-openapi.yml
+  capability_id: BC-600.30
+  capability_id_l1: BC-600
+  capability_name: IT Service Management
+  confidence: 0.82
+  evidence: GET /service_catalog/items listServiceCatalogItems List all service catalog items; schema
+    ServiceItem
+  reason: Service catalogue item retrieval is named explicitly in the IT Service Management sub-capability
+    (incident, problem, change, service catalogue) and matches the Freshworks ITSM surface.
+- tag: Calls
+  spec_file: freshworks-calls-api-openapi.yml
+  capability_id: BC-430.30
+  capability_id_l1: BC-430
+  capability_name: Contact Centre Operations Management
+  confidence: 0.8
+  evidence: GET /calls/{call_id}/recording  getCallRecording  Get call recording
+  reason: Call records and recordings from a cloud phone system for contact centre operations — contact
+    centre/telephony operations.
+- tag: Contacts
+  spec_file: freshworks-contacts-api-openapi.yml
+  capability_id: BC-420.10
+  capability_id_l1: BC-420
+  capability_name: Customer Data Management
+  confidence: 0.8
+  evidence: PUT /contacts/{contact_id}/merge  mergeContacts  Merge contacts
+  reason: Contact master record CRUD plus merge (identity resolution/deduplication) is squarely Customer
+    Data Management.
+- tag: Conversations
+  spec_file: freshworks-conversations-api-openapi.yml
+  capability_id: BC-430.10
+  capability_id_l1: BC-430
+  capability_name: Customer Inquiry Management
+  confidence: 0.8
+  evidence: POST /tickets/{ticket_id}/reply  replyToTicket  Reply to a ticket
+  reason: Conversations are threaded replies and notes on support tickets — inbound customer contact handling
+    and resolution.
+- tag: Surveys
+  spec_file: freshworks-surveys-api-openapi.yml
+  capability_id: BC-430.50
+  capability_id_l1: BC-430
+  capability_name: Customer Feedback Management
+  confidence: 0.8
+  evidence: GET /surveys/satisfaction_ratings listSatisfactionRatings; schema SatisfactionRating
+  reason: Satisfaction rating retrieval from support surveys is voice-of-customer/CSAT feedback collection,
+    matching Customer Feedback Management.
+- tag: Employees
+  spec_file: freshworks-employees-api-openapi.yml
+  capability_id: BC-300.70
+  capability_id_l1: BC-300
+  capability_name: HR Operations Management
+  confidence: 0.78
+  evidence: GET /employees listEmployees; PUT /employees/{employee_id} updateEmployee Update an employee;
+    GET /employee_fields listEmployeeFields
+  reason: Read and update of employee master records plus configurable employee fields — an HRIS employee-record
+    surface (Freshworks' Freshteam), matching HR Operations Management (employee records).
+- tag: Agents
+  spec_file: freshworks-agents-api-openapi.yml
+  capability_id: BC-430.30
+  capability_id_l1: BC-430
+  capability_name: Contact Centre Operations Management
+  confidence: 0.75
+  evidence: '''cloud-based phone system functionality for contact center operations ... synchronize agent
+    data''; GET /agents  listAgents  List all agents; PUT /agents/{agent_id}  updateAgent'
+  reason: Agent records in Freshcaller are contact-centre telephony agents, and the API manages their
+    listing and updates for call-centre reporting — squarely Contact Centre Operations Management rather
+    than HR staffing.
+- tag: Companies
+  spec_file: freshworks-companies-api-openapi.yml
+  capability_id: BC-420.10
+  capability_id_l1: BC-420
+  capability_name: Customer Data Management
+  confidence: 0.75
+  evidence: POST /companies  createCompany  Create a company
+  reason: CRUD over company (customer account) master records in a Freshworks CRM/support context — customer
+    data management.
+- tag: Sales Activities
+  spec_file: freshworks-sales-activities-api-openapi.yml
+  capability_id: BC-410
+  capability_id_l1: BC-410
+  capability_name: Sales Management
+  confidence: 0.75
+  evidence: POST /sales_activities createSalesActivity Create a sales activity
+  reason: Explicit sales activity records (calls, meetings, tasks logged against sales records) belong
+    to Sales Management; the evidence does not specify which sub-capability (pipeline vs sales operations),
+    so only the L1 is asserted.
+- tag: Tickets
+  spec_file: freshworks-tickets-api-openapi.yml
+  capability_id: BC-430.10
+  capability_id_l1: BC-430
+  capability_name: Customer Inquiry Management
+  confidence: 0.75
+  evidence: POST /tickets createTicket Create a ticket; PUT /tickets/{ticket_id}/restore restoreTicket
+    Restore a deleted ticket
+  reason: Full lifecycle CRUD over support tickets realises inbound contact capture, routing and resolution.
+    Confidence moderated because Freshworks tickets could equally be IT service desk incidents (BC-600.30)
+    rather than customer inquiries.
+- tag: Call Metrics
+  spec_file: freshworks-call-metrics-api-openapi.yml
+  capability_id: BC-430.30
+  capability_id_l1: BC-430
+  capability_name: Contact Centre Operations Management
+  confidence: 0.7
+  evidence: listCallMetrics  List call metrics; 'automate call center reporting'
+  reason: Metrics over contact-centre phone activity, which the vendor describes as enabling 'call center
+    reporting' — supports Contact Centre Operations Management.
+- tag: Time Off
+  spec_file: freshworks-time-off-api-openapi.yml
+  capability_id: BC-300.70
+  capability_id_l1: BC-300
+  capability_name: HR Operations Management
+  confidence: 0.7
+  evidence: GET /time_off_types  listTimeOffTypes  List all time-off types; POST /time_offs  createTimeOffRequest  Create
+    a time-off request
+  reason: Time-off types and time-off requests are leave/absence administration, an employee-lifecycle
+    HR process. Placed under HR Operations Management as employee record/leave administration; some chance
+    it belongs to benefits administration, hence moderate confidence.
