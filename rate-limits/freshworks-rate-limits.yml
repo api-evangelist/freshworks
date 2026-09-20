@@ -1,45 +1,165 @@
-specification: API Commons Rate Limits
-specificationVersion: '0.1'
-schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
-provider: Freshworks
-providerId: freshworks
-created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
-reconciled: true
-tags:
-  - Rate Limiting
-  - CRM
-description: Freshdesk and Freshchat APIs enforce per-account rate limits.
+# Rate limits transcribed from the provider's own documentation — see provenance. Quoted, not derived.
+generated: '2026-09-20'
+method: searched
+source: https://developers.freshdesk.com/api/
 sources:
-  - https://www.freshworks.com/freshdesk/pricing/
-  - https://developers.freshdesk.com/api/#ratelimit
-headers:
-  limit: X-RateLimit-Total
-  remaining: X-RateLimit-Remaining
-  used: X-RateLimit-Used-CurrentRequest
-responseCodes:
-  throttled: 429
+- https://developers.freshdesk.com/api/
+provenance:
+  tool: planning/api-economics/harvest_ratelimits.py
+  run: 20260920T133210
+  grounding: every limit_text was found verbatim in the fetched page text
+published: true
+note: Freshdesk API v2 docs state account-wide rate limits by plan (hourly table for Blossom/Garden/Estate/Forest,
+  per-minute tables for old plans and Growth/Pro/Enterprise with per-endpoint sub-limits), a 50 calls/minute
+  trial default, and purchasable additional limits. 429 returned with Retry-After.
+limit_count: 22
 limits:
-  - name: Freshdesk Growth
-    scope: account
-    metric: requests_per_minute
-    limit: 100
-    timeFrame: minute
-  - name: Freshdesk Pro
-    scope: account
-    metric: requests_per_minute
-    limit: 400
-    timeFrame: minute
-  - name: Freshdesk Enterprise
-    scope: account
-    metric: requests_per_minute
-    limit: 700
-    timeFrame: minute
-  - name: Public APIs default
-    scope: account
-    metric: requests_per_minute
-    limit: 50
-    timeFrame: minute
+- name: Trial account default limit
+  limit_text: there is a default API limit of 50 calls/minute
+  limit: 50
+  window: minute
+  scope: account
+  plan: Trial
+- name: Blossom plan hourly limit
+  limit_text: Blossom 3000
+  limit: 3000
+  window: hour
+  scope: account
+  plan: Blossom
+- name: Garden plan hourly limit
+  limit_text: Garden 3000
+  limit: 3000
+  window: hour
+  scope: account
+  plan: Garden
+- name: Estate plan hourly limit
+  limit_text: Estate 5000
+  limit: 5000
+  window: hour
+  scope: account
+  plan: Estate
+- name: Forest plan hourly limit
+  limit_text: Forest 5000
+  limit: 5000
+  window: hour
+  scope: account
+  plan: Forest
+- name: Growth plan per-minute limit
+  limit_text: Growth 100
+  limit: 100
+  window: minute
+  scope: account
+  plan: Growth
+- name: Pro plan per-minute limit
+  limit_text: Pro 400
+  limit: 400
+  window: minute
+  scope: account
+  plan: Pro
+- name: Enterprise plan per-minute limit
+  limit_text: Enterprise 700
+  limit: 700
+  window: minute
+  scope: account
+  plan: Enterprise
+- name: Growth Ticket Create sub-limit
+  limit_text: Ticket Create - 50
+  limit: 50
+  window: minute
+  scope: endpoint
+  plan: Growth
+  endpoint: Ticket Create
+- name: Growth Ticket Update sub-limit
+  limit_text: Ticket Update - 50
+  limit: 50
+  window: minute
+  scope: endpoint
+  plan: Growth
+  endpoint: Ticket Update
+- name: Growth Tickets List sub-limit
+  limit_text: Tickets List - 40
+  limit: 40
+  window: minute
+  scope: endpoint
+  plan: Growth
+  endpoint: Tickets List
+- name: Growth Contacts List sub-limit
+  limit_text: Contacts List - 40
+  limit: 40
+  window: minute
+  scope: endpoint
+  plan: Growth
+  endpoint: Contacts List
+- name: Pro/Estate Ticket Create sub-limit
+  limit_text: Ticket Create - 160
+  limit: 160
+  window: minute
+  scope: endpoint
+  plan: Pro
+  endpoint: Ticket Create
+- name: Pro/Estate Tickets List sub-limit
+  limit_text: Tickets List - 100
+  limit: 100
+  window: minute
+  scope: endpoint
+  plan: Pro
+  endpoint: Tickets List
+- name: Enterprise Ticket Create sub-limit
+  limit_text: Ticket Create - 280
+  limit: 280
+  window: minute
+  scope: endpoint
+  plan: Enterprise
+  endpoint: Ticket Create
+- name: Enterprise Tickets List sub-limit
+  limit_text: Tickets List - 200
+  limit: 200
+  window: minute
+  scope: endpoint
+  plan: Enterprise
+  endpoint: Tickets List
+- name: Old Blossom per-minute limit
+  limit_text: Blossom 100
+  limit: 100
+  window: minute
+  scope: account
+  plan: Blossom (old plan)
+- name: Old Garden per-minute limit
+  limit_text: Garden 200
+  limit: 200
+  window: minute
+  scope: account
+  plan: Garden (old plan)
+- name: Old Estate per-minute limit
+  limit_text: Estate 400
+  limit: 400
+  window: minute
+  scope: account
+  plan: Estate (old plan)
+- name: Old Forest per-minute limit
+  limit_text: Forest 700
+  limit: 700
+  window: minute
+  scope: account
+  plan: Forest (old plan)
+- name: Purchased additional limit sub-limits (1000)
+  limit_text: Ticket Create - 400
+  limit: 400
+  window: minute
+  scope: endpoint
+  plan: Purchased additional rate limit - 1000
+  endpoint: Ticket Create
+- name: Purchased additional limit sub-limits (2000)
+  limit_text: Ticket Create - 800
+  limit: 800
+  window: minute
+  scope: endpoint
+  plan: Purchased additional rate limit - 2000
+  endpoint: Ticket Create
+headers:
+- X-RateLimit-Total
+- X-RateLimit-Remaining
+- X-RateLimit-Used-CurrentRequest
+- Retry-After
+- X-Freshdesk-Api-Version
+exceeded_status: 429
