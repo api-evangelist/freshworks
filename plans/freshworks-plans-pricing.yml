@@ -1,86 +1,110 @@
-specification: API Commons Plans
-specificationVersion: '0.1'
-schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
-provider: Freshworks
-providerId: freshworks
-created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
-reconciled: true
-tags:
-  - CRM
-  - Customer Support
-  - ITSM
-description: Freshdesk per-agent pricing (representative; CRM, IT, etc. have parallel tiers).
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-09-20'
+method: searched
+source: https://www.freshworks.com/freshservice/pricing/
 sources:
-  - https://www.freshworks.com/freshdesk/pricing/
+- https://www.freshworks.com/freshservice/pricing/
+provenance:
+  tool: planning/api-economics/harvest_pricing.py
+  run: 20260920T124425
+  grounding: every price_text was found verbatim in the fetched page text
+audience: business-product
+pricing_basis: per-seat
+published: true
+note: Freshservice ITSM per-agent tier pricing with several usage add-on packs; Enterprise tier priced
+  as Custom.
+plan_count: 11
+currency: USD
 plans:
-  - id: freshdesk-growth
-    name: Freshdesk Growth
-    type: paid
-    description: $19/agent/month.
-    entries:
-      - label: Per agent
-        name: seat
-        type: subscription
-        metric: user
-        limit: -1
-        timeFrame: month
-        geo: global
-        unit: 1
-        price: '19.00'
-        userMultiplied: true
-    elements:
-      - name: Ticketing + customer portal
-      - name: Reports
-      - name: Shared inbox
-      - name: Threads and tasks
-      - name: Multilingual help desk
-      - name: 5,000 collaborators included
-  - id: freshdesk-pro
-    name: Freshdesk Pro
-    type: paid
-    description: $55/agent/month.
-    entries:
-      - label: Per agent
-        name: seat
-        type: subscription
-        metric: user
-        limit: -1
-        timeFrame: month
-        geo: global
-        unit: 1
-        price: '55.00'
-        userMultiplied: true
-    elements:
-      - name: Custom support portals
-      - name: Custom objects
-      - name: Advanced ticketing
-      - name: Custom reporting
-      - name: Routing mechanisms
-      - name: Freddy AI Agent (500 sessions)
-      - name: Freddy AI Copilot
-      - name: Freddy AI Insights
-  - id: freshdesk-enterprise
-    name: Freshdesk Enterprise
-    type: enterprise
-    description: $89/agent/month.
-    entries:
-      - label: Per agent
-        name: seat
-        type: subscription
-        metric: user
-        limit: -1
-        timeFrame: month
-        geo: global
-        unit: 1
-        price: '89.00'
-        userMultiplied: true
-    elements:
-      - name: Audit logs
-      - name: Approval workflows
-      - name: Skills-based assignments
-      - name: Additional security
-      - name: Freddy AI Agent (500 sessions)
+- name: Starter
+  price_text: $19 /agent/month, billed annually
+  price: 19
+  currency: USD
+  period: month
+  unit: agent
+  included_quota: Incident management, Knowledge management, Task management, Support portal; 100 API
+    calls/minute; 1000 transactions/account/month
+- name: Growth
+  price_text: $49 /agent/month, billed annually
+  price: 49
+  currency: USD
+  period: month
+  unit: agent
+  included_quota: Everything in Starter plus Service catalog, SLA management, On-call management, Cloud
+    management; 200 API calls/minute; 2000 transactions/account/month; 1,200 MCP actions/year
+  overage: Additional actions available at $15 /pack for 1,000 actions.
+- name: Pro
+  price_text: $99 /agent/month, billed annually
+  price: 99
+  currency: USD
+  period: month
+  unit: agent
+  included_quota: Everything in Growth plus Problem, Change, Major incident, Workload, Release management,
+    Employee journeys; 400 API calls/minute; 5000 transactions/account/month; 6,000 MCP actions/year
+  overage: Additional actions available at $15 /pack for 1,000 actions.
+- name: Enterprise
+  price_text: Custom
+  period: none
+  unit: agent
+  included_quota: Everything in Pro plus Sandbox, Audit logs, Freddy AI Agent (Classic), Freddy AI Insights;
+    500 API calls/minute; 20000 transactions/account/month; 12,000 MCP actions/year; 1,200 Freddy AI Agent
+    (Classic) sessions per year
+  overage: Additional actions available at $15 /pack for 1,000 actions.
+- name: Freddy AI Copilot (add-on)
+  price_text: $29 /agent/month
+  price: 29
+  currency: USD
+  period: month
+  unit: agent
+- name: Business Agent License
+  price_text: $49 /agent/month
+  price: 49
+  currency: USD
+  period: month
+  unit: agent
+  included_quota: Non-IT teams like HR, Facilities, Finance, Legal
+- name: E-signature pack
+  price_text: $90 /pack/account, with 30 signature credits per pack
+  price: 90
+  currency: USD
+  period: one-time
+  unit: pack
+  included_quota: 30 signature credits
+- name: Orchestration Transaction Packs
+  price_text: $250 /pack for 1000 transactions. Valid until the end of the billing cycle.
+  price: 250
+  currency: USD
+  period: one-time
+  unit: pack of 1000 transactions
+- name: Connector App Tasks packs
+  price_text: additional packs at $80 per 5000 tasks
+  price: 80
+  currency: USD
+  period: one-time
+  unit: pack of 5000 tasks
+  included_quota: one-time free credit of 500 tasks
+- name: Additional Project Management Licenses
+  price_text: $15 /user/month
+  price: 15
+  currency: USD
+  period: month
+  unit: user
+- name: Day Passes (occasional agents)
+  price_text: you can purchase Day Passes starting from $3
+  price: 3
+  currency: USD
+  period: one-time
+  unit: day pass
+  included_quota: 3 free Day Passes at sign up
+rate_limit_statements:
+- 100 API calls/minute
+- 200 API calls/minute
+- 400 API calls/minute
+- 500 API calls/minute
+- 1000 transactions/account/month
+- 2000 transactions/account/month
+- 5000 transactions/account/month
+- 20000 transactions/account/month
+- 1,200 actions/year
+- 6,000 actions/year
+- 12,000 actions/year

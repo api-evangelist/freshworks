@@ -1013,6 +1013,10 @@ apis:
   - type: Documentation
     url: https://developers.freshworks.com/api-sdk/freshteam/
 common:
+- type: Pricing
+  url: https://www.freshworks.com/freshservice/pricing/
+- type: Plans
+  url: plans/freshworks-plans-pricing.yml
 - type: Website
   url: https://freshworks.com
 - type: CapabilityMap
