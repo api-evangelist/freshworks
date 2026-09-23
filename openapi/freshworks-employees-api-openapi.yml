@@ -127,35 +127,33 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  responses:
-    BadRequest:
-      description: The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    Error:
+    Field:
       type: object
       properties:
-        code:
+        id:
+          type: integer
+          description: Unique ID of the field.
+        name:
           type: string
-          description: Error code.
-        message:
+          description: Internal name of the field.
+        label:
           type: string
-          description: Human-readable error message.
+          description: Display label.
+        field_type:
+          type: string
+          description: Type of field (text, dropdown, checkbox, etc).
+        required:
+          type: boolean
+          description: Whether the field is required.
+        position:
+          type: integer
+          description: Display position order.
+        choices:
+          type: array
+          description: Available choices for dropdown fields.
+          items:
+            type: string
     Employee:
       type: object
       properties:
@@ -248,6 +246,15 @@ components:
           type: string
           format: date-time
           description: Timestamp when last updated.
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Human-readable error message.
     EmployeeUpdate:
       type: object
       properties:
@@ -286,33 +293,14 @@ components:
           type: object
           additionalProperties: true
           description: Custom field values.
-    Field:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Unique ID of the field.
-        name:
-          type: string
-          description: Internal name of the field.
-        label:
-          type: string
-          description: Display label.
-        field_type:
-          type: string
-          description: Type of field (text, dropdown, checkbox, etc).
-        required:
-          type: boolean
-          description: Whether the field is required.
-        position:
-          type: integer
-          description: Display position order.
-        choices:
-          type: array
-          description: Available choices for dropdown fields.
-          items:
-            type: string
   parameters:
+    EmployeeIdParam:
+      name: employee_id
+      in: path
+      required: true
+      description: The ID of the employee.
+      schema:
+        type: integer
     PageParam:
       name: page
       in: query
@@ -321,13 +309,25 @@ components:
         type: integer
         minimum: 1
         default: 1
-    EmployeeIdParam:
-      name: employee_id
-      in: path
-      required: true
-      description: The ID of the employee.
-      schema:
-        type: integer
+  responses:
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

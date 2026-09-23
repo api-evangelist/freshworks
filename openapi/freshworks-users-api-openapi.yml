@@ -185,47 +185,6 @@ paths:
           default: yourdomain
           description: Your Freshcaller subdomain
 components:
-  parameters:
-    UserIdParam:
-      name: user_id
-      in: path
-      required: true
-      description: The ID of the user.
-      schema:
-        type: integer
-    PageParam:
-      name: page
-      in: query
-      description: Page number for pagination.
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
-    PerPageParam:
-      name: per_page
-      in: query
-      description: Number of results per page.
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 100
-        default: 25
-    UserIdParam_2:
-      name: user_id
-      in: path
-      required: true
-      description: The ID of the user.
-      schema:
-        type: string
-    ItemsPerPageParam:
-      name: items_per_page
-      in: query
-      description: Number of items per page.
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 50
-        default: 20
   schemas:
     Error:
       type: object
@@ -260,6 +219,24 @@ components:
           items:
             type: integer
           description: IDs of teams to assign.
+    UserStatus:
+      type: object
+      properties:
+        user_id:
+          type: integer
+          description: ID of the user.
+        name:
+          type: string
+          description: Name of the user.
+        available:
+          type: boolean
+          description: Whether the user is available.
+        on_call:
+          type: boolean
+          description: Whether the user is currently on a call.
+        status:
+          type: string
+          description: Current status label.
     User:
       type: object
       properties:
@@ -295,24 +272,6 @@ components:
           type: string
           format: date-time
           description: Timestamp when last updated.
-    UserStatus:
-      type: object
-      properties:
-        user_id:
-          type: integer
-          description: ID of the user.
-        name:
-          type: string
-          description: Name of the user.
-        available:
-          type: boolean
-          description: Whether the user is available.
-        on_call:
-          type: boolean
-          description: Whether the user is currently on a call.
-        status:
-          type: string
-          description: Current status label.
     Meta:
       type: object
       properties:
@@ -408,8 +367,8 @@ components:
           format: date-time
           description: Timestamp when the user was created.
   responses:
-    NotFound:
-      description: The requested resource was not found.
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
       content:
         application/json:
           schema:
@@ -420,12 +379,53 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
+    NotFound:
+      description: The requested resource was not found.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+  parameters:
+    UserIdParam:
+      name: user_id
+      in: path
+      required: true
+      description: The ID of the user.
+      schema:
+        type: integer
+    PerPageParam:
+      name: per_page
+      in: query
+      description: Number of results per page.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 25
+    PageParam:
+      name: page
+      in: query
+      description: Page number for pagination.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    UserIdParam_2:
+      name: user_id
+      in: path
+      required: true
+      description: The ID of the user.
+      schema:
+        type: string
+    ItemsPerPageParam:
+      name: items_per_page
+      in: query
+      description: Number of items per page.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 50
+        default: 20
   securitySchemes:
     apiKeyAuth:
       type: apiKey

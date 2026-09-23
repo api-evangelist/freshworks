@@ -97,19 +97,6 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  responses:
-    BadRequest:
-      description: The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
@@ -120,6 +107,21 @@ components:
         message:
           type: string
           description: Human-readable error message.
+    TimeOffType:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the time-off type.
+        name:
+          type: string
+          description: Name of the time-off type (e.g., Vacation, Sick Leave).
+        description:
+          type: string
+          description: Description.
+        is_paid:
+          type: boolean
+          description: Whether the time-off type is paid leave.
     TimeOffRequestCreate:
       type: object
       required:
@@ -146,21 +148,6 @@ components:
           items:
             type: integer
           description: User IDs to notify about the request.
-    TimeOffType:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Unique ID of the time-off type.
-        name:
-          type: string
-          description: Name of the time-off type (e.g., Vacation, Sick Leave).
-        description:
-          type: string
-          description: Description.
-        is_paid:
-          type: boolean
-          description: Whether the time-off type is paid leave.
     TimeOffRequest:
       type: object
       properties:
@@ -200,6 +187,19 @@ components:
           type: string
           format: date-time
           description: Timestamp when last updated.
+  responses:
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
     PageParam:
       name: page

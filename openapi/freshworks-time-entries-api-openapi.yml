@@ -68,25 +68,6 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  responses:
-    BadRequest:
-      description: The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
@@ -109,27 +90,6 @@ components:
               code:
                 type: string
                 description: Error code.
-    TimeEntryCreate:
-      type: object
-      required:
-      - time_spent
-      properties:
-        agent_id:
-          type: integer
-          description: ID of the agent logging the time.
-        billable:
-          type: boolean
-          description: Whether the time entry is billable.
-        executed_at:
-          type: string
-          format: date-time
-          description: Timestamp when the work was executed.
-        note:
-          type: string
-          description: Note describing the work performed.
-        time_spent:
-          type: string
-          description: Duration of time spent in HH:MM format.
     TimeEntry:
       type: object
       properties:
@@ -167,6 +127,46 @@ components:
           type: string
           format: date-time
           description: Timestamp when the time entry was last updated.
+    TimeEntryCreate:
+      type: object
+      required:
+      - time_spent
+      properties:
+        agent_id:
+          type: integer
+          description: ID of the agent logging the time.
+        billable:
+          type: boolean
+          description: Whether the time entry is billable.
+        executed_at:
+          type: string
+          format: date-time
+          description: Timestamp when the work was executed.
+        note:
+          type: string
+          description: Note describing the work performed.
+        time_spent:
+          type: string
+          description: Duration of time spent in HH:MM format.
+  responses:
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
     TicketIdParam:
       name: ticket_id

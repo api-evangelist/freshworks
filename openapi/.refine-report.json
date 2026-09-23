@@ -71,7 +71,8 @@
     "tag 'Products' spans 2 source specs (freshworks-freshdesk-api-openapi.yml, freshworks-freshservice-api-openapi.yml): per-path servers applied",
     "tag 'Roles' spans 2 source specs (freshworks-freshdesk-api-openapi.yml, freshworks-freshteam-api-openapi.yml): per-path servers applied",
     "tag 'Tickets' spans 2 source specs (freshworks-freshdesk-api-openapi.yml, freshworks-freshservice-api-openapi.yml): per-path servers applied",
-    "tag 'Departments' spans 2 source specs (freshworks-freshservice-api-openapi.yml, freshworks-freshteam-api-openapi.yml): per-path servers applied"
+    "tag 'Departments' spans 2 source specs (freshworks-freshservice-api-openapi.yml, freshworks-freshteam-api-openapi.yml): per-path servers applied",
+    "apis.yml register: already-registered"
   ],
   "skipped": [
     "freshworks-accounts-api-openapi.yml: previously refined output, superseded by openapi/_original/",

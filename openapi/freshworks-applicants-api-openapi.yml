@@ -69,25 +69,6 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  responses:
-    BadRequest:
-      description: The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
@@ -169,7 +150,33 @@ components:
           type: object
           additionalProperties: true
           description: Custom field values.
+  responses:
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
+    JobPostingIdParam:
+      name: job_posting_id
+      in: path
+      required: true
+      description: The ID of the job posting.
+      schema:
+        type: integer
     PageParam:
       name: page
       in: query
@@ -178,13 +185,6 @@ components:
         type: integer
         minimum: 1
         default: 1
-    JobPostingIdParam:
-      name: job_posting_id
-      in: path
-      required: true
-      description: The ID of the job posting.
-      schema:
-        type: integer
   securitySchemes:
     bearerAuth:
       type: http

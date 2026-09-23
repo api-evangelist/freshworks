@@ -79,25 +79,6 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    BadRequest:
-      description: The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
@@ -143,17 +124,6 @@ components:
                   content:
                     type: string
                     description: Text content.
-    PaginationLinks:
-      type: object
-      properties:
-        next_page:
-          type: string
-          format: uri
-          description: URL for the next page of results.
-        prev_page:
-          type: string
-          format: uri
-          description: URL for the previous page of results.
     Message:
       type: object
       properties:
@@ -205,7 +175,44 @@ components:
           type: string
           format: date-time
           description: Timestamp when the message was created.
+    PaginationLinks:
+      type: object
+      properties:
+        next_page:
+          type: string
+          format: uri
+          description: URL for the next page of results.
+        prev_page:
+          type: string
+          format: uri
+          description: URL for the previous page of results.
+  responses:
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
+    ConversationIdParam:
+      name: conversation_id
+      in: path
+      required: true
+      description: The ID of the conversation.
+      schema:
+        type: string
     PageParam:
       name: page
       in: query
@@ -214,13 +221,6 @@ components:
         type: integer
         minimum: 1
         default: 1
-    ConversationIdParam:
-      name: conversation_id
-      in: path
-      required: true
-      description: The ID of the conversation.
-      schema:
-        type: string
     ItemsPerPageParam:
       name: items_per_page
       in: query

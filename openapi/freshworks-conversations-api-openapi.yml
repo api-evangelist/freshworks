@@ -287,6 +287,15 @@ paths:
           description: Your Freshdesk subdomain
 components:
   schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Human-readable error message.
     MessageCreate:
       type: object
       required:
@@ -322,15 +331,50 @@ components:
                   content:
                     type: string
                     description: Text content.
-    Error:
+    ConversationUpdate:
       type: object
       properties:
-        code:
+        status:
           type: string
-          description: Error code.
-        message:
+          description: New status for the conversation.
+          enum:
+          - new
+          - assigned
+          - resolved
+          - reopened
+        assigned_agent_id:
           type: string
-          description: Human-readable error message.
+          description: ID of the agent to assign.
+        assigned_group_id:
+          type: string
+          description: ID of the group to assign.
+    ConversationCreate:
+      type: object
+      required:
+      - app_id
+      - channel_id
+      - messages
+      properties:
+        app_id:
+          type: string
+          description: ID of the Freshchat application.
+        channel_id:
+          type: string
+          description: ID of the channel.
+        users:
+          type: array
+          description: Users to involve in the conversation.
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: User ID.
+        messages:
+          type: array
+          description: Initial messages for the conversation.
+          items:
+            $ref: '#/components/schemas/MessageCreate'
     PaginationLinks:
       type: object
       properties:
@@ -381,50 +425,26 @@ components:
           type: string
           format: date-time
           description: Timestamp when the conversation was created.
-    ConversationCreate:
+    ReplyCreate:
       type: object
       required:
-      - app_id
-      - channel_id
-      - messages
+      - body
       properties:
-        app_id:
+        body:
           type: string
-          description: ID of the Freshchat application.
-        channel_id:
-          type: string
-          description: ID of the channel.
-        users:
+          description: HTML content of the reply.
+        cc_emails:
           type: array
-          description: Users to involve in the conversation.
           items:
-            type: object
-            properties:
-              id:
-                type: string
-                description: User ID.
-        messages:
+            type: string
+            format: email
+          description: Email addresses to CC.
+        bcc_emails:
           type: array
-          description: Initial messages for the conversation.
           items:
-            $ref: '#/components/schemas/MessageCreate'
-    ConversationUpdate:
-      type: object
-      properties:
-        status:
-          type: string
-          description: New status for the conversation.
-          enum:
-          - new
-          - assigned
-          - resolved
-          - reopened
-        assigned_agent_id:
-          type: string
-          description: ID of the agent to assign.
-        assigned_group_id:
-          type: string
-          description: ID of the group to assign.
+            type: string
+            format: email
+          description: Email addresses to BCC.
     Error_2:
       type: object
       properties:
@@ -509,26 +529,6 @@ components:
           type: string
           format: date-time
           description: Timestamp when the conversation was last updated.
-    ReplyCreate:
-      type: object
-      required:
-      - body
-      properties:
-        body:
-          type: string
-          description: HTML content of the reply.
-        cc_emails:
-          type: array
-          items:
-            type: string
-            format: email
-          description: Email addresses to CC.
-        bcc_emails:
-          type: array
-          items:
-            type: string
-            format: email
-          description: Email addresses to BCC.
     Error_3:
       type: object
       properties:
@@ -585,7 +585,33 @@ components:
           type: string
           format: date-time
           description: Timestamp when last updated.
+  responses:
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
+    ConversationIdParam:
+      name: conversation_id
+      in: path
+      required: true
+      description: The ID of the conversation.
+      schema:
+        type: string
     PageParam:
       name: page
       in: query
@@ -594,13 +620,6 @@ components:
         type: integer
         minimum: 1
         default: 1
-    ConversationIdParam:
-      name: conversation_id
-      in: path
-      required: true
-      description: The ID of the conversation.
-      schema:
-        type: string
     ItemsPerPageParam:
       name: items_per_page
       in: query
@@ -626,25 +645,6 @@ components:
         minimum: 1
         maximum: 100
         default: 30
-  responses:
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http
