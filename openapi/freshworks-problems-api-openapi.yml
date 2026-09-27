@@ -161,46 +161,6 @@ components:
               code:
                 type: string
                 description: Error code.
-    ProblemCreate:
-      type: object
-      required:
-      - subject
-      - description
-      - status
-      - priority
-      - impact
-      properties:
-        subject:
-          type: string
-          description: Subject of the problem.
-        description:
-          type: string
-          description: HTML description.
-        status:
-          type: integer
-          description: Status of the problem.
-        priority:
-          type: integer
-          description: Priority.
-        impact:
-          type: integer
-          description: Impact level.
-        agent_id:
-          type: integer
-          description: ID of the agent to assign.
-        group_id:
-          type: integer
-          description: ID of the group to assign.
-        department_id:
-          type: integer
-          description: ID of the department.
-        known_error:
-          type: boolean
-          description: Whether this is a known error.
-        due_by:
-          type: string
-          format: date-time
-          description: Due date.
     Problem:
       type: object
       properties:
@@ -246,13 +206,47 @@ components:
           type: string
           format: date-time
           description: Timestamp when last updated.
+    ProblemCreate:
+      type: object
+      required:
+      - subject
+      - description
+      - status
+      - priority
+      - impact
+      properties:
+        subject:
+          type: string
+          description: Subject of the problem.
+        description:
+          type: string
+          description: HTML description.
+        status:
+          type: integer
+          description: Status of the problem.
+        priority:
+          type: integer
+          description: Priority.
+        impact:
+          type: integer
+          description: Impact level.
+        agent_id:
+          type: integer
+          description: ID of the agent to assign.
+        group_id:
+          type: integer
+          description: ID of the group to assign.
+        department_id:
+          type: integer
+          description: ID of the department.
+        known_error:
+          type: boolean
+          description: Whether this is a known error.
+        due_by:
+          type: string
+          format: date-time
+          description: Due date.
   responses:
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     BadRequest:
       description: The request body or parameters are invalid.
       content:
@@ -265,7 +259,21 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
+    PageParam:
+      name: page
+      in: query
+      description: Page number for pagination.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
     ProblemIdParam:
       name: problem_id
       in: path
@@ -282,14 +290,6 @@ components:
         minimum: 1
         maximum: 100
         default: 30
-    PageParam:
-      name: page
-      in: query
-      description: Page number for pagination.
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
   securitySchemes:
     basicAuth:
       type: http

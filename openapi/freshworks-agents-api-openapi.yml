@@ -139,54 +139,6 @@ paths:
           default: yourdomain
           description: Your Freshworks bundle alias
 components:
-  parameters:
-    AgentIdParam:
-      name: agent_id
-      in: path
-      required: true
-      description: The ID of the agent.
-      schema:
-        type: string
-    PageParam:
-      name: page
-      in: query
-      description: Page number for pagination.
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
-    ItemsPerPageParam:
-      name: items_per_page
-      in: query
-      description: Number of items per page.
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 50
-        default: 20
-    AgentIdParam_2:
-      name: agent_id
-      in: path
-      required: true
-      description: The ID of the agent.
-      schema:
-        type: integer
-    PerPageParam:
-      name: per_page
-      in: query
-      description: Number of results per page (max 100).
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 100
-        default: 30
-    AgentIdParam_3:
-      name: agent_id
-      in: path
-      required: true
-      description: The ID of the agent.
-      schema:
-        type: integer
   schemas:
     Agent:
       type: object
@@ -415,15 +367,63 @@ components:
               code:
                 type: string
                 description: Error code.
+  parameters:
+    PageParam:
+      name: page
+      in: query
+      description: Page number for pagination.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    ItemsPerPageParam:
+      name: items_per_page
+      in: query
+      description: Number of items per page.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 50
+        default: 20
+    AgentIdParam:
+      name: agent_id
+      in: path
+      required: true
+      description: The ID of the agent.
+      schema:
+        type: string
+    AgentIdParam_2:
+      name: agent_id
+      in: path
+      required: true
+      description: The ID of the agent.
+      schema:
+        type: integer
+    PerPageParam:
+      name: per_page
+      in: query
+      description: Number of results per page (max 100).
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 30
+    AgentIdParam_3:
+      name: agent_id
+      in: path
+      required: true
+      description: The ID of the agent.
+      schema:
+        type: integer
   responses:
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
+    NotFound:
+      description: The requested resource was not found.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
       content:
         application/json:
           schema:

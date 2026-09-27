@@ -80,15 +80,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code.
-        message:
-          type: string
-          description: Human-readable error message.
     MessageCreate:
       type: object
       required:
@@ -124,6 +115,26 @@ components:
                   content:
                     type: string
                     description: Text content.
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Human-readable error message.
+    PaginationLinks:
+      type: object
+      properties:
+        next_page:
+          type: string
+          format: uri
+          description: URL for the next page of results.
+        prev_page:
+          type: string
+          format: uri
+          description: URL for the previous page of results.
     Message:
       type: object
       properties:
@@ -175,24 +186,7 @@ components:
           type: string
           format: date-time
           description: Timestamp when the message was created.
-    PaginationLinks:
-      type: object
-      properties:
-        next_page:
-          type: string
-          format: uri
-          description: URL for the next page of results.
-        prev_page:
-          type: string
-          format: uri
-          description: URL for the previous page of results.
   responses:
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     BadRequest:
       description: The request body or parameters are invalid.
       content:
@@ -205,14 +199,13 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
-    ConversationIdParam:
-      name: conversation_id
-      in: path
-      required: true
-      description: The ID of the conversation.
-      schema:
-        type: string
     PageParam:
       name: page
       in: query
@@ -221,6 +214,13 @@ components:
         type: integer
         minimum: 1
         default: 1
+    ConversationIdParam:
+      name: conversation_id
+      in: path
+      required: true
+      description: The ID of the conversation.
+      schema:
+        type: string
     ItemsPerPageParam:
       name: items_per_page
       in: query

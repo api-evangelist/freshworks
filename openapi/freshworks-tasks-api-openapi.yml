@@ -149,22 +149,6 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    TaskIdParam:
-      name: task_id
-      in: path
-      required: true
-      description: The ID of the task.
-      schema:
-        type: integer
-    PageParam:
-      name: page
-      in: query
-      description: Page number for pagination.
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
   schemas:
     Error:
       type: object
@@ -186,6 +170,35 @@ components:
               code:
                 type: string
                 description: Error code.
+    TaskCreate:
+      type: object
+      required:
+      - title
+      - due_date
+      - owner_id
+      properties:
+        title:
+          type: string
+          description: Title of the task.
+        description:
+          type: string
+          description: Description.
+        due_date:
+          type: string
+          format: date-time
+          description: Due date and time.
+        owner_id:
+          type: integer
+          description: ID of the task owner.
+        task_type_id:
+          type: integer
+          description: ID of the task type.
+        targetable_type:
+          type: string
+          description: Type of associated record.
+        targetable_id:
+          type: integer
+          description: ID of associated record.
     Task:
       type: object
       properties:
@@ -228,42 +241,7 @@ components:
           type: string
           format: date-time
           description: Timestamp when last updated.
-    TaskCreate:
-      type: object
-      required:
-      - title
-      - due_date
-      - owner_id
-      properties:
-        title:
-          type: string
-          description: Title of the task.
-        description:
-          type: string
-          description: Description.
-        due_date:
-          type: string
-          format: date-time
-          description: Due date and time.
-        owner_id:
-          type: integer
-          description: ID of the task owner.
-        task_type_id:
-          type: integer
-          description: ID of the task type.
-        targetable_type:
-          type: string
-          description: Type of associated record.
-        targetable_id:
-          type: integer
-          description: ID of associated record.
   responses:
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     BadRequest:
       description: The request body or parameters are invalid.
       content:
@@ -276,6 +254,28 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    PageParam:
+      name: page
+      in: query
+      description: Page number for pagination.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    TaskIdParam:
+      name: task_id
+      in: path
+      required: true
+      description: The ID of the task.
+      schema:
+        type: integer
   securitySchemes:
     apiKeyAuth:
       type: apiKey

@@ -163,6 +163,41 @@ components:
               code:
                 type: string
                 description: Error code.
+    DealCreate:
+      type: object
+      required:
+      - name
+      - amount
+      properties:
+        name:
+          type: string
+          description: Name of the deal.
+        amount:
+          type: number
+          description: Deal value amount.
+        expected_close:
+          type: string
+          format: date
+          description: Expected close date.
+        deal_stage_id:
+          type: integer
+          description: ID of the deal stage.
+        deal_pipeline_id:
+          type: integer
+          description: ID of the pipeline.
+        probability:
+          type: integer
+          description: Probability of closing.
+        sales_account_id:
+          type: integer
+          description: ID of the associated account.
+        owner_id:
+          type: integer
+          description: ID of the owning agent.
+        custom_field:
+          type: object
+          additionalProperties: true
+          description: Custom field values.
     Deal:
       type: object
       properties:
@@ -211,41 +246,6 @@ components:
           type: string
           format: date-time
           description: Timestamp when last updated.
-    DealCreate:
-      type: object
-      required:
-      - name
-      - amount
-      properties:
-        name:
-          type: string
-          description: Name of the deal.
-        amount:
-          type: number
-          description: Deal value amount.
-        expected_close:
-          type: string
-          format: date
-          description: Expected close date.
-        deal_stage_id:
-          type: integer
-          description: ID of the deal stage.
-        deal_pipeline_id:
-          type: integer
-          description: ID of the pipeline.
-        probability:
-          type: integer
-          description: Probability of closing.
-        sales_account_id:
-          type: integer
-          description: ID of the associated account.
-        owner_id:
-          type: integer
-          description: ID of the owning agent.
-        custom_field:
-          type: object
-          additionalProperties: true
-          description: Custom field values.
     Meta:
       type: object
       properties:
@@ -255,25 +255,6 @@ components:
         total:
           type: integer
           description: Total number of records.
-  responses:
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   parameters:
     SortTypeParam:
       name: sort_type
@@ -284,13 +265,6 @@ components:
         enum:
         - asc
         - desc
-    DealIdParam:
-      name: deal_id
-      in: path
-      required: true
-      description: The ID of the deal.
-      schema:
-        type: integer
     PageParam:
       name: page
       in: query
@@ -305,6 +279,32 @@ components:
       description: Field to sort by.
       schema:
         type: string
+    DealIdParam:
+      name: deal_id
+      in: path
+      required: true
+      description: The ID of the deal.
+      schema:
+        type: integer
+  responses:
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     apiKeyAuth:
       type: apiKey

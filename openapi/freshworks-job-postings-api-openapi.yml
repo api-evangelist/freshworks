@@ -94,32 +94,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    Field:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Unique ID of the field.
-        name:
-          type: string
-          description: Internal name of the field.
-        label:
-          type: string
-          description: Display label.
-        field_type:
-          type: string
-          description: Type of field (text, dropdown, checkbox, etc).
-        required:
-          type: boolean
-          description: Whether the field is required.
-        position:
-          type: integer
-          description: Display position order.
-        choices:
-          type: array
-          description: Available choices for dropdown fields.
-          items:
-            type: string
     Error:
       type: object
       properties:
@@ -189,27 +163,33 @@ components:
           type: string
           format: date-time
           description: Timestamp when last updated.
-  responses:
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    Field:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the field.
+        name:
+          type: string
+          description: Internal name of the field.
+        label:
+          type: string
+          description: Display label.
+        field_type:
+          type: string
+          description: Type of field (text, dropdown, checkbox, etc).
+        required:
+          type: boolean
+          description: Whether the field is required.
+        position:
+          type: integer
+          description: Display position order.
+        choices:
+          type: array
+          description: Available choices for dropdown fields.
+          items:
+            type: string
   parameters:
-    JobPostingIdParam:
-      name: job_posting_id
-      in: path
-      required: true
-      description: The ID of the job posting.
-      schema:
-        type: integer
     PageParam:
       name: page
       in: query
@@ -218,6 +198,26 @@ components:
         type: integer
         minimum: 1
         default: 1
+    JobPostingIdParam:
+      name: job_posting_id
+      in: path
+      required: true
+      description: The ID of the job posting.
+      schema:
+        type: integer
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

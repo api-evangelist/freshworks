@@ -149,42 +149,6 @@ components:
               code:
                 type: string
                 description: Error code.
-    CompanyCreate:
-      type: object
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: Name of the company.
-        description:
-          type: string
-          description: Description of the company.
-        note:
-          type: string
-          description: Notes about the company.
-        domains:
-          type: array
-          items:
-            type: string
-          description: Email domains associated with the company.
-        health_score:
-          type: string
-          description: Health score of the company account.
-        account_tier:
-          type: string
-          description: Tier of the company account.
-        renewal_date:
-          type: string
-          format: date
-          description: Date of account renewal.
-        industry:
-          type: string
-          description: Industry sector.
-        custom_fields:
-          type: object
-          additionalProperties: true
-          description: Key-value pairs for custom fields.
     Company:
       type: object
       properties:
@@ -230,25 +194,42 @@ components:
           type: string
           format: date-time
           description: Timestamp when the company was last updated.
-  responses:
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    CompanyCreate:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Name of the company.
+        description:
+          type: string
+          description: Description of the company.
+        note:
+          type: string
+          description: Notes about the company.
+        domains:
+          type: array
+          items:
+            type: string
+          description: Email domains associated with the company.
+        health_score:
+          type: string
+          description: Health score of the company account.
+        account_tier:
+          type: string
+          description: Tier of the company account.
+        renewal_date:
+          type: string
+          format: date
+          description: Date of account renewal.
+        industry:
+          type: string
+          description: Industry sector.
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: Key-value pairs for custom fields.
   parameters:
     CompanyIdParam:
       name: company_id
@@ -274,6 +255,25 @@ components:
         minimum: 1
         maximum: 100
         default: 30
+  responses:
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     basicAuth:
       type: http

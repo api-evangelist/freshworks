@@ -126,41 +126,23 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    TeamIdParam:
-      name: team_id
-      in: path
-      required: true
-      description: The ID of the team.
-      schema:
-        type: integer
-    PageParam:
-      name: page
-      in: query
-      description: Page number for pagination.
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
-    PerPageParam:
-      name: per_page
-      in: query
-      description: Number of results per page.
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 100
-        default: 25
   schemas:
-    Error:
+    TeamCreate:
       type: object
+      required:
+      - name
       properties:
-        code:
+        name:
           type: string
-          description: Error code.
-        message:
+          description: Name of the team.
+        description:
           type: string
-          description: Human-readable error message.
+          description: Description.
+        user_ids:
+          type: array
+          items:
+            type: integer
+          description: IDs of users to include.
     Team:
       type: object
       properties:
@@ -186,6 +168,15 @@ components:
           type: string
           format: date-time
           description: Timestamp when last updated.
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Human-readable error message.
     Meta:
       type: object
       properties:
@@ -198,29 +189,7 @@ components:
         current_page:
           type: integer
           description: Current page number.
-    TeamCreate:
-      type: object
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: Name of the team.
-        description:
-          type: string
-          description: Description.
-        user_ids:
-          type: array
-          items:
-            type: integer
-          description: IDs of users to include.
   responses:
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     BadRequest:
       description: The request body or parameters are invalid.
       content:
@@ -233,6 +202,37 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    PageParam:
+      name: page
+      in: query
+      description: Page number for pagination.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    TeamIdParam:
+      name: team_id
+      in: path
+      required: true
+      description: The ID of the team.
+      schema:
+        type: integer
+    PerPageParam:
+      name: per_page
+      in: query
+      description: Number of results per page.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 25
   securitySchemes:
     apiKeyAuth:
       type: apiKey

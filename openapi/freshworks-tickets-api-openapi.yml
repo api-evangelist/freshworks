@@ -234,6 +234,93 @@ components:
               code:
                 type: string
                 description: Error code.
+    Ticket:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the ticket.
+        subject:
+          type: string
+          description: Subject of the ticket.
+        description:
+          type: string
+          description: HTML content of the ticket description.
+        description_text:
+          type: string
+          description: Plain text content of the ticket description.
+        status:
+          type: integer
+          description: Status of the ticket. 2=Open, 3=Pending, 4=Resolved, 5=Closed.
+          enum:
+          - 2
+          - 3
+          - 4
+          - 5
+        priority:
+          type: integer
+          description: Priority of the ticket. 1=Low, 2=Medium, 3=High, 4=Urgent.
+          enum:
+          - 1
+          - 2
+          - 3
+          - 4
+        source:
+          type: integer
+          description: Channel through which the ticket was created. 1=Email, 2=Portal, 3=Phone, 7=Chat, 9=Feedback Widget, 10=Outbound Email.
+        type:
+          type: string
+          description: Type of the ticket.
+        requester_id:
+          type: integer
+          description: ID of the requester who raised the ticket.
+        responder_id:
+          type: integer
+          description: ID of the agent assigned to the ticket.
+        group_id:
+          type: integer
+          description: ID of the group to which the ticket is assigned.
+        company_id:
+          type: integer
+          description: ID of the company associated with the ticket.
+        product_id:
+          type: integer
+          description: ID of the product associated with the ticket.
+        email:
+          type: string
+          format: email
+          description: Email address of the requester.
+        phone:
+          type: string
+          description: Phone number of the requester.
+        tags:
+          type: array
+          description: Tags associated with the ticket.
+          items:
+            type: string
+        due_by:
+          type: string
+          format: date-time
+          description: Timestamp indicating when the ticket is due.
+        fr_due_by:
+          type: string
+          format: date-time
+          description: Timestamp indicating when the first response is due.
+        is_escalated:
+          type: boolean
+          description: Whether the ticket has been escalated.
+        custom_fields:
+          type: object
+          description: Key-value pairs of custom field values.
+          additionalProperties: true
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the ticket was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the ticket was last updated.
     TicketUpdate:
       type: object
       properties:
@@ -353,93 +440,6 @@ components:
         parent_id:
           type: integer
           description: ID of the parent ticket to create a child ticket.
-    Ticket:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Unique ID of the ticket.
-        subject:
-          type: string
-          description: Subject of the ticket.
-        description:
-          type: string
-          description: HTML content of the ticket description.
-        description_text:
-          type: string
-          description: Plain text content of the ticket description.
-        status:
-          type: integer
-          description: Status of the ticket. 2=Open, 3=Pending, 4=Resolved, 5=Closed.
-          enum:
-          - 2
-          - 3
-          - 4
-          - 5
-        priority:
-          type: integer
-          description: Priority of the ticket. 1=Low, 2=Medium, 3=High, 4=Urgent.
-          enum:
-          - 1
-          - 2
-          - 3
-          - 4
-        source:
-          type: integer
-          description: Channel through which the ticket was created. 1=Email, 2=Portal, 3=Phone, 7=Chat, 9=Feedback Widget, 10=Outbound Email.
-        type:
-          type: string
-          description: Type of the ticket.
-        requester_id:
-          type: integer
-          description: ID of the requester who raised the ticket.
-        responder_id:
-          type: integer
-          description: ID of the agent assigned to the ticket.
-        group_id:
-          type: integer
-          description: ID of the group to which the ticket is assigned.
-        company_id:
-          type: integer
-          description: ID of the company associated with the ticket.
-        product_id:
-          type: integer
-          description: ID of the product associated with the ticket.
-        email:
-          type: string
-          format: email
-          description: Email address of the requester.
-        phone:
-          type: string
-          description: Phone number of the requester.
-        tags:
-          type: array
-          description: Tags associated with the ticket.
-          items:
-            type: string
-        due_by:
-          type: string
-          format: date-time
-          description: Timestamp indicating when the ticket is due.
-        fr_due_by:
-          type: string
-          format: date-time
-          description: Timestamp indicating when the first response is due.
-        is_escalated:
-          type: boolean
-          description: Whether the ticket has been escalated.
-        custom_fields:
-          type: object
-          description: Key-value pairs of custom field values.
-          additionalProperties: true
-        created_at:
-          type: string
-          format: date-time
-          description: Timestamp when the ticket was created.
-        updated_at:
-          type: string
-          format: date-time
-          description: Timestamp when the ticket was last updated.
     Error_2:
       type: object
       properties:
@@ -461,6 +461,86 @@ components:
               code:
                 type: string
                 description: Error code.
+    Ticket_2:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the ticket.
+        subject:
+          type: string
+          description: Subject of the ticket.
+        description:
+          type: string
+          description: HTML description of the ticket.
+        description_text:
+          type: string
+          description: Plain text description of the ticket.
+        status:
+          type: integer
+          description: Status of the ticket. 2=Open, 3=Pending, 4=Resolved, 5=Closed.
+        priority:
+          type: integer
+          description: Priority of the ticket. 1=Low, 2=Medium, 3=High, 4=Urgent.
+        type:
+          type: string
+          description: Type of the ticket (Incident, Service Request).
+        source:
+          type: integer
+          description: Source channel of the ticket.
+        requester_id:
+          type: integer
+          description: ID of the requester.
+        responder_id:
+          type: integer
+          description: ID of the assigned agent.
+        group_id:
+          type: integer
+          description: ID of the assigned group.
+        department_id:
+          type: integer
+          description: ID of the associated department.
+        category:
+          type: string
+          description: Category of the ticket.
+        sub_category:
+          type: string
+          description: Sub-category of the ticket.
+        item_category:
+          type: string
+          description: Item category of the ticket.
+        email:
+          type: string
+          format: email
+          description: Email of the requester.
+        tags:
+          type: array
+          items:
+            type: string
+          description: Tags associated with the ticket.
+        due_by:
+          type: string
+          format: date-time
+          description: Due date for ticket resolution.
+        fr_due_by:
+          type: string
+          format: date-time
+          description: Due date for first response.
+        is_escalated:
+          type: boolean
+          description: Whether the ticket has been escalated.
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: Custom field values.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the ticket was created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the ticket was last updated.
     TicketUpdate_2:
       type: object
       properties:
@@ -567,93 +647,7 @@ components:
           type: object
           additionalProperties: true
           description: Custom field values.
-    Ticket_2:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Unique ID of the ticket.
-        subject:
-          type: string
-          description: Subject of the ticket.
-        description:
-          type: string
-          description: HTML description of the ticket.
-        description_text:
-          type: string
-          description: Plain text description of the ticket.
-        status:
-          type: integer
-          description: Status of the ticket. 2=Open, 3=Pending, 4=Resolved, 5=Closed.
-        priority:
-          type: integer
-          description: Priority of the ticket. 1=Low, 2=Medium, 3=High, 4=Urgent.
-        type:
-          type: string
-          description: Type of the ticket (Incident, Service Request).
-        source:
-          type: integer
-          description: Source channel of the ticket.
-        requester_id:
-          type: integer
-          description: ID of the requester.
-        responder_id:
-          type: integer
-          description: ID of the assigned agent.
-        group_id:
-          type: integer
-          description: ID of the assigned group.
-        department_id:
-          type: integer
-          description: ID of the associated department.
-        category:
-          type: string
-          description: Category of the ticket.
-        sub_category:
-          type: string
-          description: Sub-category of the ticket.
-        item_category:
-          type: string
-          description: Item category of the ticket.
-        email:
-          type: string
-          format: email
-          description: Email of the requester.
-        tags:
-          type: array
-          items:
-            type: string
-          description: Tags associated with the ticket.
-        due_by:
-          type: string
-          format: date-time
-          description: Due date for ticket resolution.
-        fr_due_by:
-          type: string
-          format: date-time
-          description: Due date for first response.
-        is_escalated:
-          type: boolean
-          description: Whether the ticket has been escalated.
-        custom_fields:
-          type: object
-          additionalProperties: true
-          description: Custom field values.
-        created_at:
-          type: string
-          format: date-time
-          description: Timestamp when the ticket was created.
-        updated_at:
-          type: string
-          format: date-time
-          description: Timestamp when the ticket was last updated.
   responses:
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     BadRequest:
       description: The request body or parameters are invalid.
       content:
@@ -666,7 +660,21 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
+    PageParam:
+      name: page
+      in: query
+      description: Page number for pagination.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
     TicketIdParam:
       name: ticket_id
       in: path
@@ -683,14 +691,6 @@ components:
         minimum: 1
         maximum: 100
         default: 30
-    PageParam:
-      name: page
-      in: query
-      description: Page number for pagination.
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
   securitySchemes:
     basicAuth:
       type: http
