@@ -175,7 +175,35 @@ paths:
           default: yourdomain
           description: Your Freshworks bundle alias
 components:
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_2'
   schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Human-readable error message.
     Group:
       type: object
       properties:
@@ -200,36 +228,6 @@ components:
           type: string
           format: date-time
           description: Timestamp when the group was created.
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code.
-        message:
-          type: string
-          description: Human-readable error message.
-    Error_2:
-      type: object
-      properties:
-        description:
-          type: string
-          description: Human-readable error message.
-        errors:
-          type: array
-          description: List of specific validation errors.
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                description: Field that caused the error.
-              message:
-                type: string
-                description: Error message for the field.
-              code:
-                type: string
-                description: Error code.
     Group_2:
       type: object
       properties:
@@ -264,6 +262,27 @@ components:
           type: string
           format: date-time
           description: Timestamp when the group was last updated.
+    Error_2:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Human-readable error message.
+        errors:
+          type: array
+          description: List of specific validation errors.
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message for the field.
+              code:
+                type: string
+                description: Error code.
     GroupCreate:
       type: object
       required:
@@ -289,33 +308,7 @@ components:
         unassigned_for:
           type: string
           description: Time duration after which tickets are escalated.
-  responses:
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_2'
   parameters:
-    GroupIdParam:
-      name: group_id
-      in: path
-      required: true
-      description: The ID of the group.
-      schema:
-        type: integer
     PageParam:
       name: page
       in: query
@@ -324,6 +317,13 @@ components:
         type: integer
         minimum: 1
         default: 1
+    GroupIdParam:
+      name: group_id
+      in: path
+      required: true
+      description: The ID of the group.
+      schema:
+        type: integer
     PerPageParam:
       name: per_page
       in: query

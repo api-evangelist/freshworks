@@ -207,6 +207,25 @@ paths:
           default: yourdomain
           description: Your Freshdesk subdomain
 components:
+  responses:
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
@@ -229,49 +248,6 @@ components:
               code:
                 type: string
                 description: Error code.
-    ContactCreate:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Full name of the contact.
-        email:
-          type: string
-          format: email
-          description: Primary email address.
-        phone:
-          type: string
-          description: Phone number.
-        mobile:
-          type: string
-          description: Mobile number.
-        address:
-          type: string
-          description: Address of the contact.
-        description:
-          type: string
-          description: Description or notes about the contact.
-        job_title:
-          type: string
-          description: Job title of the contact.
-        company_id:
-          type: integer
-          description: ID of the associated company.
-        language:
-          type: string
-          description: Language preference.
-        time_zone:
-          type: string
-          description: Time zone.
-        tags:
-          type: array
-          items:
-            type: string
-          description: Tags to associate.
-        custom_fields:
-          type: object
-          additionalProperties: true
-          description: Key-value pairs for custom fields.
     Contact:
       type: object
       properties:
@@ -329,6 +305,49 @@ components:
           type: string
           format: date-time
           description: Timestamp when the contact was last updated.
+    ContactCreate:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Full name of the contact.
+        email:
+          type: string
+          format: email
+          description: Primary email address.
+        phone:
+          type: string
+          description: Phone number.
+        mobile:
+          type: string
+          description: Mobile number.
+        address:
+          type: string
+          description: Address of the contact.
+        description:
+          type: string
+          description: Description or notes about the contact.
+        job_title:
+          type: string
+          description: Job title of the contact.
+        company_id:
+          type: integer
+          description: ID of the associated company.
+        language:
+          type: string
+          description: Language preference.
+        time_zone:
+          type: string
+          description: Time zone.
+        tags:
+          type: array
+          items:
+            type: string
+          description: Tags to associate.
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: Key-value pairs for custom fields.
     Error_2:
       type: object
       properties:
@@ -349,56 +368,15 @@ components:
               code:
                 type: string
                 description: Error code.
-    ContactCreate_2:
+    Meta:
       type: object
       properties:
-        first_name:
-          type: string
-          description: First name.
-        last_name:
-          type: string
-          description: Last name.
-        email:
-          type: string
-          format: email
-          description: Primary email address.
-        work_number:
-          type: string
-          description: Work phone number.
-        mobile_number:
-          type: string
-          description: Mobile phone number.
-        address:
-          type: string
-          description: Mailing address.
-        city:
-          type: string
-          description: City.
-        state:
-          type: string
-          description: State or province.
-        zipcode:
-          type: string
-          description: ZIP or postal code.
-        country:
-          type: string
-          description: Country.
-        job_title:
-          type: string
-          description: Job title.
-        department:
-          type: string
-          description: Department name.
-        sales_account_id:
+        total_pages:
           type: integer
-          description: ID of the associated account.
-        owner_id:
+          description: Total number of pages.
+        total:
           type: integer
-          description: ID of the owning sales agent.
-        custom_field:
-          type: object
-          additionalProperties: true
-          description: Custom field values.
+          description: Total number of records.
     Contact_2:
       type: object
       properties:
@@ -469,34 +447,56 @@ components:
           type: string
           format: date-time
           description: Timestamp when last updated.
-    Meta:
+    ContactCreate_2:
       type: object
       properties:
-        total_pages:
+        first_name:
+          type: string
+          description: First name.
+        last_name:
+          type: string
+          description: Last name.
+        email:
+          type: string
+          format: email
+          description: Primary email address.
+        work_number:
+          type: string
+          description: Work phone number.
+        mobile_number:
+          type: string
+          description: Mobile phone number.
+        address:
+          type: string
+          description: Mailing address.
+        city:
+          type: string
+          description: City.
+        state:
+          type: string
+          description: State or province.
+        zipcode:
+          type: string
+          description: ZIP or postal code.
+        country:
+          type: string
+          description: Country.
+        job_title:
+          type: string
+          description: Job title.
+        department:
+          type: string
+          description: Department name.
+        sales_account_id:
           type: integer
-          description: Total number of pages.
-        total:
+          description: ID of the associated account.
+        owner_id:
           type: integer
-          description: Total number of records.
-  responses:
-    BadRequest:
-      description: The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+          description: ID of the owning sales agent.
+        custom_field:
+          type: object
+          additionalProperties: true
+          description: Custom field values.
   parameters:
     PageParam:
       name: page
@@ -506,13 +506,6 @@ components:
         type: integer
         minimum: 1
         default: 1
-    ContactIdParam:
-      name: contact_id
-      in: path
-      required: true
-      description: The ID of the contact.
-      schema:
-        type: integer
     PerPageParam:
       name: per_page
       in: query
@@ -522,6 +515,19 @@ components:
         minimum: 1
         maximum: 100
         default: 30
+    ContactIdParam:
+      name: contact_id
+      in: path
+      required: true
+      description: The ID of the contact.
+      schema:
+        type: integer
+    SortParam:
+      name: sort
+      in: query
+      description: Field to sort by.
+      schema:
+        type: string
     SortTypeParam:
       name: sort_type
       in: query
@@ -531,12 +537,6 @@ components:
         enum:
         - asc
         - desc
-    SortParam:
-      name: sort
-      in: query
-      description: Field to sort by.
-      schema:
-        type: string
   securitySchemes:
     basicAuth:
       type: http

@@ -70,15 +70,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code.
-        message:
-          type: string
-          description: Human-readable error message.
     Applicant:
       type: object
       properties:
@@ -123,6 +114,15 @@ components:
           type: string
           format: date-time
           description: Timestamp when last updated.
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Human-readable error message.
     ApplicantCreate:
       type: object
       required:

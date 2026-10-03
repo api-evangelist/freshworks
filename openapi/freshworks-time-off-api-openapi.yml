@@ -98,15 +98,32 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    Error:
+    TimeOffRequestCreate:
       type: object
+      required:
+      - leave_type_id
+      - start_date
+      - end_date
       properties:
-        code:
+        leave_type_id:
+          type: integer
+          description: ID of the time-off type.
+        start_date:
           type: string
-          description: Error code.
-        message:
+          format: date
+          description: Start date.
+        end_date:
           type: string
-          description: Human-readable error message.
+          format: date
+          description: End date.
+        comments:
+          type: string
+          description: Comments or reason for the request.
+        notify:
+          type: array
+          items:
+            type: integer
+          description: User IDs to notify about the request.
     TimeOffRequest:
       type: object
       properties:
@@ -146,6 +163,15 @@ components:
           type: string
           format: date-time
           description: Timestamp when last updated.
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Human-readable error message.
     TimeOffType:
       type: object
       properties:
@@ -161,32 +187,6 @@ components:
         is_paid:
           type: boolean
           description: Whether the time-off type is paid leave.
-    TimeOffRequestCreate:
-      type: object
-      required:
-      - leave_type_id
-      - start_date
-      - end_date
-      properties:
-        leave_type_id:
-          type: integer
-          description: ID of the time-off type.
-        start_date:
-          type: string
-          format: date
-          description: Start date.
-        end_date:
-          type: string
-          format: date
-          description: End date.
-        comments:
-          type: string
-          description: Comments or reason for the request.
-        notify:
-          type: array
-          items:
-            type: integer
-          description: User IDs to notify about the request.
   responses:
     BadRequest:
       description: The request body or parameters are invalid.

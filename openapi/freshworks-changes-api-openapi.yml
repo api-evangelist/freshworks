@@ -139,102 +139,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    ChangeIdParam:
-      name: change_id
-      in: path
-      required: true
-      description: The ID of the change request.
-      schema:
-        type: integer
-    PageParam:
-      name: page
-      in: query
-      description: Page number for pagination.
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
-    PerPageParam:
-      name: per_page
-      in: query
-      description: Number of results per page (max 100).
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 100
-        default: 30
   schemas:
-    Error:
-      type: object
-      properties:
-        description:
-          type: string
-          description: Human-readable error message.
-        errors:
-          type: array
-          description: List of specific validation errors.
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                description: Field that caused the error.
-              message:
-                type: string
-                description: Error message.
-              code:
-                type: string
-                description: Error code.
-    ChangeCreate:
-      type: object
-      required:
-      - subject
-      - description
-      - status
-      - priority
-      - impact
-      - risk
-      - change_type
-      properties:
-        subject:
-          type: string
-          description: Subject of the change request.
-        description:
-          type: string
-          description: HTML description.
-        status:
-          type: integer
-          description: Status.
-        priority:
-          type: integer
-          description: Priority.
-        impact:
-          type: integer
-          description: Impact level.
-        risk:
-          type: integer
-          description: Risk level.
-        change_type:
-          type: string
-          description: Type of change.
-        agent_id:
-          type: integer
-          description: ID of the agent to assign.
-        group_id:
-          type: integer
-          description: ID of the group to assign.
-        department_id:
-          type: integer
-          description: ID of the department.
-        planned_start_date:
-          type: string
-          format: date-time
-          description: Planned start date.
-        planned_end_date:
-          type: string
-          format: date-time
-          description: Planned end date.
     Change:
       type: object
       properties:
@@ -287,6 +192,76 @@ components:
           type: string
           format: date-time
           description: Timestamp when last updated.
+    ChangeCreate:
+      type: object
+      required:
+      - subject
+      - description
+      - status
+      - priority
+      - impact
+      - risk
+      - change_type
+      properties:
+        subject:
+          type: string
+          description: Subject of the change request.
+        description:
+          type: string
+          description: HTML description.
+        status:
+          type: integer
+          description: Status.
+        priority:
+          type: integer
+          description: Priority.
+        impact:
+          type: integer
+          description: Impact level.
+        risk:
+          type: integer
+          description: Risk level.
+        change_type:
+          type: string
+          description: Type of change.
+        agent_id:
+          type: integer
+          description: ID of the agent to assign.
+        group_id:
+          type: integer
+          description: ID of the group to assign.
+        department_id:
+          type: integer
+          description: ID of the department.
+        planned_start_date:
+          type: string
+          format: date-time
+          description: Planned start date.
+        planned_end_date:
+          type: string
+          format: date-time
+          description: Planned end date.
+    Error:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Human-readable error message.
+        errors:
+          type: array
+          description: List of specific validation errors.
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message.
+              code:
+                type: string
+                description: Error code.
   responses:
     BadRequest:
       description: The request body or parameters are invalid.
@@ -306,6 +281,31 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+  parameters:
+    PageParam:
+      name: page
+      in: query
+      description: Page number for pagination.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    ChangeIdParam:
+      name: change_id
+      in: path
+      required: true
+      description: The ID of the change request.
+      schema:
+        type: integer
+    PerPageParam:
+      name: per_page
+      in: query
+      description: Number of results per page (max 100).
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 30
   securitySchemes:
     basicAuth:
       type: http

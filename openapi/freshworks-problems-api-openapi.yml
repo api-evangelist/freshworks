@@ -140,27 +140,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        description:
-          type: string
-          description: Human-readable error message.
-        errors:
-          type: array
-          description: List of specific validation errors.
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                description: Field that caused the error.
-              message:
-                type: string
-                description: Error message.
-              code:
-                type: string
-                description: Error code.
     Problem:
       type: object
       properties:
@@ -246,6 +225,27 @@ components:
           type: string
           format: date-time
           description: Due date.
+    Error:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Human-readable error message.
+        errors:
+          type: array
+          description: List of specific validation errors.
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message.
+              code:
+                type: string
+                description: Error code.
   responses:
     BadRequest:
       description: The request body or parameters are invalid.
@@ -266,6 +266,13 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   parameters:
+    ProblemIdParam:
+      name: problem_id
+      in: path
+      required: true
+      description: The ID of the problem.
+      schema:
+        type: integer
     PageParam:
       name: page
       in: query
@@ -274,13 +281,6 @@ components:
         type: integer
         minimum: 1
         default: 1
-    ProblemIdParam:
-      name: problem_id
-      in: path
-      required: true
-      description: The ID of the problem.
-      schema:
-        type: integer
     PerPageParam:
       name: per_page
       in: query

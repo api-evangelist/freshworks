@@ -212,6 +212,50 @@ paths:
           default: yourdomain
           description: Your Freshdesk subdomain
 components:
+  parameters:
+    TicketIdParam:
+      name: ticket_id
+      in: path
+      required: true
+      description: The ID of the ticket.
+      schema:
+        type: integer
+    PageParam:
+      name: page
+      in: query
+      description: Page number for pagination.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    PerPageParam:
+      name: per_page
+      in: query
+      description: Number of results per page (max 100).
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 30
+  responses:
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
@@ -321,49 +365,6 @@ components:
           type: string
           format: date-time
           description: Timestamp when the ticket was last updated.
-    TicketUpdate:
-      type: object
-      properties:
-        subject:
-          type: string
-          description: Subject of the ticket.
-        description:
-          type: string
-          description: HTML content of the ticket description.
-        status:
-          type: integer
-          description: Status of the ticket.
-          enum:
-          - 2
-          - 3
-          - 4
-          - 5
-        priority:
-          type: integer
-          description: Priority of the ticket.
-          enum:
-          - 1
-          - 2
-          - 3
-          - 4
-        responder_id:
-          type: integer
-          description: ID of the agent to assign.
-        group_id:
-          type: integer
-          description: ID of the group to assign.
-        type:
-          type: string
-          description: Type of the ticket.
-        tags:
-          type: array
-          items:
-            type: string
-          description: Tags to associate with the ticket.
-        custom_fields:
-          type: object
-          additionalProperties: true
-          description: Key-value pairs for custom fields.
     TicketCreate:
       type: object
       required:
@@ -440,6 +441,49 @@ components:
         parent_id:
           type: integer
           description: ID of the parent ticket to create a child ticket.
+    TicketUpdate:
+      type: object
+      properties:
+        subject:
+          type: string
+          description: Subject of the ticket.
+        description:
+          type: string
+          description: HTML content of the ticket description.
+        status:
+          type: integer
+          description: Status of the ticket.
+          enum:
+          - 2
+          - 3
+          - 4
+          - 5
+        priority:
+          type: integer
+          description: Priority of the ticket.
+          enum:
+          - 1
+          - 2
+          - 3
+          - 4
+        responder_id:
+          type: integer
+          description: ID of the agent to assign.
+        group_id:
+          type: integer
+          description: ID of the group to assign.
+        type:
+          type: string
+          description: Type of the ticket.
+        tags:
+          type: array
+          items:
+            type: string
+          description: Tags to associate with the ticket.
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: Key-value pairs for custom fields.
     Error_2:
       type: object
       properties:
@@ -541,45 +585,6 @@ components:
           type: string
           format: date-time
           description: Timestamp when the ticket was last updated.
-    TicketUpdate_2:
-      type: object
-      properties:
-        subject:
-          type: string
-          description: Subject of the ticket.
-        description:
-          type: string
-          description: HTML description.
-        status:
-          type: integer
-          description: Status of the ticket.
-        priority:
-          type: integer
-          description: Priority of the ticket.
-        responder_id:
-          type: integer
-          description: ID of the agent to assign.
-        group_id:
-          type: integer
-          description: ID of the group to assign.
-        type:
-          type: string
-          description: Type of the ticket.
-        category:
-          type: string
-          description: Category.
-        sub_category:
-          type: string
-          description: Sub-category.
-        tags:
-          type: array
-          items:
-            type: string
-          description: Tags.
-        custom_fields:
-          type: object
-          additionalProperties: true
-          description: Custom field values.
     TicketCreate_2:
       type: object
       required:
@@ -647,50 +652,45 @@ components:
           type: object
           additionalProperties: true
           description: Custom field values.
-  responses:
-    BadRequest:
-      description: The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-  parameters:
-    PageParam:
-      name: page
-      in: query
-      description: Page number for pagination.
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
-    TicketIdParam:
-      name: ticket_id
-      in: path
-      required: true
-      description: The ID of the ticket.
-      schema:
-        type: integer
-    PerPageParam:
-      name: per_page
-      in: query
-      description: Number of results per page (max 100).
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 100
-        default: 30
+    TicketUpdate_2:
+      type: object
+      properties:
+        subject:
+          type: string
+          description: Subject of the ticket.
+        description:
+          type: string
+          description: HTML description.
+        status:
+          type: integer
+          description: Status of the ticket.
+        priority:
+          type: integer
+          description: Priority of the ticket.
+        responder_id:
+          type: integer
+          description: ID of the agent to assign.
+        group_id:
+          type: integer
+          description: ID of the group to assign.
+        type:
+          type: string
+          description: Type of the ticket.
+        category:
+          type: string
+          description: Category.
+        sub_category:
+          type: string
+          description: Sub-category.
+        tags:
+          type: array
+          items:
+            type: string
+          description: Tags.
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: Custom field values.
   securitySchemes:
     basicAuth:
       type: http

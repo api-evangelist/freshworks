@@ -139,43 +139,51 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  parameters:
+    AssetIdParam:
+      name: asset_id
+      in: path
+      required: true
+      description: The display ID of the asset.
+      schema:
+        type: integer
+    PageParam:
+      name: page
+      in: query
+      description: Page number for pagination.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    PerPageParam:
+      name: per_page
+      in: query
+      description: Number of results per page (max 100).
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 30
+  responses:
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    AssetCreate:
-      type: object
-      required:
-      - name
-      - asset_type_id
-      properties:
-        name:
-          type: string
-          description: Name of the asset.
-        description:
-          type: string
-          description: Description.
-        asset_type_id:
-          type: integer
-          description: ID of the asset type.
-        asset_tag:
-          type: string
-          description: Asset tag identifier.
-        impact:
-          type: string
-          description: Impact level.
-        usage_type:
-          type: string
-          description: Usage type.
-        user_id:
-          type: integer
-          description: ID of the user to assign.
-        department_id:
-          type: integer
-          description: ID of the department.
-        location_id:
-          type: integer
-          description: ID of the location.
-        agent_id:
-          type: integer
-          description: ID of the managing agent.
     Error:
       type: object
       properties:
@@ -248,50 +256,42 @@ components:
           type: string
           format: date-time
           description: Timestamp when last updated.
-  parameters:
-    AssetIdParam:
-      name: asset_id
-      in: path
-      required: true
-      description: The display ID of the asset.
-      schema:
-        type: integer
-    PageParam:
-      name: page
-      in: query
-      description: Page number for pagination.
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
-    PerPageParam:
-      name: per_page
-      in: query
-      description: Number of results per page (max 100).
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 100
-        default: 30
-  responses:
-    BadRequest:
-      description: The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    AssetCreate:
+      type: object
+      required:
+      - name
+      - asset_type_id
+      properties:
+        name:
+          type: string
+          description: Name of the asset.
+        description:
+          type: string
+          description: Description.
+        asset_type_id:
+          type: integer
+          description: ID of the asset type.
+        asset_tag:
+          type: string
+          description: Asset tag identifier.
+        impact:
+          type: string
+          description: Impact level.
+        usage_type:
+          type: string
+          description: Usage type.
+        user_id:
+          type: integer
+          description: ID of the user to assign.
+        department_id:
+          type: integer
+          description: ID of the department.
+        location_id:
+          type: integer
+          description: ID of the location.
+        agent_id:
+          type: integer
+          description: ID of the managing agent.
   securitySchemes:
     basicAuth:
       type: http

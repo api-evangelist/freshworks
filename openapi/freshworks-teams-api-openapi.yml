@@ -127,22 +127,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    TeamCreate:
-      type: object
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: Name of the team.
-        description:
-          type: string
-          description: Description.
-        user_ids:
-          type: array
-          items:
-            type: integer
-          description: IDs of users to include.
     Team:
       type: object
       properties:
@@ -177,6 +161,22 @@ components:
         message:
           type: string
           description: Human-readable error message.
+    TeamCreate:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Name of the team.
+        description:
+          type: string
+          description: Description.
+        user_ids:
+          type: array
+          items:
+            type: integer
+          description: IDs of users to include.
     Meta:
       type: object
       properties:

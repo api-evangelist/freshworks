@@ -150,6 +150,25 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
@@ -256,25 +275,6 @@ components:
           type: object
           additionalProperties: true
           description: Custom field values.
-  responses:
-    BadRequest:
-      description: The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   parameters:
     PageParam:
       name: page
@@ -284,13 +284,6 @@ components:
         type: integer
         minimum: 1
         default: 1
-    RequesterIdParam:
-      name: requester_id
-      in: path
-      required: true
-      description: The ID of the requester.
-      schema:
-        type: integer
     PerPageParam:
       name: per_page
       in: query
@@ -300,6 +293,13 @@ components:
         minimum: 1
         maximum: 100
         default: 30
+    RequesterIdParam:
+      name: requester_id
+      in: path
+      required: true
+      description: The ID of the requester.
+      schema:
+        type: integer
   securitySchemes:
     basicAuth:
       type: http

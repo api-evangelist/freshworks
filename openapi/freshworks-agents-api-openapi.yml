@@ -140,6 +140,26 @@ paths:
           description: Your Freshworks bundle alias
 components:
   schemas:
+    PaginationLinks:
+      type: object
+      properties:
+        next_page:
+          type: string
+          format: uri
+          description: URL for the next page of results.
+        prev_page:
+          type: string
+          format: uri
+          description: URL for the previous page of results.
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Human-readable error message.
     Agent:
       type: object
       properties:
@@ -185,26 +205,46 @@ components:
           type: string
           format: date-time
           description: Timestamp when the agent was created.
-    Error:
+    AgentUpdate:
       type: object
       properties:
-        code:
-          type: string
-          description: Error code.
-        message:
+        occasional:
+          type: boolean
+          description: Whether the agent is occasional.
+        group_ids:
+          type: array
+          items:
+            type: integer
+          description: IDs of groups to assign.
+        role_ids:
+          type: array
+          items:
+            type: integer
+          description: IDs of roles to assign.
+        ticket_scope:
+          type: integer
+          description: Scope of tickets the agent can access.
+    Error_2:
+      type: object
+      properties:
+        description:
           type: string
           description: Human-readable error message.
-    PaginationLinks:
-      type: object
-      properties:
-        next_page:
-          type: string
-          format: uri
-          description: URL for the next page of results.
-        prev_page:
-          type: string
-          format: uri
-          description: URL for the previous page of results.
+        errors:
+          type: array
+          description: List of specific validation errors.
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message for the field.
+              code:
+                type: string
+                description: Error code.
     Agent_2:
       type: object
       properties:
@@ -261,7 +301,7 @@ components:
           type: string
           format: date-time
           description: Timestamp when the agent was last updated.
-    Error_2:
+    Error_3:
       type: object
       properties:
         description:
@@ -278,29 +318,10 @@ components:
                 description: Field that caused the error.
               message:
                 type: string
-                description: Error message for the field.
+                description: Error message.
               code:
                 type: string
                 description: Error code.
-    AgentUpdate:
-      type: object
-      properties:
-        occasional:
-          type: boolean
-          description: Whether the agent is occasional.
-        group_ids:
-          type: array
-          items:
-            type: integer
-          description: IDs of groups to assign.
-        role_ids:
-          type: array
-          items:
-            type: integer
-          description: IDs of roles to assign.
-        ticket_scope:
-          type: integer
-          description: Scope of tickets the agent can access.
     Agent_3:
       type: object
       properties:
@@ -346,27 +367,25 @@ components:
           type: string
           format: date-time
           description: Timestamp when last updated.
-    Error_3:
-      type: object
-      properties:
-        description:
-          type: string
-          description: Human-readable error message.
-        errors:
-          type: array
-          description: List of specific validation errors.
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                description: Field that caused the error.
-              message:
-                type: string
-                description: Error message.
-              code:
-                type: string
-                description: Error code.
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error_2'
   parameters:
     PageParam:
       name: page
@@ -376,6 +395,13 @@ components:
         type: integer
         minimum: 1
         default: 1
+    AgentIdParam:
+      name: agent_id
+      in: path
+      required: true
+      description: The ID of the agent.
+      schema:
+        type: string
     ItemsPerPageParam:
       name: items_per_page
       in: query
@@ -385,13 +411,6 @@ components:
         minimum: 1
         maximum: 50
         default: 20
-    AgentIdParam:
-      name: agent_id
-      in: path
-      required: true
-      description: The ID of the agent.
-      schema:
-        type: string
     AgentIdParam_2:
       name: agent_id
       in: path
@@ -415,25 +434,6 @@ components:
       description: The ID of the agent.
       schema:
         type: integer
-  responses:
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error_2'
   securitySchemes:
     bearerAuth:
       type: http

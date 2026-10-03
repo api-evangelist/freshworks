@@ -70,26 +70,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        description:
-          type: string
-          description: Human-readable error message.
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                description: Field that caused the error.
-              message:
-                type: string
-                description: Error message.
-              code:
-                type: string
-                description: Error code.
     Note:
       type: object
       properties:
@@ -129,6 +109,26 @@ components:
         targetable_id:
           type: integer
           description: ID of the record.
+    Error:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Human-readable error message.
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message.
+              code:
+                type: string
+                description: Error code.
   responses:
     BadRequest:
       description: The request body or parameters are invalid.

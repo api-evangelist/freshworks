@@ -143,26 +143,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        description:
-          type: string
-          description: Human-readable error message.
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                description: Field that caused the error.
-              message:
-                type: string
-                description: Error message.
-              code:
-                type: string
-                description: Error code.
     Lead:
       type: object
       properties:
@@ -219,6 +199,35 @@ components:
           type: string
           format: date-time
           description: Timestamp when last updated.
+    Error:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Human-readable error message.
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message.
+              code:
+                type: string
+                description: Error code.
+    Meta:
+      type: object
+      properties:
+        total_pages:
+          type: integer
+          description: Total number of pages.
+        total:
+          type: integer
+          description: Total number of records.
     LeadCreate:
       type: object
       properties:
@@ -251,16 +260,28 @@ components:
           type: object
           additionalProperties: true
           description: Custom field values.
-    Meta:
-      type: object
-      properties:
-        total_pages:
-          type: integer
-          description: Total number of pages.
-        total:
-          type: integer
-          description: Total number of records.
   parameters:
+    SortParam:
+      name: sort
+      in: query
+      description: Field to sort by.
+      schema:
+        type: string
+    PageParam:
+      name: page
+      in: query
+      description: Page number for pagination.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    LeadIdParam:
+      name: lead_id
+      in: path
+      required: true
+      description: The ID of the lead.
+      schema:
+        type: integer
     SortTypeParam:
       name: sort_type
       in: query
@@ -270,27 +291,6 @@ components:
         enum:
         - asc
         - desc
-    LeadIdParam:
-      name: lead_id
-      in: path
-      required: true
-      description: The ID of the lead.
-      schema:
-        type: integer
-    PageParam:
-      name: page
-      in: query
-      description: Page number for pagination.
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
-    SortParam:
-      name: sort
-      in: query
-      description: Field to sort by.
-      schema:
-        type: string
   responses:
     BadRequest:
       description: The request body or parameters are invalid.

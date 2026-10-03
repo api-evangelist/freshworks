@@ -287,6 +287,17 @@ paths:
           description: Your Freshdesk subdomain
 components:
   schemas:
+    PaginationLinks:
+      type: object
+      properties:
+        next_page:
+          type: string
+          format: uri
+          description: URL for the next page of results.
+        prev_page:
+          type: string
+          format: uri
+          description: URL for the previous page of results.
     MessageCreate:
       type: object
       required:
@@ -331,34 +342,6 @@ components:
         message:
           type: string
           description: Human-readable error message.
-    ConversationUpdate:
-      type: object
-      properties:
-        status:
-          type: string
-          description: New status for the conversation.
-          enum:
-          - new
-          - assigned
-          - resolved
-          - reopened
-        assigned_agent_id:
-          type: string
-          description: ID of the agent to assign.
-        assigned_group_id:
-          type: string
-          description: ID of the group to assign.
-    PaginationLinks:
-      type: object
-      properties:
-        next_page:
-          type: string
-          format: uri
-          description: URL for the next page of results.
-        prev_page:
-          type: string
-          format: uri
-          description: URL for the previous page of results.
     Conversation:
       type: object
       properties:
@@ -425,6 +408,39 @@ components:
           description: Initial messages for the conversation.
           items:
             $ref: '#/components/schemas/MessageCreate'
+    ConversationUpdate:
+      type: object
+      properties:
+        status:
+          type: string
+          description: New status for the conversation.
+          enum:
+          - new
+          - assigned
+          - resolved
+          - reopened
+        assigned_agent_id:
+          type: string
+          description: ID of the agent to assign.
+        assigned_group_id:
+          type: string
+          description: ID of the group to assign.
+    NoteCreate:
+      type: object
+      required:
+      - body
+      properties:
+        body:
+          type: string
+          description: HTML content of the note.
+        private:
+          type: boolean
+          description: Whether the note is private (internal only).
+          default: true
+        incoming:
+          type: boolean
+          description: Whether the note is incoming.
+          default: false
     Error_2:
       type: object
       properties:
@@ -493,22 +509,6 @@ components:
           type: string
           format: date-time
           description: Timestamp when the conversation was last updated.
-    NoteCreate:
-      type: object
-      required:
-      - body
-      properties:
-        body:
-          type: string
-          description: HTML content of the note.
-        private:
-          type: boolean
-          description: Whether the note is private (internal only).
-          default: true
-        incoming:
-          type: boolean
-          description: Whether the note is incoming.
-          default: false
     ReplyCreate:
       type: object
       required:
@@ -605,13 +605,6 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   parameters:
-    ConversationIdParam:
-      name: conversation_id
-      in: path
-      required: true
-      description: The ID of the conversation.
-      schema:
-        type: string
     PageParam:
       name: page
       in: query
@@ -620,6 +613,13 @@ components:
         type: integer
         minimum: 1
         default: 1
+    ConversationIdParam:
+      name: conversation_id
+      in: path
+      required: true
+      description: The ID of the conversation.
+      schema:
+        type: string
     ItemsPerPageParam:
       name: items_per_page
       in: query
