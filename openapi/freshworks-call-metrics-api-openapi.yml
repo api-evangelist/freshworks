@@ -56,6 +56,15 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Human-readable error message.
     CallMetric:
       type: object
       properties:
@@ -83,15 +92,6 @@ components:
         average_handle_time:
           type: integer
           description: Average handle time in seconds.
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code.
-        message:
-          type: string
-          description: Human-readable error message.
   responses:
     Unauthorized:
       description: Authentication credentials are missing or invalid.

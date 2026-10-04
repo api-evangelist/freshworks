@@ -139,6 +139,54 @@ paths:
           default: yourdomain
           description: Your Freshworks bundle alias
 components:
+  parameters:
+    ItemsPerPageParam:
+      name: items_per_page
+      in: query
+      description: Number of items per page.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 50
+        default: 20
+    AgentIdParam:
+      name: agent_id
+      in: path
+      required: true
+      description: The ID of the agent.
+      schema:
+        type: string
+    PageParam:
+      name: page
+      in: query
+      description: Page number for pagination.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    PerPageParam:
+      name: per_page
+      in: query
+      description: Number of results per page (max 100).
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 30
+    AgentIdParam_2:
+      name: agent_id
+      in: path
+      required: true
+      description: The ID of the agent.
+      schema:
+        type: integer
+    AgentIdParam_3:
+      name: agent_id
+      in: path
+      required: true
+      description: The ID of the agent.
+      schema:
+        type: integer
   schemas:
     PaginationLinks:
       type: object
@@ -386,54 +434,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error_2'
-  parameters:
-    PageParam:
-      name: page
-      in: query
-      description: Page number for pagination.
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
-    AgentIdParam:
-      name: agent_id
-      in: path
-      required: true
-      description: The ID of the agent.
-      schema:
-        type: string
-    ItemsPerPageParam:
-      name: items_per_page
-      in: query
-      description: Number of items per page.
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 50
-        default: 20
-    AgentIdParam_2:
-      name: agent_id
-      in: path
-      required: true
-      description: The ID of the agent.
-      schema:
-        type: integer
-    PerPageParam:
-      name: per_page
-      in: query
-      description: Number of results per page (max 100).
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 100
-        default: 30
-    AgentIdParam_3:
-      name: agent_id
-      in: path
-      required: true
-      description: The ID of the agent.
-      schema:
-        type: integer
   securitySchemes:
     bearerAuth:
       type: http

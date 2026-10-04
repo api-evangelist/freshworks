@@ -142,44 +142,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    SortParam:
-      name: sort
-      in: query
-      description: Field to sort by.
-      schema:
-        type: string
-    PageParam:
-      name: page
-      in: query
-      description: Page number for pagination.
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
-    SortTypeParam:
-      name: sort_type
-      in: query
-      description: Sort order direction.
-      schema:
-        type: string
-        enum:
-        - asc
-        - desc
-    DealIdParam:
-      name: deal_id
-      in: path
-      required: true
-      description: The ID of the deal.
-      schema:
-        type: integer
   responses:
-    BadRequest:
-      description: The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     NotFound:
       description: The requested resource was not found.
       content:
@@ -192,27 +155,13 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    Error:
-      type: object
-      properties:
-        description:
-          type: string
-          description: Human-readable error message.
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                description: Field that caused the error.
-              message:
-                type: string
-                description: Error message.
-              code:
-                type: string
-                description: Error code.
     DealCreate:
       type: object
       required:
@@ -257,6 +206,26 @@ components:
         total:
           type: integer
           description: Total number of records.
+    Error:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Human-readable error message.
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message.
+              code:
+                type: string
+                description: Error code.
     Deal:
       type: object
       properties:
@@ -305,6 +274,37 @@ components:
           type: string
           format: date-time
           description: Timestamp when last updated.
+  parameters:
+    SortParam:
+      name: sort
+      in: query
+      description: Field to sort by.
+      schema:
+        type: string
+    PageParam:
+      name: page
+      in: query
+      description: Page number for pagination.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    DealIdParam:
+      name: deal_id
+      in: path
+      required: true
+      description: The ID of the deal.
+      schema:
+        type: integer
+    SortTypeParam:
+      name: sort_type
+      in: query
+      description: Sort order direction.
+      schema:
+        type: string
+        enum:
+        - asc
+        - desc
   securitySchemes:
     apiKeyAuth:
       type: apiKey

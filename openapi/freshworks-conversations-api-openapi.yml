@@ -286,7 +286,75 @@ paths:
           default: yourdomain
           description: Your Freshdesk subdomain
 components:
+  parameters:
+    ConversationIdParam:
+      name: conversation_id
+      in: path
+      required: true
+      description: The ID of the conversation.
+      schema:
+        type: string
+    ItemsPerPageParam:
+      name: items_per_page
+      in: query
+      description: Number of items per page.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 50
+        default: 20
+    PageParam:
+      name: page
+      in: query
+      description: Page number for pagination.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    PerPageParam:
+      name: per_page
+      in: query
+      description: Number of results per page (max 100).
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 30
+    TicketIdParam:
+      name: ticket_id
+      in: path
+      required: true
+      description: The ID of the ticket.
+      schema:
+        type: integer
   schemas:
+    ConversationCreate:
+      type: object
+      required:
+      - app_id
+      - channel_id
+      - messages
+      properties:
+        app_id:
+          type: string
+          description: ID of the Freshchat application.
+        channel_id:
+          type: string
+          description: ID of the channel.
+        users:
+          type: array
+          description: Users to involve in the conversation.
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: User ID.
+        messages:
+          type: array
+          description: Initial messages for the conversation.
+          items:
+            $ref: '#/components/schemas/MessageCreate'
     PaginationLinks:
       type: object
       properties:
@@ -381,33 +449,6 @@ components:
           type: string
           format: date-time
           description: Timestamp when the conversation was created.
-    ConversationCreate:
-      type: object
-      required:
-      - app_id
-      - channel_id
-      - messages
-      properties:
-        app_id:
-          type: string
-          description: ID of the Freshchat application.
-        channel_id:
-          type: string
-          description: ID of the channel.
-        users:
-          type: array
-          description: Users to involve in the conversation.
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                description: User ID.
-        messages:
-          type: array
-          description: Initial messages for the conversation.
-          items:
-            $ref: '#/components/schemas/MessageCreate'
     ConversationUpdate:
       type: object
       properties:
@@ -425,22 +466,6 @@ components:
         assigned_group_id:
           type: string
           description: ID of the group to assign.
-    NoteCreate:
-      type: object
-      required:
-      - body
-      properties:
-        body:
-          type: string
-          description: HTML content of the note.
-        private:
-          type: boolean
-          description: Whether the note is private (internal only).
-          default: true
-        incoming:
-          type: boolean
-          description: Whether the note is incoming.
-          default: false
     Error_2:
       type: object
       properties:
@@ -462,6 +487,26 @@ components:
               code:
                 type: string
                 description: Error code.
+    ReplyCreate:
+      type: object
+      required:
+      - body
+      properties:
+        body:
+          type: string
+          description: HTML content of the reply.
+        cc_emails:
+          type: array
+          items:
+            type: string
+            format: email
+          description: Email addresses to CC.
+        bcc_emails:
+          type: array
+          items:
+            type: string
+            format: email
+          description: Email addresses to BCC.
     Conversation_2:
       type: object
       properties:
@@ -509,26 +554,22 @@ components:
           type: string
           format: date-time
           description: Timestamp when the conversation was last updated.
-    ReplyCreate:
+    NoteCreate:
       type: object
       required:
       - body
       properties:
         body:
           type: string
-          description: HTML content of the reply.
-        cc_emails:
-          type: array
-          items:
-            type: string
-            format: email
-          description: Email addresses to CC.
-        bcc_emails:
-          type: array
-          items:
-            type: string
-            format: email
-          description: Email addresses to BCC.
+          description: HTML content of the note.
+        private:
+          type: boolean
+          description: Whether the note is private (internal only).
+          default: true
+        incoming:
+          type: boolean
+          description: Whether the note is incoming.
+          default: false
     Error_3:
       type: object
       properties:
@@ -586,12 +627,6 @@ components:
           format: date-time
           description: Timestamp when last updated.
   responses:
-    BadRequest:
-      description: The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     NotFound:
       description: The requested resource was not found.
       content:
@@ -604,47 +639,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  parameters:
-    PageParam:
-      name: page
-      in: query
-      description: Page number for pagination.
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
-    ConversationIdParam:
-      name: conversation_id
-      in: path
-      required: true
-      description: The ID of the conversation.
-      schema:
-        type: string
-    ItemsPerPageParam:
-      name: items_per_page
-      in: query
-      description: Number of items per page.
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 50
-        default: 20
-    TicketIdParam:
-      name: ticket_id
-      in: path
-      required: true
-      description: The ID of the ticket.
-      schema:
-        type: integer
-    PerPageParam:
-      name: per_page
-      in: query
-      description: Number of results per page (max 100).
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 100
-        default: 30
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

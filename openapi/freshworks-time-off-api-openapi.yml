@@ -98,6 +98,30 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
+    TimeOffType:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the time-off type.
+        name:
+          type: string
+          description: Name of the time-off type (e.g., Vacation, Sick Leave).
+        description:
+          type: string
+          description: Description.
+        is_paid:
+          type: boolean
+          description: Whether the time-off type is paid leave.
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Human-readable error message.
     TimeOffRequestCreate:
       type: object
       required:
@@ -163,39 +187,15 @@ components:
           type: string
           format: date-time
           description: Timestamp when last updated.
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code.
-        message:
-          type: string
-          description: Human-readable error message.
-    TimeOffType:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Unique ID of the time-off type.
-        name:
-          type: string
-          description: Name of the time-off type (e.g., Vacation, Sick Leave).
-        description:
-          type: string
-          description: Description.
-        is_paid:
-          type: boolean
-          description: Whether the time-off type is paid leave.
   responses:
-    BadRequest:
-      description: The request body or parameters are invalid.
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
+    BadRequest:
+      description: The request body or parameters are invalid.
       content:
         application/json:
           schema:

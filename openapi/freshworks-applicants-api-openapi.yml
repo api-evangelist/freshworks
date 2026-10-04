@@ -69,7 +69,62 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code.
+        message:
+          type: string
+          description: Human-readable error message.
+    ApplicantCreate:
+      type: object
+      required:
+      - first_name
+      - last_name
+      - email
+      properties:
+        first_name:
+          type: string
+          description: First name.
+        last_name:
+          type: string
+          description: Last name.
+        email:
+          type: string
+          format: email
+          description: Email address.
+        phone_number:
+          type: string
+          description: Phone number.
+        source:
+          type: string
+          description: Application source.
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: Custom field values.
     Applicant:
       type: object
       properties:
@@ -114,61 +169,6 @@ components:
           type: string
           format: date-time
           description: Timestamp when last updated.
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code.
-        message:
-          type: string
-          description: Human-readable error message.
-    ApplicantCreate:
-      type: object
-      required:
-      - first_name
-      - last_name
-      - email
-      properties:
-        first_name:
-          type: string
-          description: First name.
-        last_name:
-          type: string
-          description: Last name.
-        email:
-          type: string
-          format: email
-          description: Email address.
-        phone_number:
-          type: string
-          description: Phone number.
-        source:
-          type: string
-          description: Application source.
-        custom_fields:
-          type: object
-          additionalProperties: true
-          description: Custom field values.
-  responses:
-    BadRequest:
-      description: The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   parameters:
     PageParam:
       name: page

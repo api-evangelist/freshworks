@@ -150,12 +150,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   responses:
-    BadRequest:
-      description: The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     NotFound:
       description: The requested resource was not found.
       content:
@@ -168,6 +162,28 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    TaskIdParam:
+      name: task_id
+      in: path
+      required: true
+      description: The ID of the task.
+      schema:
+        type: integer
+    PageParam:
+      name: page
+      in: query
+      description: Page number for pagination.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
   schemas:
     Error:
       type: object
@@ -260,22 +276,6 @@ components:
         targetable_id:
           type: integer
           description: ID of associated record.
-  parameters:
-    PageParam:
-      name: page
-      in: query
-      description: Page number for pagination.
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
-    TaskIdParam:
-      name: task_id
-      in: path
-      required: true
-      description: The ID of the task.
-      schema:
-        type: integer
   securitySchemes:
     apiKeyAuth:
       type: apiKey

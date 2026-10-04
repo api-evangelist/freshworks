@@ -212,72 +212,50 @@ paths:
           default: yourdomain
           description: Your Freshdesk subdomain
 components:
-  parameters:
-    TicketIdParam:
-      name: ticket_id
-      in: path
-      required: true
-      description: The ID of the ticket.
-      schema:
-        type: integer
-    PageParam:
-      name: page
-      in: query
-      description: Page number for pagination.
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
-    PerPageParam:
-      name: per_page
-      in: query
-      description: Number of results per page (max 100).
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 100
-        default: 30
-  responses:
-    BadRequest:
-      description: The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    Error:
+    TicketUpdate:
       type: object
       properties:
+        subject:
+          type: string
+          description: Subject of the ticket.
         description:
           type: string
-          description: Human-readable error message.
-        errors:
+          description: HTML content of the ticket description.
+        status:
+          type: integer
+          description: Status of the ticket.
+          enum:
+          - 2
+          - 3
+          - 4
+          - 5
+        priority:
+          type: integer
+          description: Priority of the ticket.
+          enum:
+          - 1
+          - 2
+          - 3
+          - 4
+        responder_id:
+          type: integer
+          description: ID of the agent to assign.
+        group_id:
+          type: integer
+          description: ID of the group to assign.
+        type:
+          type: string
+          description: Type of the ticket.
+        tags:
           type: array
-          description: List of specific validation errors.
           items:
-            type: object
-            properties:
-              field:
-                type: string
-                description: Field that caused the error.
-              message:
-                type: string
-                description: Error message for the field.
-              code:
-                type: string
-                description: Error code.
+            type: string
+          description: Tags to associate with the ticket.
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: Key-value pairs for custom fields.
     Ticket:
       type: object
       properties:
@@ -441,50 +419,7 @@ components:
         parent_id:
           type: integer
           description: ID of the parent ticket to create a child ticket.
-    TicketUpdate:
-      type: object
-      properties:
-        subject:
-          type: string
-          description: Subject of the ticket.
-        description:
-          type: string
-          description: HTML content of the ticket description.
-        status:
-          type: integer
-          description: Status of the ticket.
-          enum:
-          - 2
-          - 3
-          - 4
-          - 5
-        priority:
-          type: integer
-          description: Priority of the ticket.
-          enum:
-          - 1
-          - 2
-          - 3
-          - 4
-        responder_id:
-          type: integer
-          description: ID of the agent to assign.
-        group_id:
-          type: integer
-          description: ID of the group to assign.
-        type:
-          type: string
-          description: Type of the ticket.
-        tags:
-          type: array
-          items:
-            type: string
-          description: Tags to associate with the ticket.
-        custom_fields:
-          type: object
-          additionalProperties: true
-          description: Key-value pairs for custom fields.
-    Error_2:
+    Error:
       type: object
       properties:
         description:
@@ -501,10 +436,49 @@ components:
                 description: Field that caused the error.
               message:
                 type: string
-                description: Error message.
+                description: Error message for the field.
               code:
                 type: string
                 description: Error code.
+    TicketUpdate_2:
+      type: object
+      properties:
+        subject:
+          type: string
+          description: Subject of the ticket.
+        description:
+          type: string
+          description: HTML description.
+        status:
+          type: integer
+          description: Status of the ticket.
+        priority:
+          type: integer
+          description: Priority of the ticket.
+        responder_id:
+          type: integer
+          description: ID of the agent to assign.
+        group_id:
+          type: integer
+          description: ID of the group to assign.
+        type:
+          type: string
+          description: Type of the ticket.
+        category:
+          type: string
+          description: Category.
+        sub_category:
+          type: string
+          description: Sub-category.
+        tags:
+          type: array
+          items:
+            type: string
+          description: Tags.
+        custom_fields:
+          type: object
+          additionalProperties: true
+          description: Custom field values.
     Ticket_2:
       type: object
       properties:
@@ -652,45 +626,71 @@ components:
           type: object
           additionalProperties: true
           description: Custom field values.
-    TicketUpdate_2:
+    Error_2:
       type: object
       properties:
-        subject:
-          type: string
-          description: Subject of the ticket.
         description:
           type: string
-          description: HTML description.
-        status:
-          type: integer
-          description: Status of the ticket.
-        priority:
-          type: integer
-          description: Priority of the ticket.
-        responder_id:
-          type: integer
-          description: ID of the agent to assign.
-        group_id:
-          type: integer
-          description: ID of the group to assign.
-        type:
-          type: string
-          description: Type of the ticket.
-        category:
-          type: string
-          description: Category.
-        sub_category:
-          type: string
-          description: Sub-category.
-        tags:
+          description: Human-readable error message.
+        errors:
           type: array
+          description: List of specific validation errors.
           items:
-            type: string
-          description: Tags.
-        custom_fields:
-          type: object
-          additionalProperties: true
-          description: Custom field values.
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message.
+              code:
+                type: string
+                description: Error code.
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    PerPageParam:
+      name: per_page
+      in: query
+      description: Number of results per page (max 100).
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 30
+    TicketIdParam:
+      name: ticket_id
+      in: path
+      required: true
+      description: The ID of the ticket.
+      schema:
+        type: integer
+    PageParam:
+      name: page
+      in: query
+      description: Page number for pagination.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
   securitySchemes:
     basicAuth:
       type: http
