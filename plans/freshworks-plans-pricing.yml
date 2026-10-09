@@ -113,3 +113,103 @@ rate_limit_statements:
 - 1,200 actions/year
 - 6,000 actions/year
 - 12,000 actions/year
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - hybrid
+  - metered
+  - seat
+  - subscription
+  units:
+  - seat
+  - transaction
+  plans:
+  - name: Starter
+    access: other
+    model: seat
+    model_how: derived
+    units:
+    - seat
+    periods:
+    - month
+  - name: Growth
+    access: other
+    model: seat
+    model_how: derived
+    units:
+    - seat
+    periods:
+    - month
+  - name: Pro
+    access: other
+    model: seat
+    model_how: derived
+    units:
+    - seat
+    periods:
+    - month
+  - name: Enterprise
+    access: other
+    model: metered
+    model_how: derived
+    units:
+    - seat
+    periods:
+    - none
+  - name: Freddy AI Copilot (add-on)
+    access: other
+    model: seat
+    model_how: derived
+    units:
+    - seat
+    periods:
+    - month
+  - name: Business Agent License
+    access: other
+    model: seat
+    model_how: derived
+    units:
+    - seat
+    periods:
+    - month
+  - name: E-signature pack
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - one-time
+  - name: Orchestration Transaction Packs
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - transaction
+    periods:
+    - one-time
+  - name: Connector App Tasks packs
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - one-time
+  - name: Additional Project Management Licenses
+    access: other
+    model: seat
+    model_how: derived
+    units:
+    - seat
+    periods:
+    - month
+  - name: Day Passes (occasional agents)
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - one-time
