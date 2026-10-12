@@ -1,0 +1,16 @@
+generated: '2026-10-12'
+method: none
+source:
+- https://zapier.com/apps/freshworks/integrations
+- https://n8n.io/integrations/freshworks/
+- https://composio.dev/toolkits/freshworks
+- https://monid.ai/tools/freshworks
+checked:
+- https://composio.dev/toolkits/freshworks
+- https://monid.ai/tools/freshworks
+- https://n8n.io/integrations/freshworks/
+- https://zapier.com/apps/freshworks/integrations
+summary: null
+marketplace_apps: []
+edges: []
+templates: []
