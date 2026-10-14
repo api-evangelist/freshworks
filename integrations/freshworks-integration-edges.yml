@@ -1,5 +1,5 @@
 generated: '2026-10-12'
-method: none
+method: searched
 source:
 - https://zapier.com/apps/freshworks/integrations
 - https://n8n.io/integrations/freshworks/
@@ -7,10 +7,26 @@ source:
 - https://monid.ai/tools/freshworks
 checked:
 - https://composio.dev/toolkits/freshworks
+- https://marketplace.atlassian.com/
 - https://monid.ai/tools/freshworks
 - https://n8n.io/integrations/freshworks/
 - https://zapier.com/apps/freshworks/integrations
 summary: null
 marketplace_apps: []
-edges: []
+edges:
+- partner_name: Atlassian Marketplace
+  partner: atlassian
+  partner_match: aggregator
+  type: marketplace
+  marketplace: atlassian
+  channel: partner-built
+  relationship: platform-app
+  direction: third-party
+  evidence: https://marketplace.atlassian.com/vendors/1678956887/freshworks
+  listing_count: 1
+  apps:
+  - Freshdesk by Freshworks
+  publisher_name: Freshworks
+  detected_by: sweep-devtools.py
+  detected: '2026-10-14'
 templates: []
