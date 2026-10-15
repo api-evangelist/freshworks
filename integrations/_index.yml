@@ -38,7 +38,7 @@
     node_path: FreshworksCrm
     trigger: false
     builder: n8n (built-in node)
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: freshworks-uk-g-cloud-15-digital-marketplace
   label: UK G-Cloud 15 (Digital Marketplace)
