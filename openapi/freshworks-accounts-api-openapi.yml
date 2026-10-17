@@ -142,26 +142,76 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
+    AccountCreate:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Name of the company.
+        address:
+          type: string
+          description: Address.
+        city:
+          type: string
+          description: City.
+        state:
+          type: string
+          description: State or province.
+        zipcode:
+          type: string
+          description: ZIP or postal code.
+        country:
+          type: string
+          description: Country.
+        phone:
+          type: string
+          description: Phone number.
+        website:
+          type: string
+          format: uri
+          description: Website URL.
+        number_of_employees:
+          type: integer
+          description: Number of employees.
+        annual_revenue:
+          type: number
+          description: Annual revenue.
+        industry_type_id:
+          type: integer
+          description: Industry type ID.
+        business_type_id:
+          type: integer
+          description: Business type ID.
+        owner_id:
+          type: integer
+          description: ID of the owning sales agent.
+        custom_field:
+          type: object
+          additionalProperties: true
+          description: Custom field values.
+    Error:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Human-readable error message.
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message.
+              code:
+                type: string
+                description: Error code.
     Account:
       type: object
       properties:
@@ -229,76 +279,16 @@ components:
         total:
           type: integer
           description: Total number of records.
-    Error:
-      type: object
-      properties:
-        description:
-          type: string
-          description: Human-readable error message.
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                description: Field that caused the error.
-              message:
-                type: string
-                description: Error message.
-              code:
-                type: string
-                description: Error code.
-    AccountCreate:
-      type: object
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: Name of the company.
-        address:
-          type: string
-          description: Address.
-        city:
-          type: string
-          description: City.
-        state:
-          type: string
-          description: State or province.
-        zipcode:
-          type: string
-          description: ZIP or postal code.
-        country:
-          type: string
-          description: Country.
-        phone:
-          type: string
-          description: Phone number.
-        website:
-          type: string
-          format: uri
-          description: Website URL.
-        number_of_employees:
-          type: integer
-          description: Number of employees.
-        annual_revenue:
-          type: number
-          description: Annual revenue.
-        industry_type_id:
-          type: integer
-          description: Industry type ID.
-        business_type_id:
-          type: integer
-          description: Business type ID.
-        owner_id:
-          type: integer
-          description: ID of the owning sales agent.
-        custom_field:
-          type: object
-          additionalProperties: true
-          description: Custom field values.
   parameters:
+    SortTypeParam:
+      name: sort_type
+      in: query
+      description: Sort order direction.
+      schema:
+        type: string
+        enum:
+        - asc
+        - desc
     AccountIdParam:
       name: account_id
       in: path
@@ -312,15 +302,6 @@ components:
       description: Field to sort by.
       schema:
         type: string
-    SortTypeParam:
-      name: sort_type
-      in: query
-      description: Sort order direction.
-      schema:
-        type: string
-        enum:
-        - asc
-        - desc
     PageParam:
       name: page
       in: query
@@ -329,6 +310,25 @@ components:
         type: integer
         minimum: 1
         default: 1
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     apiKeyAuth:
       type: apiKey

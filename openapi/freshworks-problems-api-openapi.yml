@@ -139,96 +139,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    ProblemIdParam:
-      name: problem_id
-      in: path
-      required: true
-      description: The ID of the problem.
-      schema:
-        type: integer
-    PerPageParam:
-      name: per_page
-      in: query
-      description: Number of results per page (max 100).
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 100
-        default: 30
-    PageParam:
-      name: page
-      in: query
-      description: Page number for pagination.
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
-  responses:
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    Problem:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Unique ID of the problem.
-        subject:
-          type: string
-          description: Subject of the problem.
-        description:
-          type: string
-          description: HTML description.
-        status:
-          type: integer
-          description: Status of the problem. 1=Open, 2=Change Requested, 3=Closed.
-        priority:
-          type: integer
-          description: Priority. 1=Low, 2=Medium, 3=High, 4=Urgent.
-        impact:
-          type: integer
-          description: Impact. 1=Low, 2=Medium, 3=High.
-        agent_id:
-          type: integer
-          description: ID of the assigned agent.
-        group_id:
-          type: integer
-          description: ID of the assigned group.
-        department_id:
-          type: integer
-          description: ID of the department.
-        known_error:
-          type: boolean
-          description: Whether this is a known error.
-        due_by:
-          type: string
-          format: date-time
-          description: Due date for resolution.
-        created_at:
-          type: string
-          format: date-time
-          description: Timestamp when created.
-        updated_at:
-          type: string
-          format: date-time
-          description: Timestamp when last updated.
     Error:
       type: object
       properties:
@@ -290,6 +201,95 @@ components:
           type: string
           format: date-time
           description: Due date.
+    Problem:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the problem.
+        subject:
+          type: string
+          description: Subject of the problem.
+        description:
+          type: string
+          description: HTML description.
+        status:
+          type: integer
+          description: Status of the problem. 1=Open, 2=Change Requested, 3=Closed.
+        priority:
+          type: integer
+          description: Priority. 1=Low, 2=Medium, 3=High, 4=Urgent.
+        impact:
+          type: integer
+          description: Impact. 1=Low, 2=Medium, 3=High.
+        agent_id:
+          type: integer
+          description: ID of the assigned agent.
+        group_id:
+          type: integer
+          description: ID of the assigned group.
+        department_id:
+          type: integer
+          description: ID of the department.
+        known_error:
+          type: boolean
+          description: Whether this is a known error.
+        due_by:
+          type: string
+          format: date-time
+          description: Due date for resolution.
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when created.
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when last updated.
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    ProblemIdParam:
+      name: problem_id
+      in: path
+      required: true
+      description: The ID of the problem.
+      schema:
+        type: integer
+    PageParam:
+      name: page
+      in: query
+      description: Page number for pagination.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    PerPageParam:
+      name: per_page
+      in: query
+      description: Number of results per page (max 100).
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 30
   securitySchemes:
     basicAuth:
       type: http

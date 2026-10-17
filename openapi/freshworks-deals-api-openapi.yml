@@ -142,26 +142,36 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request body or parameters are invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
+    Error:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Human-readable error message.
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error.
+              message:
+                type: string
+                description: Error message.
+              code:
+                type: string
+                description: Error code.
+    Meta:
+      type: object
+      properties:
+        total_pages:
+          type: integer
+          description: Total number of pages.
+        total:
+          type: integer
+          description: Total number of records.
     DealCreate:
       type: object
       required:
@@ -197,35 +207,6 @@ components:
           type: object
           additionalProperties: true
           description: Custom field values.
-    Meta:
-      type: object
-      properties:
-        total_pages:
-          type: integer
-          description: Total number of pages.
-        total:
-          type: integer
-          description: Total number of records.
-    Error:
-      type: object
-      properties:
-        description:
-          type: string
-          description: Human-readable error message.
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                description: Field that caused the error.
-              message:
-                type: string
-                description: Error message.
-              code:
-                type: string
-                description: Error code.
     Deal:
       type: object
       properties:
@@ -275,6 +256,22 @@ components:
           format: date-time
           description: Timestamp when last updated.
   parameters:
+    SortTypeParam:
+      name: sort_type
+      in: query
+      description: Sort order direction.
+      schema:
+        type: string
+        enum:
+        - asc
+        - desc
+    DealIdParam:
+      name: deal_id
+      in: path
+      required: true
+      description: The ID of the deal.
+      schema:
+        type: integer
     SortParam:
       name: sort
       in: query
@@ -289,22 +286,25 @@ components:
         type: integer
         minimum: 1
         default: 1
-    DealIdParam:
-      name: deal_id
-      in: path
-      required: true
-      description: The ID of the deal.
-      schema:
-        type: integer
-    SortTypeParam:
-      name: sort_type
-      in: query
-      description: Sort order direction.
-      schema:
-        type: string
-        enum:
-        - asc
-        - desc
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request body or parameters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     apiKeyAuth:
       type: apiKey
