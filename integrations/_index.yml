@@ -92,7 +92,7 @@
     quality:
     - gold
     builder: 'community (Meltano Hub variant maintainers: hotgluexyz)'
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: freshworks-monday-com-own
   label: Monday.com (own)
