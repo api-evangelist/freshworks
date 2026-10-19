@@ -133,3 +133,447 @@
   relationship: platform-app
   status: not-a-workflow
   arazzo: null
+- slug: freshworks-8x8-inc
+  label: 8x8 Inc
+  partner: 8x8
+  partner_name: 8x8 Inc
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://www.freshworks.com/apps/8x8_for_freshdesk
+  source: edge
+  relationship: platform-app
+  contract_reference:
+    register: Freshworks Marketplace (freshworks.com/apps/sitemap.xml -> app pages, Nuxt state)
+    spec_file: null
+    role: freshworks-app
+    registered_name: 8x8 Inc
+    matched_domain: 8x8.com
+    matched_by: domain
+    listings: 1
+    sample_apps:
+    - 8x8 for Freshdesk
+    signal_note: one edge per (builder, platform); listings and badges are context, never read
+    detected_by: sweep-customer-support.py
+    detected: '2026-10-19'
+  status: not-a-workflow
+  arazzo: null
+- slug: freshworks-anydesk-software-gmbh
+  label: AnyDesk Software GmbH
+  partner: anydesk
+  partner_name: AnyDesk Software GmbH
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://www.freshworks.com/apps/anydesk_remote_access
+  source: edge
+  relationship: platform-app
+  contract_reference:
+    register: Freshworks Marketplace (freshworks.com/apps/sitemap.xml -> app pages, Nuxt state)
+    spec_file: null
+    role: freshworks-app
+    registered_name: AnyDesk Software GmbH
+    matched_domain: anydesk.com
+    matched_by: domain
+    listings: 3
+    sample_apps:
+    - AnyDesk
+    signal_note: one edge per (builder, platform); listings and badges are context, never read
+    detected_by: sweep-customer-support.py
+    detected: '2026-10-19'
+  status: not-a-workflow
+  arazzo: null
+- slug: freshworks-controlup
+  label: ControlUp
+  partner: controlup
+  partner_name: ControlUp
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://www.freshworks.com/apps/controlup_integration_for_freshservice
+  source: edge
+  relationship: platform-app
+  contract_reference:
+    register: Freshworks Marketplace (freshworks.com/apps/sitemap.xml -> app pages, Nuxt state)
+    spec_file: null
+    role: freshworks-app
+    registered_name: ControlUp
+    matched_domain: controlup.com
+    matched_by: domain
+    listings: 1
+    sample_apps:
+    - ControlUp Integration For Freshservice
+    signal_note: one edge per (builder, platform); listings and badges are context, never read
+    detected_by: sweep-customer-support.py
+    detected: '2026-10-19'
+  status: not-a-workflow
+  arazzo: null
+- slug: freshworks-kovai-limited
+  label: Kovai Limited
+  partner: document360
+  partner_name: Kovai Limited
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://www.freshworks.com/apps/document360
+  source: edge
+  relationship: platform-app
+  contract_reference:
+    register: Freshworks Marketplace (freshworks.com/apps/sitemap.xml -> app pages, Nuxt state)
+    spec_file: null
+    role: freshworks-app
+    registered_name: Kovai Limited
+    matched_domain: document360.com
+    matched_by: domain+product
+    listings: 1
+    sample_apps:
+    - Document360
+    signal_note: one edge per (builder, platform); listings and badges are context, never read
+    detected_by: sweep-customer-support.py
+    detected: '2026-10-19'
+  status: not-a-workflow
+  arazzo: null
+- slug: freshworks-exotel
+  label: Exotel
+  partner: exotel
+  partner_name: Exotel
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://www.freshworks.com/apps/exotel_cti_v2
+  source: edge
+  relationship: platform-app
+  contract_reference:
+    register: Freshworks Marketplace (freshworks.com/apps/sitemap.xml -> app pages, Nuxt state)
+    spec_file: null
+    role: freshworks-app
+    registered_name: Exotel
+    matched_domain: exotel.com
+    matched_by: domain
+    listings: 1
+    sample_apps:
+    - Exotel CTI V2
+    signal_note: one edge per (builder, platform); listings and badges are context, never read
+    detected_by: sweep-customer-support.py
+    detected: '2026-10-19'
+  status: not-a-workflow
+  arazzo: null
+- slug: freshworks-kaleyra
+  label: Kaleyra
+  partner: kaleyra
+  partner_name: Kaleyra
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://www.freshworks.com/apps/kaleyra_click-to-call
+  source: edge
+  relationship: platform-app
+  contract_reference:
+    register: Freshworks Marketplace (freshworks.com/apps/sitemap.xml -> app pages, Nuxt state)
+    spec_file: null
+    role: freshworks-app
+    registered_name: Kaleyra
+    matched_domain: kaleyra.com
+    matched_by: domain
+    listings: 1
+    sample_apps:
+    - Kaleyra Click-to-Call
+    signal_note: one edge per (builder, platform); listings and badges are context, never read
+    detected_by: sweep-customer-support.py
+    detected: '2026-10-19'
+  status: not-a-workflow
+  arazzo: null
+- slug: freshworks-keeper-security
+  label: Keeper Security
+  partner: keeper-security
+  partner_name: Keeper Security
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://www.freshworks.com/apps/keeper_security_itsm_1
+  source: edge
+  relationship: platform-app
+  contract_reference:
+    register: Freshworks Marketplace (freshworks.com/apps/sitemap.xml -> app pages, Nuxt state)
+    spec_file: null
+    role: freshworks-app
+    registered_name: Keeper Security
+    matched_domain: keepersecurity.com
+    matched_by: domain
+    listings: 2
+    sample_apps:
+    - Keeper Security ITSM
+    - Keeper Security Workflow
+    signal_note: one edge per (builder, platform); listings and badges are context, never read
+    detected_by: sweep-customer-support.py
+    detected: '2026-10-19'
+  status: not-a-workflow
+  arazzo: null
+- slug: freshworks-lansweeper
+  label: Lansweeper
+  partner: lansweeper
+  partner_name: Lansweeper
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://www.freshworks.com/apps/lansweeper_app_for_freshservice
+  source: edge
+  relationship: platform-app
+  contract_reference:
+    register: Freshworks Marketplace (freshworks.com/apps/sitemap.xml -> app pages, Nuxt state)
+    spec_file: null
+    role: freshworks-app
+    registered_name: Lansweeper
+    matched_domain: lansweeper.com
+    matched_by: domain
+    listings: 1
+    sample_apps:
+    - Lansweeper App for Freshservice
+    signal_note: one edge per (builder, platform); listings and badges are context, never read
+    detected_by: sweep-customer-support.py
+    detected: '2026-10-19'
+  status: not-a-workflow
+  arazzo: null
+- slug: freshworks-mavenagi
+  label: mavenagi
+  partner: maven-agi
+  partner_name: mavenagi
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://www.freshworks.com/apps/mavenagi_copilot
+  source: edge
+  relationship: platform-app
+  contract_reference:
+    register: Freshworks Marketplace (freshworks.com/apps/sitemap.xml -> app pages, Nuxt state)
+    spec_file: null
+    role: freshworks-app
+    registered_name: mavenagi
+    matched_domain: mavenagi.com
+    matched_by: domain
+    listings: 2
+    sample_apps:
+    - Maven AGI Co-Pilot
+    - Maven AGI Copilot
+    signal_note: one edge per (builder, platform); listings and badges are context, never read
+    detected_by: sweep-customer-support.py
+    detected: '2026-10-19'
+  status: not-a-workflow
+  arazzo: null
+- slug: freshworks-ringcentral
+  label: Ringcentral
+  partner: ringcentral
+  partner_name: Ringcentral
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://www.freshworks.com/apps/ringcx_for_freshservice_3
+  source: edge
+  relationship: platform-app
+  contract_reference:
+    register: Freshworks Marketplace (freshworks.com/apps/sitemap.xml -> app pages, Nuxt state)
+    spec_file: null
+    role: freshworks-app
+    registered_name: Ringcentral
+    matched_domain: ringcentral.com
+    matched_by: domain+name-among-holders
+    listings: 3
+    sample_apps:
+    - RingCentral RingCX for Freshdesk
+    - RingCentral RingCX for Freshservice
+    - RingCentral RingCX for Freshworks
+    signal_note: one edge per (builder, platform); listings and badges are context, never read
+    detected_by: sweep-customer-support.py
+    detected: '2026-10-19'
+  status: not-a-workflow
+  arazzo: null
+- slug: freshworks-splashtop
+  label: splashtop
+  partner: splashtop
+  partner_name: splashtop
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://www.freshworks.com/apps/splashtop_sos_on-prem
+  source: edge
+  relationship: platform-app
+  contract_reference:
+    register: Freshworks Marketplace (freshworks.com/apps/sitemap.xml -> app pages, Nuxt state)
+    spec_file: null
+    role: freshworks-app
+    registered_name: splashtop
+    matched_domain: splashtop.com
+    matched_by: domain
+    listings: 4
+    sample_apps:
+    - Splashtop On-Demand Support
+    - Splashtop SOS (with Service Desk support)
+    - Splashtop SOS On-Prem
+    signal_note: one edge per (builder, platform); listings and badges are context, never read
+    detected_by: sweep-customer-support.py
+    detected: '2026-10-19'
+  status: not-a-workflow
+  arazzo: null
+- slug: freshworks-stonly
+  label: Stonly
+  partner: stonly
+  partner_name: Stonly
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://www.freshworks.com/apps/stonly_scripted_guides_for_agents
+  source: edge
+  relationship: platform-app
+  contract_reference:
+    register: Freshworks Marketplace (freshworks.com/apps/sitemap.xml -> app pages, Nuxt state)
+    spec_file: null
+    role: freshworks-app
+    registered_name: Stonly
+    matched_domain: stonly.com
+    matched_by: domain
+    listings: 1
+    sample_apps:
+    - Stonly scripted guides for agents
+    signal_note: one edge per (builder, platform); listings and badges are context, never read
+    detected_by: sweep-customer-support.py
+    detected: '2026-10-19'
+  status: not-a-workflow
+  arazzo: null
+- slug: freshworks-superops
+  label: SuperOps
+  partner: superops
+  partner_name: SuperOps
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://www.freshworks.com/apps/freshservice_superops_integration
+  source: edge
+  relationship: platform-app
+  contract_reference:
+    register: Freshworks Marketplace (freshworks.com/apps/sitemap.xml -> app pages, Nuxt state)
+    spec_file: null
+    role: freshworks-app
+    registered_name: SuperOps
+    matched_domain: superops.com
+    matched_by: domain
+    listings: 1
+    sample_apps:
+    - Freshservice SuperOps Integration
+    signal_note: one edge per (builder, platform); listings and badges are context, never read
+    detected_by: sweep-customer-support.py
+    detected: '2026-10-19'
+  status: not-a-workflow
+  arazzo: null
+- slug: freshworks-fctelephonyflow
+  label: fctelephonyflow
+  partner: synthflow
+  partner_name: fctelephonyflow
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://www.freshworks.com/apps/synthflow_voice_ai_agents
+  source: edge
+  relationship: platform-app
+  contract_reference:
+    register: Freshworks Marketplace (freshworks.com/apps/sitemap.xml -> app pages, Nuxt state)
+    spec_file: null
+    role: freshworks-app
+    registered_name: fctelephonyflow
+    matched_domain: synthflow.ai
+    matched_by: domain+product
+    listings: 1
+    sample_apps:
+    - Synthflow AI Agent
+    signal_note: one edge per (builder, platform); listings and badges are context, never read
+    detected_by: sweep-customer-support.py
+    detected: '2026-10-19'
+  status: not-a-workflow
+  arazzo: null
+- slug: freshworks-teamviewer
+  label: TeamViewer
+  partner: teamviewer
+  partner_name: TeamViewer
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://www.freshworks.com/apps/teamviewer_enterprise_integration-for-freshservice
+  source: edge
+  relationship: platform-app
+  contract_reference:
+    register: Freshworks Marketplace (freshworks.com/apps/sitemap.xml -> app pages, Nuxt state)
+    spec_file: null
+    role: freshworks-app
+    registered_name: TeamViewer
+    matched_domain: teamviewer.com
+    matched_by: domain
+    listings: 1
+    sample_apps:
+    - TeamViewer Enterprise Integration
+    signal_note: one edge per (builder, platform); listings and badges are context, never read
+    detected_by: sweep-customer-support.py
+    detected: '2026-10-19'
+  status: not-a-workflow
+  arazzo: null
+- slug: freshworks-unbabel
+  label: Unbabel
+  partner: unbabel
+  partner_name: Unbabel
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://www.freshworks.com/apps/unbabel_for_freshchat
+  source: edge
+  relationship: platform-app
+  contract_reference:
+    register: Freshworks Marketplace (freshworks.com/apps/sitemap.xml -> app pages, Nuxt state)
+    spec_file: null
+    role: freshworks-app
+    registered_name: Unbabel
+    matched_domain: unbabel.com
+    matched_by: domain
+    listings: 1
+    sample_apps:
+    - Unbabel for Freshchat
+    signal_note: one edge per (builder, platform); listings and badges are context, never read
+    detected_by: sweep-customer-support.py
+    detected: '2026-10-19'
+  status: not-a-workflow
+  arazzo: null
+- slug: freshworks-zoho-assist
+  label: Zoho Assist
+  partner: zoho
+  partner_name: Zoho Assist
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://www.freshworks.com/apps/zoho_assist_remote_support-for-freshdesk
+  source: edge
+  relationship: platform-app
+  contract_reference:
+    register: Freshworks Marketplace (freshworks.com/apps/sitemap.xml -> app pages, Nuxt state)
+    spec_file: null
+    role: freshworks-app
+    registered_name: Zoho Assist
+    matched_domain: zoho.com
+    matched_by: domain+name-among-holders
+    listings: 1
+    sample_apps:
+    - Zoho Assist Remote Support
+    signal_note: one edge per (builder, platform); listings and badges are context, never read
+    detected_by: sweep-customer-support.py
+    detected: '2026-10-19'
+  status: not-a-workflow
+  arazzo: null
+- slug: freshworks-genesys-own
+  label: Genesys (own)
+  partner: genesys
+  partner_name: Genesys (own)
+  category: businessOptimization|operations
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://appfoundry.genesys.com/filter/genesyscloud/listing/ce109b06-f36d-40ca-bc2c-d3ee32c39e8e
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
